@@ -1,0 +1,12 @@
+# --- Core Scientifique ---
+numpy>=1.24.0
+scipy>=1.10.0
+matplotlib>=3.7.0
+
+# --- Solveurs PDE (Méthodes Classiques) ---
+fipy>=3.4.3
+
+
+# --- Visualisation Avancée (3D / Maillages) ---
+pyvista>=0.39.0
+itkwidgets>=0.32.6
