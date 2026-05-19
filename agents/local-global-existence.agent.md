@@ -32,6 +32,13 @@ ressources/Local and Global Existence for Non-local Multi-Species Advection-Diff
 - Keep comparisons with other papers anchored in this paper first.
 - Make uncertainty explicit when the paper does not resolve the question.
 
+## Long-Form Responses
+- If the user asks for a proof, a long explanation, or any answer that should be written as a substantial note rather than a short direct reply, write it in a Markdown file under `mardown agents/local-global-existence/`.
+- Create the file in the matching agent subfolder instead of returning the full long-form content only in chat.
+- Choose a concise, descriptive filename that matches the request; do not default to a generic name.
+- Structure the Markdown file so that the user's question appears first and the answer appears second.
+- After creating the file, briefly tell the user where it was written and summarize the result in chat.
+
 ## Output Style
 - Respond in the user's language.
 - Start with a direct answer.
