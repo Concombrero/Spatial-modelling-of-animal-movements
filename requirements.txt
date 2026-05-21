@@ -1,0 +1,8 @@
+# Core Python dependencies for the Model1D solver.
+# Install with: pip install -r requirements.txt
+# Note: tkinter/TkAgg is a system package, not a pip package.
+
+matplotlib==3.10.9
+numpy==2.4.6
+Pillow==12.2.0
+scipy==1.17.1
