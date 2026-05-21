@@ -10,9 +10,9 @@ def main():
     
     n = 2 # number of population
     # attraction matrix between populations
-    coefficient_attraction = np.array([[0, 1], 
-                                       [-1, 0]]) 
-    coefficient_diffusion = np.array([0.01, 0.01]) # diffusion coefficient for each population
+    coefficient_attraction = np.array([[0, -2], 
+                                       [-2, 0]]) 
+    coefficient_diffusion = np.array([1, 1]) # diffusion coefficient for each population
     solver = Model1D(
         a_border = 0.0,
         b_border = 1.0,
@@ -23,11 +23,13 @@ def main():
         coefficient_attraction = coefficient_attraction,
         coefficient_diffusion = coefficient_diffusion,
         kernel_type = "von_mises",
-        kernel_standard_deviation=0.05
+        kernel_standard_deviation=0.025
         
     )
 
     figure, anim = solver.create_solution_gif(interval = 10)
+    kernel_info = solver.get_kernel_info()
+    print(f"type :{kernel_info['type']}, coefficient : {kernel_info['coefficient']}, standard deviation : {kernel_info['standard_deviation']}")
     plt.show()
     
     

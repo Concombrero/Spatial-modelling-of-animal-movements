@@ -678,3 +678,11 @@ class Model1D:
             figure.savefig(output_path, bbox_inches="tight")
 
         return figure, axes
+    
+    def get_kernel_info(self):
+        """Return a dictionary of kernel properties for reference."""
+        return {
+            "type": self.kernel_type,
+            "coefficient": self.kernel_coefficient,
+            "standard_deviation": self.get_kernel_standard_deviation(),
+        }
