@@ -526,6 +526,16 @@ class Model1D:
         """Return the solution at one stored time index."""
         return self.U[time_index, :, :]
 
+    def get_final_distribution(self):
+        """Return the final stored state in physical space, solving if needed."""
+        self._ensure_solution_computed()
+        return self.U[-1, :, :].copy()
+
+    def get_final_initial_condition(self):
+        """Return an initial-condition callback built from the final stored state."""
+        final_distribution = self.get_final_distribution()
+        return self._build_initial_condition_from_state(final_distribution)
+
     def get_mass(self):
         """Return the total mass of each population at each stored time."""
         return self.dx * np.sum(self.U, axis=1)
@@ -577,6 +587,37 @@ class Model1D:
         amplitude = solution_max - solution_min
         margin = 0.05 * amplitude if amplitude > 0.0 else 0.1 * max(solution_max, 1.0)
         return solution_min - margin, solution_max + margin
+
+    def _build_initial_condition_from_state(self, state):
+        """Create a periodic initial-condition callback from one stored state."""
+        state = np.asarray(state, dtype=float)
+        expected_shape = (self.number_of_points, self.number_of_population)
+        if state.shape != expected_shape:
+            raise ValueError(
+                "state must have shape "
+                "(number_of_points, number_of_population)."
+            )
+
+        x_extended = np.concatenate((self.x, [self.b_border]))
+        state_extended = np.vstack((state, state[0:1, :]))
+
+        def initial_condition(x):
+            sample_points = np.asarray(x, dtype=float)
+            wrapped_points = self.a_border + np.mod(
+                sample_points - self.a_border,
+                self.length,
+            )
+            interpolated_profiles = [
+                np.interp(
+                    wrapped_points,
+                    x_extended,
+                    state_extended[:, population_index],
+                )
+                for population_index in range(self.number_of_population)
+            ]
+            return np.column_stack(interpolated_profiles)
+
+        return initial_condition
 
     def _plot_population_profiles(self, axis, state, title):
         """Draw one spatial profile per population on a given matplotlib axis."""
@@ -675,6 +716,61 @@ class Model1D:
 
         if save:
             output_path = self._resolve_output_path(save_path, "solution_snapshots.png")
+            figure.savefig(output_path, bbox_inches="tight")
+
+        return figure, axes
+
+    def plot_solution_heatmaps(
+        self,
+        cmap="hot_r",
+        share_color_scale=True,
+        save=False,
+        save_path=None,
+    ):
+        """Create one x-t density heatmap per population and optionally save it."""
+        self._ensure_solution_computed()
+
+        figure, axes = plt.subplots(
+            1,
+            self.number_of_population,
+            figsize=(4.8 * self.number_of_population, 4.0),
+            squeeze=False,
+            sharex=True,
+            sharey=True,
+        )
+        flat_axes = axes.ravel()
+
+        common_limits = {}
+        if share_color_scale:
+            common_limits = {
+                "vmin": float(np.min(self.U)),
+                "vmax": float(np.max(self.U)),
+            }
+
+        extent = [self.a_border, self.b_border, self.time[0], self.time[-1]]
+
+        for population_index, axis in enumerate(flat_axes):
+            heatmap_values = self.U[:, :, population_index]
+            image = axis.imshow(
+                heatmap_values,
+                origin="lower",
+                aspect="auto",
+                extent=extent,
+                cmap=cmap,
+                **common_limits,
+            )
+            axis.set_title(f"$u_{population_index + 1}$")
+            axis.set_xlabel("x")
+            if population_index == 0:
+                axis.set_ylabel("t")
+
+            colorbar = figure.colorbar(image, ax=axis)
+            colorbar.set_label("density")
+
+        figure.tight_layout()
+
+        if save:
+            output_path = self._resolve_output_path(save_path, "solution_heatmaps.png")
             figure.savefig(output_path, bbox_inches="tight")
 
         return figure, axes
