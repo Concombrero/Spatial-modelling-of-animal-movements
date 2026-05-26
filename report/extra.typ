@@ -102,6 +102,8 @@
 #let definition = mathblock(
   blocktitle: "Definition",
   counter: mathcounter,
+  above: 2em,
+  below: 2em,
 )
 
 #let remark = mathblock(
@@ -113,6 +115,13 @@
 )
 
 #let proof = proofblock()
+
+#let stix-two-fonts(body) = {
+  show text: set text(font: "STIX Two Text")
+  show math.equation: set text(font: "STIX Two Math")
+
+  body
+}
 
 #let number-only-great-theorem-refs(body) = {
   show ref: it => {

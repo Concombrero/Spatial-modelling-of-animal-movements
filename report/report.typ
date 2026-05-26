@@ -8,6 +8,7 @@
 //-------------------------------------
 // Template config
 //
+#show: stix-two-fonts
 #show: report.with(
   option: option,
   doc: doc,
@@ -28,9 +29,9 @@
   if ns.len() == 1 {
     numbering("1.", ns.at(0))
   } else if ns.len() == 2 {
-    numbering("a)", ns.at(1))
+    numbering("1.1", ns.at(0), ns.at(1))
   } else {
-    numbering("a.1", ns.at(1), ns.at(2))
+    numbering("1.1.1", ns.at(0), ns.at(1), ns.at(2))
   }
 }
 
@@ -45,6 +46,6 @@
 
 #include "chapters/introduction.typ"
 
-= Definitions
+= Day-Night Cycle Model
 
-#include "chapters/definitions.typ"
+#include "chapters/day-night_cycle_model.typ"
