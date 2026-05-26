@@ -99,6 +99,11 @@
   counter: mathcounter,
 )
 
+#let definition = mathblock(
+  blocktitle: "Definition",
+  counter: mathcounter,
+)
+
 #let remark = mathblock(
   blocktitle: "Remark",
   prefix: [_Remark._],
@@ -108,6 +113,24 @@
 )
 
 #let proof = proofblock()
+
+#let number-only-great-theorem-refs(body) = {
+  show ref: it => {
+    if it.element != none and it.element.func() == figure and it.element.kind == "great-theorem-counted" {
+      let data = query(selector(label("great-theorems:numberfunc")).after(it.target)).first()
+      if data == none {
+        return it
+      }
+
+      let numberfunc = data.value
+      link(it.target, [#numberfunc(data.location())])
+    } else {
+      it
+    }
+  }
+
+  body
+}
 
 
 #let eq(content) = math.equation(

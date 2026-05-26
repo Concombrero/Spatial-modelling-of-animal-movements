@@ -1,4 +1,5 @@
 #import "@preview/hei-synd-report:0.1.1": *
+#import "@preview/diverential:0.3.0": *
 #import "metadata.typ": *
 #import "extra.typ": *
 //#show:make-glossary
@@ -13,6 +14,9 @@
   date: date,
   tableof: tableof,
 )
+
+#show: great-theorems-init
+#show: number-only-great-theorem-refs
 
 //-------------------------------------
 // Content
@@ -35,6 +39,12 @@
 
 = Abstract
 
+#include "chapters/abstract.typ"
 
 = Introduction
 
+#include "chapters/introduction.typ"
+
+= Definitions
+
+#include "chapters/definitions.typ"
