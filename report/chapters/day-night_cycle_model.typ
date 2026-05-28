@@ -1,14 +1,14 @@
 #import "../extra.typ": definition, lemma, proof
 #import "@preview/diverential:0.3.0": *
 
-== Animal movement models
-Before introducing the day-night cycle model, we will first introduce some basic animal movement models that will be used as a basis @wang2023openproblemspdemodels. We note $u$ the population densities where $u_i (x,t)$ is the density of the $i$-th species at position $x$ and time $t$. We then consider the following general model for the population dynamics of $n$ species:
+== Animal movement model
+Before introducing the day-night cycle model, we will first introduce some basic animal movement models that will be used as a basis @wang2023openproblemspdemodels. We note $u(x,t)$ the population density at position $x$ and time $t$. We then consider the following general model for the population dynamics of $n$ species:
 
 $
-  dvp(u, t) (x,t) = D Delta u(x,t) - nabla dot (u(x,t) nabla a(x,t))
+  dvp(u, t) (x,t) = d Delta u(x,t) - nabla dot (u(x,t) nabla a(x,t))
 $ <equation-animal-movement-model>
 
-The diffusion term $D$ represents the random movement of the individuals, while the advective potential $a(x,t)$ corresponds to the bias in movement based on information. In our case, we will consider that the advective potential will only depend on the perception of the environment. 
+The diffusion term $d$ represents the random movement of the individuals, while the advective potential $a(x,t)$ corresponds to the bias in movement based on information. In our case, we will consider that the advective potential will only depend on the perception of the environment.
 
 === Perception Model
 
@@ -18,7 +18,11 @@ $
   h(x,t) := K(x,t) * m(x,t) = integral_Omega K(x-y,t) m(y,t) d y
 $<equation-perception-model>
 
-[Detail $h$]
+$h$ can be interpreted as the perceived density of the "thing" at position $x$ and time $t$. The advective potential can then be defined as a function of the perceived density $h$, for example $a(x,t) = chi h(x,t)$. This means that the individuals will move towards areas where the perceived density of the "thing" is higher if $chi > 0$ and away from them if $chi < 0$. $chi$ mesure the attraction or repulsion of the populationh to the "thing" that is perceived. Then the model can be written as follows:
+
+$
+  dvp(u, t) (x,t) = d Delta u(x,t) - chi nabla dot (u(x,t)  nabla h(x,t))
+$
 
 == Day-Night Cycle Model
 
@@ -135,7 +139,7 @@ With the day and night cycle, we can have two different species that can appear:
 ] <definition-diurnal-biology-based>
 
 
-Thus to model the behavior of a inactive population, we can fix the diffusion coefficient and the advective potential to be zero during the period of inactivity. For example, for a nocturnal population, we can define the diffusion coefficient and the advective potential as follows:
+Thus to model the behavior of a inactive population, we can fix the diffusion coefficient and the mesure of attraction to zero during the period of inactivity. For example, for a nocturnal species, we can assume that:
 
 #math.equation(block: true,
   grid(
@@ -145,8 +149,8 @@ Thus to model the behavior of a inactive population, we can fix the diffusion co
       D_"active" &quad "if" t in I_"night",
       0 &quad "if" t in I_"day"
     )$],
-    [$a(x,t) = cases(
-      a_"active" (x) &quad "if" t in I_"night",
+    [$chi(x,t) = cases(
+      chi_"active" (x) &quad "if" t in I_"night",
       0 &quad "if" t in I_"day"
     )$],
   )
