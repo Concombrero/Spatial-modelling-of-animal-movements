@@ -58,6 +58,7 @@
 #let appendix = false
 #let bib = (
   display : true,
-  path  : "/assets/bibliography.bib",
+  path  : "assets/bibliography.bib",
   style : "ieee",
+  full  : false,
 )

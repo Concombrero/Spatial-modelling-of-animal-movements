@@ -97,6 +97,8 @@
 #let lemma = mathblock(
   blocktitle: "Lemma",
   counter: mathcounter,
+  above: 2em,
+  below: 2em,
 )
 
 #let definition = mathblock(

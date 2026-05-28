@@ -37,6 +37,8 @@
 
 #set heading(numbering: project-heading-numbering)
 
+#set enum(numbering: "i)")
+
 
 = Abstract
 
@@ -49,3 +51,18 @@
 = Day-Night Cycle Model
 
 #include "chapters/day-night_cycle_model.typ"
+
+
+= Simulation 
+
+#include "chapters/simulation.typ"
+
+
+#if bib.display {
+  pagebreak()
+  bibliography(
+    bib.path,
+    style: bib.style,
+    full: bib.full,
+  )
+}
