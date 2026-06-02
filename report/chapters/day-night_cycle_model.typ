@@ -58,14 +58,14 @@ In reality, animals can have multiple types of perception that can be affected o
 ]<lemma-combination-of-perception-kernels>
 
 #proof()[
-  We reacall that a perceptual kernel satisfies the following properties:
+  We recall that a perceptual kernel satisfies the following properties @wang2023openproblemspdemodels:
 
   + $K$ is symmetric in the spatial variable
   + $integral_Omega K(x, t) d x = 1$ for all $t$
   + $lim_(R->0^+) K(x, t) = delta(x)$ for all $t$
   + $K$ is non increasing from the origin in the spatial variable
 
-  We will show that the combined kernel of perception defined above satisfies these properties @wang2023openproblemspdemodels.
+  We will show that the combined kernel of perception defined above satisfies these properties.
 
   + A sum of symmetric functions is symmetric, so $K$ is symmetric in the spatial variable.
 
@@ -106,11 +106,11 @@ This simple combination allows us to capture the effects of the day-night cycle 
 
 
 === Sight-based perception
-It's clear that the perception of the environment can be strongly affected by the day-night cycle. For example, a animal that relies on vision to perceive it's environment will have a much better perception during the day than during the night. Based on this observation we can assume that during the night the individuals cannot perceive anything, which means that the sight-based perception kernel is zero during the night.It's clear that this type of kernel is greatly simplified, but it captures the essential features of the perception during the day and night. That leaves one question: how does the kernel behave during the day? 
+It's clear that the perception of the environment can be strongly affected by the day-night cycle. For example, a animal that relies on vision to perceive it's environment will have a much better perception during the day than during the night. Based on this observation we can assume that during the night the individuals cannot perceive anything, which means that the sight-based perception kernel is zero during the night.It's clear that this type of kernel is greatly simplified, but it captures the essential features of the perception during the day and night. That leaves one question: how does the kernel behave during the day? *[Justify exponential]*
 
 $
   K_"sight" (x-y, t) = cases(
-    K(x-y) &quad "if" t in I_"day",
+    1/(2R) e^(- abs(x)/R) &quad "if" t in I_"day",
     0 &quad "if" t in I_"night"
   )
 $<equation-sight-based-perception-kernel>
@@ -121,6 +121,9 @@ On the other hand, we assume that the perception of the environment based on sme
 $
   K_"smell" (x) = frac(1, sqrt(2 pi) R) e^(x^2 slash 2 R^2)
 $<equation-smell-based-perception-kernel>
+
+#figure(image("../figures/R1_02_R2_05_kernel_combinaison.png"),
+caption: "Combination of sight-based and smell-based perception kernels during the day")
 
 == Behavior of species
 
@@ -149,8 +152,8 @@ Thus to model the behavior of a inactive population, we can fix the diffusion co
       D_"active" &quad "if" t in I_"night",
       0 &quad "if" t in I_"day"
     )$],
-    [$chi(x,t) = cases(
-      chi_"active" (x) &quad "if" t in I_"night",
+    [$chi(t) = cases(
+      chi_"active" &quad "if" t in I_"night",
       0 &quad "if" t in I_"day"
     )$],
   )

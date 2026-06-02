@@ -7,19 +7,19 @@ import sys
 
 
 
-def kernel2(x, R):
-    #top hat kernel
-    return np.where(np.abs(x) <= R, 1/(2*R), 0)
-
 def kernel1(x, R):
-    #Exponential kernel 
-    return np.exp(-np.abs(x)/R)/(2*R)
+    """Gaussian kernel with standard deviation R."""
+    return np.exp(-0.5 * (x / R) ** 2) / (R * np.sqrt(2 * np.pi))
+
+def kernel2(x, R):
+    """Exponential kernel with scale R."""
+    return 0.5 * np.exp(-np.abs(x) / R) / R
 
 
 def main(argc, argv):
     
     R1 = float(argv[1]) if argc > 1 else 0.1
-    R2 = float(argv[2]) if argc > 1 else 0.5
+    R2 = float(argv[2]) if argc > 2 else 0.5
     x = np.linspace(-5*max(R1, R2), 5*max(R1, R2), int(5000*max(R1, R2)))
     k1 = kernel1(x, R1)
     k2 = kernel2(x, R2)
@@ -45,14 +45,14 @@ def main(argc, argv):
     axes[2].legend()
     axes[2].grid()
 
-    fig.suptitle("Combination of Gaussian and Exponential Kernels with R1={} and R2={}".format(R1, R2), fontsize=16)
+    #fig.suptitle("Combination of Gaussian and Exponential Kernels with R1={} and R2={}".format(R1, R2), fontsize=16)
     fig.tight_layout()
     
     plt.show()
         
     if argc == 4:
         output_path = Path(argv[3])
-        fig.savefig(output_path, dpi=300)
+        fig.savefig(f"{output_path}", dpi=300)
         print(f"Figure saved to {output_path}")
 
     

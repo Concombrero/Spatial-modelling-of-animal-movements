@@ -12,4 +12,5 @@ $
   )
 $
 
-For the fist simulations, we will consider a case where the population is moving in one dimension. 
+For the fist simulations, we will consider a case where the population is moving in one dimensional space.
+
