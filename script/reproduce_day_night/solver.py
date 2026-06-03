@@ -22,9 +22,12 @@ class DayNightModel1D:
         number_of_population=1,
         day_start=0.0,
         day_end=None,
+        time_input_mode="phase",
+        clock_hours_per_cycle=24.0,
         activity_mode="always",
         activity_start=None,
         activity_end=None,
+        activity_periods=None,
         sight_weight=0.5,
         sight_radius=0.05,
         smell_radius=0.15,
@@ -43,20 +46,19 @@ class DayNightModel1D:
             coefficient_diffusion
         )
         self.cycle_period = float(cycle_period)
-        self.day_start = float(day_start)
-        self.day_end = (
-            0.5 * self.cycle_period if day_end is None else float(day_end)
+        self.time_input_mode = str(time_input_mode)
+        self.clock_hours_per_cycle = float(clock_hours_per_cycle)
+        self._validate_time_scale_inputs()
+        self.day_start, self.day_end = self._resolve_day_interval(day_start, day_end)
+        self.day_duration = self._compute_interval_duration(
+            self.day_start,
+            self.day_end,
         )
         self.activity_mode = str(activity_mode)
-        self._has_explicit_activity_period = (
-            activity_start is not None or activity_end is not None
-        )
-        self.activity_start, self.activity_end = self._resolve_activity_interval(
+        self.activity_intervals = self._resolve_activity_intervals(
+            activity_periods,
             activity_start,
             activity_end,
-        )
-        self._always_active = (
-            not self._has_explicit_activity_period and self.activity_mode == "always"
         )
         self.sight_weight = float(sight_weight)
         self.sight_radius = float(sight_radius)
@@ -64,11 +66,6 @@ class DayNightModel1D:
 
         self.length = self._compute_domain_length()
         self.number_of_steps = self._compute_number_of_steps()
-        self.day_duration = self._compute_interval_duration(
-            self.day_start,
-            self.day_end,
-        )
-        self.activity_duration = self._compute_activity_duration()
 
         self._validate_inputs()
 
@@ -111,22 +108,174 @@ class DayNightModel1D:
     def _compute_number_of_steps(self):
         return int(round(self.total_time / self.dt))
 
-    def _resolve_activity_interval(self, activity_start, activity_end):
+    def _validate_time_scale_inputs(self):
+        if self.time_input_mode not in {"phase", "clock"}:
+            raise ValueError("time_input_mode must be 'phase' or 'clock'.")
+
+        if (
+            not np.isfinite(self.clock_hours_per_cycle)
+            or self.clock_hours_per_cycle <= 0.0
+        ):
+            raise ValueError("clock_hours_per_cycle must be positive.")
+
+    def _resolve_day_interval(self, day_start, day_end):
+        day_start = float(day_start)
+        if day_end is None:
+            default_duration = (
+                0.5 * self.clock_hours_per_cycle
+                if self.time_input_mode == "clock"
+                else 0.5 * self.cycle_period
+            )
+            day_end = day_start + default_duration
+        else:
+            day_end = float(day_end)
+
+        if self.time_input_mode == "phase":
+            self._clock_reference_time = 0.0
+            return day_start, day_end
+
+        self._clock_reference_time = day_start
+        day_duration = self._compute_clock_interval_duration(day_start, day_end)
+        return 0.0, day_duration
+
+    def _compute_clock_interval_duration(self, start, end, allow_full_cycle=False):
+        raw_duration = float(end) - float(start)
+        wrapped_duration = np.mod(raw_duration, self.clock_hours_per_cycle)
+
+        if allow_full_cycle and np.isclose(wrapped_duration, 0.0):
+            cycle_count = raw_duration / self.clock_hours_per_cycle
+            if not np.isclose(cycle_count, 0.0) and np.isclose(
+                cycle_count,
+                round(cycle_count),
+            ):
+                return self.cycle_period
+
+        return self.cycle_period * wrapped_duration / self.clock_hours_per_cycle
+
+    def _convert_clock_time_to_cycle_phase(self, value):
+        return (
+            self.cycle_period
+            * np.mod(
+                float(value) - self._clock_reference_time,
+                self.clock_hours_per_cycle,
+            )
+            / self.clock_hours_per_cycle
+        )
+
+    def _resolve_interval(self, start, end, *, allow_full_cycle=False):
+        if self.time_input_mode == "clock":
+            return (
+                self._convert_clock_time_to_cycle_phase(start),
+                self._compute_clock_interval_duration(
+                    start,
+                    end,
+                    allow_full_cycle=allow_full_cycle,
+                ),
+            )
+
+        return (
+            float(start),
+            self._compute_interval_duration(
+                start,
+                end,
+                allow_full_cycle=allow_full_cycle,
+            ),
+        )
+
+    def _build_uniform_activity_intervals(self, interval):
+        return [[interval] for _ in range(self.number_of_population)]
+
+    def _is_interval_like(self, values):
+        try:
+            start, end = values
+        except (TypeError, ValueError):
+            return False
+
+        return np.isscalar(start) and np.isscalar(end)
+
+    def _coerce_population_activity_periods(self, activity_periods):
+        population_periods = list(activity_periods)
+        if self.number_of_population == 1:
+            if not population_periods:
+                population_periods = [[]]
+            elif all(self._is_interval_like(interval) for interval in population_periods):
+                population_periods = [population_periods]
+
+        if len(population_periods) != self.number_of_population:
+            raise ValueError(
+                "activity_periods must provide one list of intervals per population."
+            )
+
+        schedules = []
+        for population_index, intervals in enumerate(population_periods):
+            try:
+                interval_list = list(intervals)
+            except TypeError as exc:
+                raise ValueError(
+                    "Each entry in activity_periods must be a list of (start, end) pairs."
+                ) from exc
+
+            population_schedule = []
+            for interval in interval_list:
+                if not self._is_interval_like(interval):
+                    raise ValueError(
+                        f"activity_periods[{population_index}] entries must be (start, end) pairs."
+                    )
+
+                start, end = interval
+                interval_start, interval_duration = self._resolve_interval(
+                    start,
+                    end,
+                    allow_full_cycle=True,
+                )
+                if np.isclose(interval_duration, 0.0):
+                    raise ValueError(
+                        "activity_periods must not contain zero-duration intervals."
+                    )
+
+                population_schedule.append((interval_start, interval_duration))
+
+            schedules.append(population_schedule)
+
+        return schedules
+
+    def _resolve_activity_intervals(
+        self,
+        activity_periods,
+        activity_start,
+        activity_end,
+    ):
+        if activity_periods is not None:
+            if activity_start is not None or activity_end is not None:
+                raise ValueError(
+                    "Provide activity_periods or activity_start/activity_end, not both."
+                )
+            return self._coerce_population_activity_periods(activity_periods)
+
         if (activity_start is None) != (activity_end is None):
             raise ValueError(
                 "Provide both activity_start and activity_end, or neither."
             )
 
         if activity_start is not None:
-            return float(activity_start), float(activity_end)
+            interval = self._resolve_interval(
+                activity_start,
+                activity_end,
+                allow_full_cycle=True,
+            )
+            return self._build_uniform_activity_intervals(interval)
 
         if self.activity_mode == "diurnal":
-            return self.day_start, self.day_end
+            return self._build_uniform_activity_intervals(
+                (self.day_start, self.day_duration)
+            )
 
         if self.activity_mode == "nocturnal":
-            return self.day_end, self.day_start
+            return self._build_uniform_activity_intervals(
+                (self.day_end, self.cycle_period - self.day_duration)
+            )
 
-        return self.day_start, self.day_start + self.cycle_period
+        return self._build_uniform_activity_intervals((self.day_start, self.cycle_period))
 
     def _compute_interval_duration(self, start, end, allow_full_cycle=False):
         if not np.isfinite(self.cycle_period) or self.cycle_period <= 0.0:
@@ -145,15 +294,40 @@ class DayNightModel1D:
 
         return wrapped_duration
 
-    def _compute_activity_duration(self):
-        if self._always_active:
-            return self.cycle_period
+    def _validate_day_interval(self):
+        if not np.isfinite(self.day_start) or not np.isfinite(self.day_end):
+            raise ValueError("day_start and day_end must be finite.")
 
-        return self._compute_interval_duration(
-            self.activity_start,
-            self.activity_end,
-            allow_full_cycle=True,
-        )
+        if np.isclose(self.day_duration, 0.0):
+            raise ValueError(
+                "day_start and day_end must define non-zero day and night intervals."
+            )
+
+    def _validate_activity_intervals(self):
+        for population_index, intervals in enumerate(self.activity_intervals):
+            for interval_start, interval_duration in intervals:
+                if not np.isfinite(interval_start) or not np.isfinite(interval_duration):
+                    raise ValueError(
+                        f"activity interval {population_index + 1} must be finite."
+                    )
+
+                if interval_duration < 0.0:
+                    raise ValueError(
+                        f"activity interval {population_index + 1} must be non-negative."
+                    )
+
+                if np.isclose(interval_duration, 0.0):
+                    raise ValueError(
+                        f"activity interval {population_index + 1} must be non-zero."
+                    )
+
+                if (
+                    interval_duration > self.cycle_period
+                    and not np.isclose(interval_duration, self.cycle_period)
+                ):
+                    raise ValueError(
+                        f"activity interval {population_index + 1} exceeds one cycle."
+                    )
 
     def _validate_inputs(self):
         if self.length <= 0.0:
@@ -200,26 +374,14 @@ class DayNightModel1D:
         if not np.isfinite(self.cycle_period) or self.cycle_period <= 0.0:
             raise ValueError("cycle_period must be positive.")
 
-        if not np.isfinite(self.day_start) or not np.isfinite(self.day_end):
-            raise ValueError("day_start and day_end must be finite.")
-
-        if np.isclose(self.day_duration, 0.0):
-            raise ValueError(
-                "day_start and day_end must define non-zero day and night intervals."
-            )
+        self._validate_day_interval()
 
         if self.activity_mode not in {"always", "diurnal", "nocturnal"}:
             raise ValueError(
                 "activity_mode must be 'always', 'diurnal', or 'nocturnal'."
             )
 
-        if not np.isfinite(self.activity_start) or not np.isfinite(self.activity_end):
-            raise ValueError("activity_start and activity_end must be finite.")
-
-        if not self._always_active and np.isclose(self.activity_duration, 0.0):
-            raise ValueError(
-                "activity_start and activity_end must define a non-zero active interval."
-            )
+        self._validate_activity_intervals()
 
         if not 0.0 <= self.sight_weight <= 1.0:
             raise ValueError("sight_weight must lie in the interval [0, 1].")
@@ -457,19 +619,39 @@ class DayNightModel1D:
     def is_daytime(self, time):
         return self._is_within_interval(time, self.day_start, self.day_duration)
 
-    def is_active(self, time):
-        if self._always_active:
-            return True
-        return self._is_within_interval(time, self.activity_start, self.activity_duration)
+    def _is_active_in_intervals(self, time, intervals):
+        return any(
+            self._is_within_interval(time, interval_start, interval_duration)
+            for interval_start, interval_duration in intervals
+        )
+
+    def get_activity_mask(self, time):
+        return np.array(
+            [
+                self._is_active_in_intervals(time, intervals)
+                for intervals in self.activity_intervals
+            ],
+            dtype=bool,
+        )
+
+    def is_active(self, time, population_index=None):
+        activity_mask = self.get_activity_mask(time)
+        if population_index is None:
+            return bool(activity_mask[0]) if self.number_of_population == 1 else bool(np.any(activity_mask))
+
+        if not 0 <= population_index < self.number_of_population:
+            raise IndexError("population_index is out of bounds.")
+
+        return bool(activity_mask[population_index])
 
     def _activity_factor(self, time):
-        return 1.0 if self.is_active(time) else 0.0
+        return self.get_activity_mask(time).astype(float)
 
     def _effective_diffusion(self, time):
         return self.coefficient_diffusion * self._activity_factor(time)
 
     def _effective_attraction(self, time):
-        return self.coefficient_attraction * self._activity_factor(time)
+        return self.coefficient_attraction * self._activity_factor(time)[:, np.newaxis]
 
     def _sight_factor(self, time):
         return 1.0 if self.is_daytime(time) else 0.0
@@ -669,10 +851,13 @@ class DayNightModel1D:
 
     def get_effective_parameters(self, time):
         combined_kernel = self._combined_kernel_values(time)
+        activity_mask = self.get_activity_mask(time)
         return {
             "is_daytime": self.is_daytime(time),
-            "is_active": self.is_active(time),
-            "activity_factor": self._activity_factor(time),
+            "is_active": bool(np.any(activity_mask)),
+            "all_populations_active": bool(np.all(activity_mask)),
+            "active_populations": activity_mask.copy(),
+            "activity_factor": activity_mask.astype(float),
             "coefficient_diffusion": self._effective_diffusion(time).copy(),
             "coefficient_attraction": self._effective_attraction(time).copy(),
             "kernel_mass": self.dx * np.sum(combined_kernel),
@@ -744,13 +929,27 @@ class DayNightModel1D:
     def _day_to_night_switch_times(self):
         return self._periodic_event_times(self.day_start + self.day_duration)
 
-    def _activity_switch_times(self):
-        if not self._has_explicit_activity_period or self.activity_duration >= self.cycle_period:
+    def _night_to_day_switch_times(self):
+        return self._periodic_event_times(self.day_start)
+
+    def _population_activity_switch_times(self, population_index):
+        start_times = []
+        end_times = []
+        for interval_start, interval_duration in self.activity_intervals[population_index]:
+            if interval_duration >= self.cycle_period:
+                continue
+
+            start_times.extend(self._periodic_event_times(interval_start))
+            end_times.extend(
+                self._periodic_event_times(interval_start + interval_duration)
+            )
+
+        if not start_times and not end_times:
             return {"start": [], "end": []}
 
         return {
-            "start": self._periodic_event_times(self.activity_start),
-            "end": self._periodic_event_times(self.activity_start + self.activity_duration),
+            "start": np.unique(np.round(start_times, decimals=12)).tolist(),
+            "end": np.unique(np.round(end_times, decimals=12)).tolist(),
         }
 
     def _plot_population_profiles(self, axis, state, title):
@@ -845,7 +1044,18 @@ class DayNightModel1D:
 
         return figure, animation
 
-    def _add_transition_markers(self, axis, show_legend):
+    def _add_transition_markers(self, axis, population_index, show_legend):
+        for switch_index, switch_time in enumerate(self._night_to_day_switch_times()):
+            label = "night to day" if show_legend and switch_index == 0 else None
+            axis.axhline(
+                switch_time,
+                color="black",
+                linestyle="-",
+                linewidth=1.5,
+                alpha=0.9,
+                label=label,
+            )
+
         for switch_index, switch_time in enumerate(self._day_to_night_switch_times()):
             label = "day to night" if show_legend and switch_index == 0 else None
             axis.axhline(
@@ -857,7 +1067,7 @@ class DayNightModel1D:
                 label=label,
             )
 
-        activity_switches = self._activity_switch_times()
+        activity_switches = self._population_activity_switch_times(population_index)
         for switch_index, switch_time in enumerate(activity_switches["start"]):
             label = "activity starts" if show_legend and switch_index == 0 else None
             axis.axhline(
@@ -927,7 +1137,11 @@ class DayNightModel1D:
             axis.set_xlabel("x")
             if population_index == 0:
                 axis.set_ylabel("t")
-            self._add_transition_markers(axis, show_legend=population_index == 0)
+            self._add_transition_markers(
+                axis,
+                population_index,
+                show_legend=population_index == 0,
+            )
             colorbar = figure.colorbar(image, ax=axis)
             colorbar.set_label("density")
 

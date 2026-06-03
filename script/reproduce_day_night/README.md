@@ -52,10 +52,13 @@ model = DayNightModel1D(
     ]),
     coefficient_diffusion=np.array([0.05, 0.03]),
     cycle_period=1.0,
-    day_start=0.0,
-    day_end=0.5,
-    activity_start=0.05,
-    activity_end=0.35,
+    time_input_mode="clock",
+    day_start=8.0,
+    day_end=22.0,
+    activity_periods=[
+        [(0.0, 8.0)],
+        [(1.0, 6.0), (13.0, 22.0)],
+    ],
     sight_weight=0.4,
     sight_radius=0.12,
     smell_radius=0.18,
@@ -71,9 +74,10 @@ parameters = model.get_effective_parameters(0.2)
 - `number_of_population`: number of populations.
 - `coefficient_attraction`: interaction matrix of shape `(m, m)`.
 - `coefficient_diffusion`: diffusion vector of length `m`.
-- `cycle_period`: length of one day-night cycle.
-- `day_start`, `day_end`: define the daytime interval inside one cycle.
-- `activity_start`, `activity_end`: define when populations are active inside one cycle.
+- `cycle_period`: simulation duration of one full 24-hour cycle.
+- `time_input_mode="clock"`: interpret `day_start`, `day_end`, and `activity_periods` as clock times in hours.
+- `day_start`, `day_end`: daytime clock values. With `cycle_period=1.0`, `day_start=8`, `day_end=22` gives day on `[0, 14/24]`.
+- `activity_periods`: one list of active clock intervals per population, for example `[[ (0, 8) ], [ (1, 6), (13, 22) ]]`.
 - `initial_condition(x)`: should return one density per population.
 
 For several populations, `initial_condition(x)` should return an array of shape `(number_of_points, number_of_population)`.
@@ -82,11 +86,12 @@ For several populations, `initial_condition(x)` should return an array of shape 
 
 - `solve()`: runs the simulation.
 - `get_mass()`: returns the mass of each population over time.
-- `get_effective_parameters(t)`: returns the active diffusion and attraction at time `t`.
+- `get_effective_parameters(t)`: returns the active diffusion, attraction, and per-population activity mask at time `t`.
 - `plot_solution_heatmaps(...)`: plots one heatmap per population.
 - `create_solution_gif(...)`: creates an animation of the densities.
 
 ## Notes
 
-- During inactive periods, diffusion and attraction are both zero.
+- In `time_input_mode="clock"`, one cycle still repeats forever, but the solver converts clock times into the matching interval inside each cycle.
+- During inactive periods, the diffusion of an inactive population is zero and that population's attraction row is set to zero.
 - The solver supports several cycles by setting `total_time` larger than `cycle_period`.
