@@ -1,0 +1,23 @@
+\begin{thebibliography}{3}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Campbell and Tobler(1984)]{campbell1984animal}
+Scott~S Campbell and Irene Tobler.
+\newblock Animal sleep: a review of sleep duration across phylogeny.
+\newblock \emph{Neuroscience \& Biobehavioral Reviews}, 8\penalty0 (3):\penalty0 269--300, 1984.
+
+\bibitem[Hut et~al.(2012)Hut, Kronfeld-Schor, van~der Vinne, and De~la Iglesia]{hut2012search}
+Roelof~A Hut, Noga Kronfeld-Schor, Vincent van~der Vinne, and Horacio De~la Iglesia.
+\newblock In search of a temporal niche: environmental factors.
+\newblock \emph{Progress in brain research}, 199:\penalty0 281--304, 2012.
+
+\bibitem[Wang and Salmaniw(2023)]{wang2023open}
+Hao Wang and Yurij Salmaniw.
+\newblock Open problems in pde models for knowledge-based animal movement via nonlocal perception and cognitive mapping.
+\newblock \emph{Journal of Mathematical Biology}, 86\penalty0 (5):\penalty0 71, 2023.
+
+\end{thebibliography}

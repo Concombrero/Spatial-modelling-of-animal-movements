@@ -108,6 +108,19 @@ class DayNightModel1D:
     def _compute_number_of_steps(self):
         return int(round(self.total_time / self.dt))
 
+    def _compute_wrapped_duration(self, raw_duration, period, *, allow_full_cycle=False):
+        wrapped_duration = np.mod(float(raw_duration), period)
+
+        if allow_full_cycle and np.isclose(wrapped_duration, 0.0):
+            cycle_count = float(raw_duration) / period
+            if not np.isclose(cycle_count, 0.0) and np.isclose(
+                cycle_count,
+                round(cycle_count),
+            ):
+                return period
+
+        return wrapped_duration
+
     def _validate_time_scale_inputs(self):
         if self.time_input_mode not in {"phase", "clock"}:
             raise ValueError("time_input_mode must be 'phase' or 'clock'.")
@@ -139,17 +152,11 @@ class DayNightModel1D:
         return 0.0, day_duration
 
     def _compute_clock_interval_duration(self, start, end, allow_full_cycle=False):
-        raw_duration = float(end) - float(start)
-        wrapped_duration = np.mod(raw_duration, self.clock_hours_per_cycle)
-
-        if allow_full_cycle and np.isclose(wrapped_duration, 0.0):
-            cycle_count = raw_duration / self.clock_hours_per_cycle
-            if not np.isclose(cycle_count, 0.0) and np.isclose(
-                cycle_count,
-                round(cycle_count),
-            ):
-                return self.cycle_period
-
+        wrapped_duration = self._compute_wrapped_duration(
+            float(end) - float(start),
+            self.clock_hours_per_cycle,
+            allow_full_cycle=allow_full_cycle,
+        )
         return self.cycle_period * wrapped_duration / self.clock_hours_per_cycle
 
     def _convert_clock_time_to_cycle_phase(self, value):
@@ -281,18 +288,11 @@ class DayNightModel1D:
         if not np.isfinite(self.cycle_period) or self.cycle_period <= 0.0:
             return np.nan
 
-        raw_duration = float(end) - float(start)
-        wrapped_duration = np.mod(raw_duration, self.cycle_period)
-
-        if allow_full_cycle and np.isclose(wrapped_duration, 0.0):
-            cycle_count = raw_duration / self.cycle_period
-            if not np.isclose(cycle_count, 0.0) and np.isclose(
-                cycle_count,
-                round(cycle_count),
-            ):
-                return self.cycle_period
-
-        return wrapped_duration
+        return self._compute_wrapped_duration(
+            float(end) - float(start),
+            self.cycle_period,
+            allow_full_cycle=allow_full_cycle,
+        )
 
     def _validate_day_interval(self):
         if not np.isfinite(self.day_start) or not np.isfinite(self.day_end):
@@ -472,7 +472,11 @@ class DayNightModel1D:
 
     def _compute_positivity_dt_limit(self, population, time):
         rhs = self._compute_rhs(time, population)
-        unstable_mask = (rhs < 0.0) & (population > 0.0)
+        density_floor = np.maximum(
+            1.0e-12,
+            1.0e-5 * np.max(population, axis=0, keepdims=True),
+        )
+        unstable_mask = (rhs < 0.0) & (population > density_floor)
         if not np.any(unstable_mask):
             return np.inf
 
@@ -637,7 +641,9 @@ class DayNightModel1D:
     def is_active(self, time, population_index=None):
         activity_mask = self.get_activity_mask(time)
         if population_index is None:
-            return bool(activity_mask[0]) if self.number_of_population == 1 else bool(np.any(activity_mask))
+            if self.number_of_population == 1:
+                return bool(activity_mask[0])
+            return bool(np.any(activity_mask))
 
         if not 0 <= population_index < self.number_of_population:
             raise IndexError("population_index is out of bounds.")
@@ -656,17 +662,24 @@ class DayNightModel1D:
     def _sight_factor(self, time):
         return 1.0 if self.is_daytime(time) else 0.0
 
+    def _blend_kernel_parts(self, smell_values, sight_values, time):
+        smell_part = (1.0 - self.sight_weight) * smell_values
+        sight_part = self.sight_weight * self._sight_factor(time) * sight_values
+        return smell_part, sight_part
+
     def _combined_kernel_values(self, time):
-        smell_part = (1.0 - self.sight_weight) * self.smell_kernel_values
-        sight_part = (
-            self.sight_weight * self._sight_factor(time) * self.sight_kernel_values
+        smell_part, sight_part = self._blend_kernel_parts(
+            self.smell_kernel_values,
+            self.sight_kernel_values,
+            time,
         )
         return smell_part + sight_part
 
     def _combined_kernel_fourier(self, time):
-        smell_part = (1.0 - self.sight_weight) * self.smell_kernel_fourier
-        sight_part = (
-            self.sight_weight * self._sight_factor(time) * self.sight_kernel_fourier
+        smell_part, sight_part = self._blend_kernel_parts(
+            self.smell_kernel_fourier,
+            self.sight_kernel_fourier,
+            time,
         )
         return smell_part + sight_part
 
@@ -725,7 +738,10 @@ class DayNightModel1D:
         if not np.all(np.isfinite(candidate_population)):
             return None
 
-        negative_tolerance = 1.0e-10
+        negative_tolerance = max(
+            1.0e-10,
+            1.0e-6 * float(np.max(np.abs(candidate_population))),
+        )
         if float(np.min(candidate_population)) < -negative_tolerance:
             return None
 
@@ -837,9 +853,10 @@ class DayNightModel1D:
         return self.dx * np.sum(self.U, axis=1)
 
     def get_kernel_components(self, time):
-        smell_part = (1.0 - self.sight_weight) * self.smell_kernel_values
-        sight_part = (
-            self.sight_weight * self._sight_factor(time) * self.sight_kernel_values
+        smell_part, sight_part = self._blend_kernel_parts(
+            self.smell_kernel_values,
+            self.sight_kernel_values,
+            time,
         )
         combined = smell_part + sight_part
         return {

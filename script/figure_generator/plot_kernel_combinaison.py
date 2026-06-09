@@ -18,24 +18,22 @@ def kernel2(x, R):
 
 def main(argc, argv):
     
-    R1 = float(argv[1]) if argc > 1 else 0.1
-    R2 = float(argv[2]) if argc > 2 else 0.5
+    R1 = float(argv[1]) if argc > 1 else 0.2
+    R2 = float(argv[2]) if argc > 2 else 0.1
     x = np.linspace(-5*max(R1, R2), 5*max(R1, R2), int(5000*max(R1, R2)))
     k1 = kernel1(x, R1)
     k2 = kernel2(x, R2)
     fig, axes = plt.subplots(1, 3, figsize=(24, 6), sharex=True, sharey=True)
 
-    axes[0].plot(x, k1, label='Gaussian Kernel')
-    axes[0].set_title('Gaussian Kernel')
+    axes[0].plot(x, k1, label='Gaussian Kernel', color='blue')
+    axes[0].set_title('Gaussian Kernel (Smell-based Perception)')
     axes[0].set_xlabel('x')
     axes[0].set_ylabel('Kernel Value')
-    axes[0].legend()
     axes[0].grid()
 
-    axes[1].plot(x, k2, label='Exponential Kernel')
-    axes[1].set_title('Exponential Kernel')
+    axes[1].plot(x, k2, label='Exponential Kernel', color='green')
+    axes[1].set_title('Exponential Kernel (Sight-based Perception)')
     axes[1].set_xlabel('x')
-    axes[1].legend()
     axes[1].grid()
     for w in [0.25, 0.5, 0.75]:
         k_comb = w * k1 + (1 - w) * k2
