@@ -1061,51 +1061,60 @@ class DayNightModel1D:
 
         return figure, animation
 
-    def _add_transition_markers(self, axis, population_index, show_legend):
-        for switch_index, switch_time in enumerate(self._night_to_day_switch_times()):
-            label = "night to day" if show_legend and switch_index == 0 else None
-            axis.axhline(
-                switch_time,
-                color="black",
-                linestyle="-",
-                linewidth=1.5,
-                alpha=0.9,
-                label=label,
-            )
+    def _add_transition_markers(
+        self,
+        axis,
+        population_index,
+        show_legend,
+        show_day_night_cycle=True,
+        show_activity_period=True,
+    ):
+        if show_day_night_cycle:
+            for switch_index, switch_time in enumerate(self._night_to_day_switch_times()):
+                label = "night to day" if show_legend and switch_index == 0 else None
+                axis.axhline(
+                    switch_time,
+                    color="blue",
+                    linestyle="-",
+                    linewidth=1.5,
+                    alpha=0.9,
+                    label=label,
+                )
 
-        for switch_index, switch_time in enumerate(self._day_to_night_switch_times()):
-            label = "day to night" if show_legend and switch_index == 0 else None
-            axis.axhline(
-                switch_time,
-                color="black",
-                linestyle="--",
-                linewidth=1.5,
-                alpha=0.9,
-                label=label,
-            )
+            for switch_index, switch_time in enumerate(self._day_to_night_switch_times()):
+                label = "day to night" if show_legend and switch_index == 0 else None
+                axis.axhline(
+                    switch_time,
+                    color="blue",
+                    linestyle="--",
+                    linewidth=1.5,
+                    alpha=0.9,
+                    label=label,
+                )
 
-        activity_switches = self._population_activity_switch_times(population_index)
-        for switch_index, switch_time in enumerate(activity_switches["start"]):
-            label = "activity starts" if show_legend and switch_index == 0 else None
-            axis.axhline(
-                switch_time,
-                color="white",
-                linestyle=":",
-                linewidth=1.2,
-                alpha=0.9,
-                label=label,
-            )
+        if show_activity_period:
+            activity_switches = self._population_activity_switch_times(population_index)
+            for switch_index, switch_time in enumerate(activity_switches["start"]):
+                label = "activity starts" if show_legend and switch_index == 0 else None
+                axis.axhline(
+                    switch_time,
+                    color="orange",
+                    linestyle="-",
+                    linewidth=1.2,
+                    alpha=0.9,
+                    label=label,
+                )
 
-        for switch_index, switch_time in enumerate(activity_switches["end"]):
-            label = "activity ends" if show_legend and switch_index == 0 else None
-            axis.axhline(
-                switch_time,
-                color="white",
-                linestyle="-.",
-                linewidth=1.2,
-                alpha=0.9,
-                label=label,
-            )
+            for switch_index, switch_time in enumerate(activity_switches["end"]):
+                label = "activity ends" if show_legend and switch_index == 0 else None
+                axis.axhline(
+                    switch_time,
+                    color="orange",
+                    linestyle="--",
+                    linewidth=1.2,
+                    alpha=0.9,
+                    label=label,
+                )
 
         if show_legend:
             handles, labels = axis.get_legend_handles_labels()
@@ -1116,6 +1125,8 @@ class DayNightModel1D:
         self,
         cmap="hot_r",
         share_color_scale=True,
+        show_day_night_cycle=True,
+        show_activity_period=True,
         save=False,
         save_path=None,
     ):
@@ -1158,6 +1169,8 @@ class DayNightModel1D:
                 axis,
                 population_index,
                 show_legend=population_index == 0,
+                show_day_night_cycle=show_day_night_cycle,
+                show_activity_period=show_activity_period,
             )
             colorbar = figure.colorbar(image, ax=axis)
             colorbar.set_label("density")
@@ -1174,12 +1187,16 @@ class DayNightModel1D:
         self,
         cmap="hot_r",
         share_color_scale=True,
+        show_day_night_cycle=True,
+        show_activity_period=True,
         save=False,
         save_path=None,
     ):
         figure, axes = self.plot_solution_heatmaps(
             cmap=cmap,
             share_color_scale=share_color_scale,
+            show_day_night_cycle=show_day_night_cycle,
+            show_activity_period=show_activity_period,
             save=save,
             save_path=save_path,
         )

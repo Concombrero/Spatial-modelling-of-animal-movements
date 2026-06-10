@@ -219,6 +219,7 @@ For the displacement activity, we can consider that the population is only movin
 For the reaction activity we will consider that the population can only grow during the active periods. This means that we fix the reproduction of our reaction model to be zero during the inactive periods. For example, if we consider a logistic growth term of the form $f(u,t) = r(t)u(1-u)$, we can define $r(t) = r_0 \mathbf{1}_{\{t \in \mathcal{T}_{active}\}}$, where $r_0$ is a positive constant representing the intrinsic growth rate during the active periods. However, we will not use reaction terms in our first simulations where we want to study only the evolution of one population under the influence of the day-night cycle, and we will focus on the impact of the circadian activity on the movement of the population.
 
 
+
 \section{Numerical simulations}
 \subsection{Measuring spread}
 
@@ -268,7 +269,7 @@ We note a population based on smell is not affected by the day-night cycle, and 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{figures/sight_weight_sunset_spread.png}
-    \caption{Spread indicator $\Omega$ as a function of sight weight $w$ for different values of $t_{\mathrm{sunset}}$. The $x$-axis represents the sight weight $w$ and the $y$-axis represents the normalized spread indicator $\Omega$.}
+    \caption{Spread indicator $\Psi$ as a function of sight weight $w$ for different values of $t_{\mathrm{sunset}}$. The $x$-axis represents the sight weight $w$ and the $y$-axis represents the normalized spread indicator $\Psi$.}
     \label{fig:spread-constant-activity}
 \end{figure}
 \color{black}
