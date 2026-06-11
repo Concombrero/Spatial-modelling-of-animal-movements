@@ -205,11 +205,13 @@ With this mathematical framework in place, we can classify populations based on 
     \label{tab:circadian_patterns}
 \end{table}
 
+Even if $t_{\mathrm{sunset}}$ depends on the geographical location and time of year, we can considerate his average value over the year and the earth as a whole to be around 0.5. In this case, if we divide the interval $[0,1)$ into four equal parts, we can systematically define a set of standardized circadian activity cycles. As illustrated in the figure, while Diurnal and Nocturnal behaviors occupy two consecutive quarters corresponding respectively to the day and the night, this subdivision also allows us to easily represent fragmented schedules. By combining different quarters, we can construct Polyphasic profiles (alternating active and inactive phases every quarter of a day) and Matutinal profiles (grouping activity around specific transitional periods). These idealized models provide a clear mathematical framework to evaluate how various temporal strategies interact with daylight-dependent perception.
+
 \begin{figure}[H]
     \hspace*{20px}
     \includegraphics[width=0.8\linewidth]{figures/circadian_activity_patterns.png}
     \caption{Illustration of the circadian activity patterns defined in Table~\ref{tab:circadian_patterns}.}
-    \label{fig:placeholder}
+    \label{fig-circadian-activity}
 \end{figure}
 
 Now that we have defined the circadian activity cycle, it's important to clarify how it interacts with the population dynamics model. There is two type of activity the displacement activity, which corresponds to the movement of the population, and the reaction activity, which corresponds to the growth or decay of the population. We assume that both of these activities are governed by the same circadian activity cycle, meaning that the population is only moving and growing during the active periods defined by $\mathcal{T}_{active}$. This means that during the inactive periods, the population is not moving and not growing, which can be interpreted as a resting phase. This assumption allows us to capture the impact of the circadian activity on both the movement and growth of the population in a consistent way. 
@@ -277,7 +279,45 @@ We note a population based on smell is not affected by the day-night cycle, and 
 
 \subsection{Impact of sleep pattern}
 
-The second simulation we consider is the impact of the sleep pattern on the population distribution. In particular, we want to study how the alignment of the active periods with the day-night cycle, in particular with the change in perception during the day and night, impacts the population movement. For example, we can argument that a population with a great reliance on sight has to be mostly active during the day in order to have a greater perception of the environment, and therefore a more concentrated population distribution. On the other hand, a population with a great reliance on smell can be active during the day or during the night without having a significant impact on the population distribution.
+To understand he impact of the daylight cycle on the spacial dynamics of the population we will firstly consider the behavior of the diurnal and nocturnal populations in an equatorial habitat where the day-night cycle is perfectly balanced, that is $t_{\mathrm{sunset}}=0.5$. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/spread_diurnal_vs_nocturnal.png}
+    \caption{Spread indicator $\Psi$ as a function of sight weight $w$ for diurnal and nocturnal populations.}
+    \label{fig:spread-diurnal-vs-nocturnal}
+\end{figure}
+
+For the diurnal population, the active periods coincide with the daylight hours ($\mathcal{T}_{active} = \mathcal{T}_{day}$). Therefore, the sight-based perception kernel is entirely active during the population's active periods, allowing individuals to effectively perceive their environment and aggregate. As a result, we expect the diurnal population to exhibit a high degree of aggregation, particularly as the reliance on sight ($w$) increases. This is reflected in the spread indicator $\Psi$, which decreases as $w$ increases, indicating a more concentrated population distribution.
+
+On the other hand, for the nocturnal population, the active periods coincide with the nighttime hours ($\mathcal{T}_{active} = \mathcal{T}_{night}$). During these periods, the sight-based perception kernel is inactive (zero), meaning that individuals cannot rely on sight to perceive their environment. Instead, they must rely entirely on the smell-based perception kernel, which remains constant regardless of the time of day. As a result, we expect the nocturnal population to exhibit a more spread out distribution compared to the diurnal population, particularly as the reliance on sight ($w$) increases. This is reflected in the spread indicator $\Psi$, which remains relatively high and does not decrease significantly as $w$ increases, indicating a more dispersed population distribution.
+
+\vspace{10px}
+We extend our analysis to fragmented activity patterns, namely polyphasic and matutinal behaviors, illustrated across four configurations: Polyphasic 1 \& 2, Matutinal 1 \& 2. The following Figure ~\ref{fig:polyphasic-matutinal-activity-cycles} visually represents these configurations, showing the temporal distribution of active and inactive periods within a day for each simulated population for different values of $t_{\mathrm{sunset}}$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/polyphasic_matutinal_activity_cycles.png}
+    \caption{Visualization of the circadian activity patterns for the polyphasic and matutinal configurations.}
+    \label{fig:polyphasic-matutinal-activity-cycles}
+\end{figure}
+
+We remark that some simulations has small active periods during the day or during the night, however each one fits the definition given for it. To understand the ecological consequences of these temporal alignments, we investigate how the interplay between fragmented schedules and varying daylight durations impacts the spatial aggregation of the population. By altering the proportion of daylight ($t_{\mathrm{sunset}} \in \{0.3,0.5,0.7\}$), we can evaluate the robustness of these strategies under shifting environmental conditions. To quantify this effect, we compute the spread indicator $\Psi$ across the full spectrum of sensory reliance $w$.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/spread_polyphasic_matutinal.png}
+    \caption{Spread indicator $\Psi$ as a function of sight weight $w$ for polyphasic and matutinal populations.}
+    \label{fig:spread-polyphasic-matutinal}
+\end{figure}
+
+Since sunrise is fixed at $t_{\mathrm{sunrise}}$ = 0, populations whose first block of activity begins simultaneously with the daily cycle (Polyphasic 1 and Matutinal 1) systematically ensure a period of overlap with the diurnal phase $\mathcal{T}_{\mathrm{day}}$. Even during short days ($t_{\mathrm{sunset}}$ = 0.3), the visual kernel $K_{\mathrm{sight}}$ is sufficiently engaged during movement to allow aggregation. The indicator $\Psi$ remains at very low values across all studied daylight durations. These activity patterns thus provide the population with excellent spatial resilience against seasonal or latitudinal variations in light.
+
+Conversely, shifted profiles (Polyphasic 2 and Matutinal 2), which only initiate their motor phase at $t$ = 0.25, are extremely sensitive to daylight duration. During long days ($t_{\mathrm{sunset}}$ = 0.7), these populations have sufficient daylight hours for vision to operate effectively, leading to strong aggregation ($\Psi$ approaches 0). However, when days shorten ($t_{\mathrm{sunset}}$ = 0.3), the majority of their activity phase shifts into darkness. For species highly dependent on vision ($w \rightarrow 1$), this translates into severe sensory deprivation. Their dispersion trajectories then critically mirror those of strictly nocturnal species, resulting in major population spread.
+
+
+These results highlight that a temporal fragmentation of activity only guarantees the spatial cohesion of a visual species if at least one of the movement phases is firmly anchored within the daylight window. Otherwise, only a preponderance of olfaction ($w$ close to 0) can compensate for the lack of visual information and maintain population clustering independently of fluctuations in $\mathcal{T}_{\mathrm{day}}$
 
 
 \section{Intraspecific interaction}

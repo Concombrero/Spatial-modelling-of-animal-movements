@@ -229,7 +229,7 @@ def save_spread_plot(omega_by_regime, sight_weights, lighting_regimes, output_pa
         axis.set_xlabel("w")
         axis.grid(True, alpha=0.3)
 
-    axes[0].set_ylabel(r"$\Omega$")
+    axes[0].set_ylabel(r"$\Psi$")
     output_path.parent.mkdir(parents=True, exist_ok=True)
     figure.savefig(output_path, bbox_inches="tight")
     plt.close(figure)
