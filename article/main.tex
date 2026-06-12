@@ -265,17 +265,16 @@ where $w\in[0,1]$ is the reliance of the population on sight and $1-w$ is the re
     \label{fig:heatmaps-constant-activity}
 \end{figure}
 
-We note a population based on smell is not affected by the day-night cycle, and therefore the population distribution is the same for all values of $t$. On the other hand, a population based on sight is affected by the day-night cycle, and therefore the population distribution is more concentrated during the day and more spread out during the night. We also note that as $t_{\mathrm{sunset}}$ increases the population become more concentrated because the population has an active perception during a larger proportion of the day. 
+We note a population based on smell is not affected by the day-night cycle, and therefore the population distribution is the same for all values of $t$. On the other hand, a population based on sight is affected by the day-night cycle, and therefore the population distribution is more concentrated during the day and more spread out during the night. We also note that as $t_{\mathrm{sunset}}$ increases the population become more concentrated because the population has an active perception during a larger proportion of the day. The Figure ~\ref{fig:spread-constant-activity} quantifies this observation by showing the spread indicator $\Psi$ as a function of the sight weight $w$ for different values of $t_{\mathrm{sunset}}$. We observe that once night falls to a certain extent, overreliance on sight perception will cause the population to disperse.
 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{figures/sight_weight_sunset_spread.png}
-    \caption{Spread indicator $\Psi$ as a function of sight weight $w$ for different values of $t_{\mathrm{sunset}}$. The $x$-axis represents the sight weight $w$ and the $y$-axis represents the normalized spread indicator $\Psi$.}
+    \caption{Spread indicator $\Psi$ as a function of sight weight $w$ for different values of $t_{\mathrm{sunset}}$.}
     \label{fig:spread-constant-activity}
 \end{figure}
 \color{black}
-
 
 \subsection{Impact of sleep pattern}
 
@@ -314,11 +313,12 @@ We remark that some simulations has small active periods during the day or durin
 
 Since sunrise is fixed at $t_{\mathrm{sunrise}}$ = 0, populations whose first block of activity begins simultaneously with the daily cycle (Polyphasic 1 and Matutinal 1) systematically ensure a period of overlap with the diurnal phase $\mathcal{T}_{\mathrm{day}}$. Even during short days ($t_{\mathrm{sunset}}$ = 0.3), the visual kernel $K_{\mathrm{sight}}$ is sufficiently engaged during movement to allow aggregation. The indicator $\Psi$ remains at very low values across all studied daylight durations. These activity patterns thus provide the population with excellent spatial resilience against seasonal or latitudinal variations in light.
 
-Conversely, shifted profiles (Polyphasic 2 and Matutinal 2), which only initiate their motor phase at $t$ = 0.25, are extremely sensitive to daylight duration. During long days ($t_{\mathrm{sunset}}$ = 0.7), these populations have sufficient daylight hours for vision to operate effectively, leading to strong aggregation ($\Psi$ approaches 0). However, when days shorten ($t_{\mathrm{sunset}}$ = 0.3), the majority of their activity phase shifts into darkness. For species highly dependent on vision ($w \rightarrow 1$), this translates into severe sensory deprivation. Their dispersion trajectories then critically mirror those of strictly nocturnal species, resulting in major population spread.
+Conversely, shifted profiles (Polyphasic 2 and Matutinal 2), which only initiate their motor phase at $t$ = 0.25, are extremely sensitive to daylight duration. During long days ($t_{\mathrm{sunset}}$ = 0.7), these populations have sufficient daylight hours for vision to operate effectively, leading to strong aggregation ($\Psi$ approaches 0). However, when days shorten ($t_{\mathrm{sunset}}$ = 0.3), the majority of their activity phase shifts into darkness. For species highly dependent on vision ($w \rightarrow 1$), this translates into severe sensory deprivation. Their dispersion trajectories then critically mirror those of strictly nocturnal species, resulting in major population spread. These results highlight that a temporal fragmentation of activity only guarantees the spatial cohesion of a visual species if at least one of the movement phases is firmly anchored within the daylight window. Otherwise, only a preponderance of olfaction ($w$ close to 0) can compensate for the lack of visual information and maintain population clustering independently of fluctuations in $\mathcal{T}_{\mathrm{day}}$
 
 
-These results highlight that a temporal fragmentation of activity only guarantees the spatial cohesion of a visual species if at least one of the movement phases is firmly anchored within the daylight window. Otherwise, only a preponderance of olfaction ($w$ close to 0) can compensate for the lack of visual information and maintain population clustering independently of fluctuations in $\mathcal{T}_{\mathrm{day}}$
+\vspace{10px}
 
+Thus we conclude that the alignment of active periods with daylight is a crucial factor in determining the spatial dynamics of a population, particularly for species that rely heavily on vision. Fragmented activity patterns can provide resilience against changes in daylight duration, but only if they ensure sufficient overlap with the diurnal phase. We also note that for populations based purely on vision, it’s better to do nothing than to act without being aware of your surroundings. As a result, the circadian rhythm does not always act as a constraint on individuals but can also be a strategy to optimize the use of sensory information and therefore the spatial dynamics of the population. In another way, we could incorporate a concept of energy into our model, favoring populations that conserve energy through their circadian cycle, and therefore giving an advantage to populations with a more fragmented activity pattern. This would allow us to study the trade-off between energy conservation and spatial aggregation, and how this trade-off is affected by the day-night cycle.
 
 \section{Intraspecific interaction}
 
