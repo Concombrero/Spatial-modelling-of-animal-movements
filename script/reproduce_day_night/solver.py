@@ -31,6 +31,7 @@ class DayNightModel1D:
         sight_weight=0.5,
         sight_radius=0.05,
         smell_radius=0.15,
+        reaction_term=None,
     ):
         self.a_border = float(a_border)
         self.b_border = float(b_border)
@@ -60,9 +61,13 @@ class DayNightModel1D:
             activity_start,
             activity_end,
         )
-        self.sight_weight = float(sight_weight)
+        self.sight_weight = self._coerce_population_parameter(
+            sight_weight,
+            argument_name="sight_weight",
+        )
         self.sight_radius = float(sight_radius)
         self.smell_radius = float(smell_radius)
+        self.reaction_term = reaction_term
 
         self.length = self._compute_domain_length()
         self.number_of_steps = self._compute_number_of_steps()
@@ -101,6 +106,19 @@ class DayNightModel1D:
         if self.number_of_population == 1 and array.shape == ():
             return array.reshape(1)
         return array
+
+    def _coerce_population_parameter(self, values, *, argument_name):
+        array = np.asarray(values, dtype=float)
+        if array.shape == ():
+            return np.full(self.number_of_population, float(array), dtype=float)
+
+        flattened = np.ravel(array)
+        if flattened.shape == (self.number_of_population,):
+            return flattened.astype(float, copy=False)
+
+        raise ValueError(
+            f"{argument_name} must be a scalar or have length number_of_population."
+        )
 
     def _compute_domain_length(self):
         return self.b_border - self.a_border
@@ -383,14 +401,22 @@ class DayNightModel1D:
 
         self._validate_activity_intervals()
 
-        if not 0.0 <= self.sight_weight <= 1.0:
-            raise ValueError("sight_weight must lie in the interval [0, 1].")
+        if not np.all(np.isfinite(self.sight_weight)):
+            raise ValueError("sight_weight must be finite.")
+
+        if np.any((self.sight_weight < 0.0) | (self.sight_weight > 1.0)):
+            raise ValueError(
+                "Each sight_weight must lie in the interval [0, 1]."
+            )
 
         if not np.isfinite(self.sight_radius) or self.sight_radius <= 0.0:
             raise ValueError("sight_radius must be positive.")
 
         if not np.isfinite(self.smell_radius) or self.smell_radius <= 0.0:
             raise ValueError("smell_radius must be positive.")
+
+        if self.reaction_term is not None and not callable(self.reaction_term):
+            raise ValueError("reaction_term must be callable or None.")
 
     def _compute_dx(self):
         return self.length / self.number_of_points
@@ -458,11 +484,19 @@ class DayNightModel1D:
         if np.allclose(self._effective_attraction(time), 0.0):
             return np.inf
 
-        smoothed_curvature = self._compute_smoothed_density_second_derivative(
-            population,
-            time,
-        )
-        compression_rate = self._apply_interaction_matrix(smoothed_curvature, time)
+        compression_rate = np.zeros_like(population)
+        for population_index in range(self.number_of_population):
+            smoothed_curvature = self._compute_smoothed_density_second_derivative(
+                population,
+                time,
+                population_index=population_index,
+            )
+            compression_rate[:, population_index] = self._apply_interaction_matrix(
+                smoothed_curvature,
+                time,
+                population_index=population_index,
+            )
+
         max_compression_rate = float(np.max(np.abs(compression_rate)))
         if max_compression_rate <= 0.0 or not np.isfinite(max_compression_rate):
             return np.inf
@@ -600,6 +634,11 @@ class DayNightModel1D:
     def _ifft_matrix(self, values):
         return np.fft.ifft(values, axis=0).real
 
+    def _integrate_trapezoid(self, values, time_grid):
+        if hasattr(np, "trapezoid"):
+            return np.trapezoid(values, x=time_grid)
+        return np.trapz(values, x=time_grid)
+
     def _first_derivative_multiplier(self):
         return 1j * self.wavenumbers
 
@@ -662,52 +701,120 @@ class DayNightModel1D:
     def _sight_factor(self, time):
         return 1.0 if self.is_daytime(time) else 0.0
 
-    def _blend_kernel_parts(self, smell_values, sight_values, time):
-        smell_part = (1.0 - self.sight_weight) * smell_values
-        sight_part = self.sight_weight * self._sight_factor(time) * sight_values
+    def _blend_kernel_parts(
+        self,
+        smell_values,
+        sight_values,
+        time,
+        population_index=None,
+    ):
+        sight_factor = self._sight_factor(time)
+
+        if population_index is not None:
+            sight_weight = float(self.sight_weight[population_index])
+            smell_part = (1.0 - sight_weight) * smell_values
+            sight_part = sight_weight * sight_factor * sight_values
+            return smell_part, sight_part
+
+        if self.number_of_population == 1:
+            sight_weight = float(self.sight_weight[0])
+            smell_part = (1.0 - sight_weight) * smell_values
+            sight_part = sight_weight * sight_factor * sight_values
+            return smell_part, sight_part
+
+        weight_vector = self.sight_weight[np.newaxis, :]
+        smell_part = smell_values[:, np.newaxis] * (1.0 - weight_vector)
+        sight_part = sight_values[:, np.newaxis] * (sight_factor * weight_vector)
         return smell_part, sight_part
 
-    def _combined_kernel_values(self, time):
+    def _combined_kernel_values(self, time, population_index=None):
         smell_part, sight_part = self._blend_kernel_parts(
             self.smell_kernel_values,
             self.sight_kernel_values,
             time,
+            population_index=population_index,
         )
         return smell_part + sight_part
 
-    def _combined_kernel_fourier(self, time):
+    def _combined_kernel_fourier(self, time, population_index=None):
         smell_part, sight_part = self._blend_kernel_parts(
             self.smell_kernel_fourier,
             self.sight_kernel_fourier,
             time,
+            population_index=population_index,
         )
         return smell_part + sight_part
 
-    def _convolve_in_fourier_space(self, values_hat, time):
-        kernel_hat = self._combined_kernel_fourier(time)[:, np.newaxis]
+    def _convolve_in_fourier_space(self, values_hat, time, population_index=None):
+        kernel_hat = self._combined_kernel_fourier(
+            time,
+            population_index=population_index,
+        )
+        if np.ndim(kernel_hat) == 1:
+            return self.dx * kernel_hat[:, np.newaxis] * values_hat
         return self.dx * kernel_hat * values_hat
 
-    def _compute_smoothed_density_gradient(self, population, time):
+    def _compute_smoothed_density_gradient(
+        self,
+        population,
+        time,
+        population_index=None,
+    ):
         population_hat = self._fft_matrix(population)
-        smoothed_hat = self._convolve_in_fourier_space(population_hat, time)
+        smoothed_hat = self._convolve_in_fourier_space(
+            population_hat,
+            time,
+            population_index=population_index,
+        )
         gradient_hat = self._apply_first_derivative_fourier(smoothed_hat)
         return self._ifft_matrix(gradient_hat)
 
-    def _compute_smoothed_density_second_derivative(self, population, time):
+    def _compute_smoothed_density_second_derivative(
+        self,
+        population,
+        time,
+        population_index=None,
+    ):
         population_hat = self._fft_matrix(population)
-        smoothed_hat = self._convolve_in_fourier_space(population_hat, time)
+        smoothed_hat = self._convolve_in_fourier_space(
+            population_hat,
+            time,
+            population_index=population_index,
+        )
         curvature_hat = self._apply_second_derivative_fourier(smoothed_hat)
         return self._ifft_matrix(curvature_hat)
 
-    def _apply_interaction_matrix(self, values, time):
+    def _apply_interaction_matrix(self, values, time, population_index=None):
         effective_attraction = self._effective_attraction(time)
         if np.allclose(effective_attraction, 0.0):
-            return np.zeros_like(values)
-        return values @ effective_attraction.T
+            if population_index is None:
+                return np.zeros_like(values)
+            return np.zeros(values.shape[0], dtype=values.dtype)
+
+        if population_index is None:
+            return values @ effective_attraction.T
+
+        return values @ effective_attraction[population_index, :]
 
     def _compute_advective_velocity(self, population, time):
-        smoothed_gradient = self._compute_smoothed_density_gradient(population, time)
-        return self._apply_interaction_matrix(smoothed_gradient, time)
+        effective_attraction = self._effective_attraction(time)
+        if np.allclose(effective_attraction, 0.0):
+            return np.zeros_like(population)
+
+        velocity = np.zeros_like(population)
+        for population_index in range(self.number_of_population):
+            smoothed_gradient = self._compute_smoothed_density_gradient(
+                population,
+                time,
+                population_index=population_index,
+            )
+            velocity[:, population_index] = self._apply_interaction_matrix(
+                smoothed_gradient,
+                time,
+                population_index=population_index,
+            )
+
+        return velocity
 
     def _compute_diffusion_term(self, population, time):
         effective_diffusion = self._effective_diffusion(time)
@@ -729,13 +836,45 @@ class DayNightModel1D:
         derivative_hat = self._apply_first_derivative_fourier(flux_hat)
         return self._ifft_matrix(derivative_hat)
 
+    def _compute_reaction_term(self, population, time):
+        if self.reaction_term is None:
+            return np.zeros_like(population)
+
+        reaction_values = self.reaction_term(population, time, self)
+        reaction_term = self._coerce_population_state(
+            reaction_values,
+            argument_name="reaction_term(population, time, model)",
+        )
+        if not np.all(np.isfinite(reaction_term)):
+            raise ValueError("reaction_term must return finite values.")
+
+        return reaction_term
+
     def _compute_rhs(self, time, population):
         diffusion_term = self._compute_diffusion_term(population, time)
         advection_term = self._compute_flux_derivative(population, time)
-        return diffusion_term - advection_term
+        reaction_term = self._compute_reaction_term(population, time)
+        return diffusion_term - advection_term + reaction_term
+
+    def _resolve_target_mass(self, candidate_population, reference_mass):
+        if self.reaction_term is None:
+            return np.asarray(reference_mass, dtype=float)
+
+        target_mass = self.dx * np.sum(candidate_population, axis=0)
+        if not np.all(np.isfinite(target_mass)):
+            return None
+
+        if np.any(target_mass < 0.0):
+            return None
+
+        return target_mass
 
     def _accept_step_candidate(self, candidate_population, reference_mass):
         if not np.all(np.isfinite(candidate_population)):
+            return None
+
+        target_mass = self._resolve_target_mass(candidate_population, reference_mass)
+        if target_mass is None:
             return None
 
         negative_tolerance = max(
@@ -747,11 +886,21 @@ class DayNightModel1D:
 
         clipped_population = np.maximum(candidate_population, 0.0)
         candidate_mass = self.dx * np.sum(clipped_population, axis=0)
-        if np.any(candidate_mass <= 0.0) or not np.all(np.isfinite(candidate_mass)):
+        if not np.all(np.isfinite(candidate_mass)):
             return None
 
-        mass_ratio = reference_mass / candidate_mass
-        return clipped_population * mass_ratio[np.newaxis, :]
+        accepted_population = np.zeros_like(clipped_population)
+        positive_mass_mask = target_mass > 0.0
+        if np.any(candidate_mass[positive_mass_mask] <= 0.0):
+            return None
+
+        if np.any(positive_mass_mask):
+            mass_ratio = target_mass[positive_mass_mask] / candidate_mass[positive_mass_mask]
+            accepted_population[:, positive_mass_mask] = (
+                clipped_population[:, positive_mass_mask] * mass_ratio[np.newaxis, :]
+            )
+
+        return accepted_population
 
     def _runge_kutta_step(self, population, start_time, dt_step):
         k1 = self._compute_rhs(start_time, population)
@@ -852,6 +1001,46 @@ class DayNightModel1D:
         self._ensure_solution_computed()
         return self.dx * np.sum(self.U, axis=1)
 
+    def get_overlap_energy(self, population_indices=(0, 1), observation_window=None):
+        self._ensure_solution_computed()
+
+        if self.number_of_population < 2:
+            raise ValueError("get_overlap_energy requires at least two populations.")
+
+        if observation_window is None:
+            observation_window = self.cycle_period
+
+        observation_window = float(observation_window)
+        if observation_window <= 0.0:
+            raise ValueError("observation_window must be positive.")
+
+        try:
+            population_a, population_b = population_indices
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                "population_indices must contain exactly two population indices."
+            ) from exc
+
+        population_a = int(population_a)
+        population_b = int(population_b)
+
+        for population_index in (population_a, population_b):
+            if not 0 <= population_index < self.number_of_population:
+                raise IndexError("population index is out of bounds.")
+
+        if population_a == population_b:
+            raise ValueError("population_indices must refer to two distinct populations.")
+
+        window_start = max(self.time[-1] - observation_window, self.time[0])
+        window_mask = self.time >= (window_start - 1.0e-12)
+        window_time = self.time[window_mask]
+
+        density_a = self.U[window_mask, :, population_a]
+        density_b = self.U[window_mask, :, population_b]
+        overlap_density = np.sqrt(np.maximum(density_a, 0.0) * np.maximum(density_b, 0.0))
+        spatial_overlap = self.dx * np.sum(overlap_density, axis=1)
+        return float(self._integrate_trapezoid(spatial_overlap, window_time))
+
     def get_kernel_components(self, time):
         smell_part, sight_part = self._blend_kernel_parts(
             self.smell_kernel_values,
@@ -869,6 +1058,10 @@ class DayNightModel1D:
     def get_effective_parameters(self, time):
         combined_kernel = self._combined_kernel_values(time)
         activity_mask = self.get_activity_mask(time)
+        if np.ndim(combined_kernel) == 2:
+            kernel_mass = self.dx * np.sum(combined_kernel, axis=0)
+        else:
+            kernel_mass = float(self.dx * np.sum(combined_kernel))
         return {
             "is_daytime": self.is_daytime(time),
             "is_active": bool(np.any(activity_mask)),
@@ -877,7 +1070,7 @@ class DayNightModel1D:
             "activity_factor": activity_mask.astype(float),
             "coefficient_diffusion": self._effective_diffusion(time).copy(),
             "coefficient_attraction": self._effective_attraction(time).copy(),
-            "kernel_mass": self.dx * np.sum(combined_kernel),
+            "kernel_mass": kernel_mass,
         }
 
     def _build_initial_condition_from_state(self, state):

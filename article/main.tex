@@ -15,6 +15,7 @@
 \newtheorem{lemma}{Lemma}[section]
 \usepackage{xcolor}
 \newcommand{\tablecell}[1]{\parbox[c][2.0cm][c]{0.95\linewidth}{\centering #1}}
+\newcommand{\payoffentry}[2]{\textbf{\boldmath$\mathcal{E}_{#1,#2}$}}
 \bibliographystyle{plainnat}
 \setlength{\droptitle}{-5em}
 
@@ -172,6 +173,7 @@ To illustrate how these distinct sensory mechanisms interact, thanks to the Lemm
 \end{figure}
 
 \subsection{Circadian activity}
+\label{sec-circadian-activity}
 
 In addition to the perception kernel, we can also add to the model a circadian activity, which represents the times of day when the population is active or resting. While the day-night cycle dictates the external environment, circadian activity captures the internal biological rhythms driving animal movement and interaction. To keep the model tractable, we assume this behavioral pattern is strictly periodic with a period of 1, meaning the schedule repeats exactly each day. Furthermore, rather than assuming a single block of activity, we generalize the framework to allow for $k$ distinct active phases within a day. We parameterize these phases using a sequence of $2k$ strictly increasing time points within the interval $[0, 1]$, which correspond to the start and end of each active bout. Under these assumptions, we formally define the circadian activity cycle as follows.
 
@@ -320,7 +322,7 @@ Conversely, shifted profiles (Polyphasic 2 and Matutinal 2), which only initiate
 
 Thus we conclude that the alignment of active periods with daylight is a crucial factor in determining the spatial dynamics of a population, particularly for species that rely heavily on vision. Fragmented activity patterns can provide resilience against changes in daylight duration, but only if they ensure sufficient overlap with the diurnal phase. We also note that for populations based purely on vision, it’s better to do nothing than to act without being aware of your surroundings. As a result, the circadian rhythm does not always act as a constraint on individuals but can also be a strategy to optimize the use of sensory information and therefore the spatial dynamics of the population. In another way, we could incorporate a concept of energy into our model, favoring populations that conserve energy through their circadian cycle, and therefore giving an advantage to populations with a more fragmented activity pattern. This would allow us to study the trade-off between energy conservation and spatial aggregation, and how this trade-off is affected by the day-night cycle.
 
-\section{Intraspecific interaction}
+\section{Interspecific interaction}
 
 \subsection{Generalized model}
 
@@ -330,15 +332,64 @@ Our model described in the Section~\ref{sec:model-nonlocal-1pop} can be easily g
     \frac{\partial u_i}{\partial t}=\nabla\cdot\left[D_i(t)\nabla u_i-\sum_{j=1}^n \chi_{ij}(t) u_i\nabla h_{ij}\right]+f_i(u_1, \ldots, u_n, t),\quad h_{ij}(x,t) = \int_{\Omega} K_{i}(x-y,t)u_j(y,t)\,dy.
 \end{equation*}
 
-The parameters of this model have almost the same interpretation as in the single population case, with the addition of the indices $i$ and $j$ to indicate which population we are referring to. The only two new parameters are  $\chi_{ij}$, which represents the strength of the attraction of population $i$ to population $j$. If $\chi_{ij}$ is positive, then population $i$ is attracted to population $j$, and if $\chi_{ij}$ is negative, then population $i$ is repulsed by population $j$ and $h_{ij}$, which represents the perception of the population $j$ by population $i$. We can use this model to study the impact of the day-night cycle on the dynamics of multiple interacting populations.
+The parameters of this model have almost the same interpretation as in the single population case, with the addition of the indices $i$ and $j$ to indicate which population we are referring to. The only two new parameters are  $\chi_{ij}$, which represents the strength of the attraction of population $i$ to population $j$. If $\chi_{ij}$ is positive, then population $i$ is attracted to population $j$, and if $\chi_{ij}$ is negative, then population $i$ is repulsed by population $j$. The parameters $h_{ij}$ quantify the perception of the population $j$ by population $i$. We can use this model to study the impact of the day-night cycle on the dynamics of multiple interacting populations.
 
 \subsection{Predator-prey dynamics}
 
+We can apply the generalized multi-population model to study the impact of the day-night cycle on predator-prey dynamics by setting $n=2$. Let $u_1$ represent the prey population density and $u_2$ represent the predator population density. We will label each variable specific to a population with the variable name followed by the subscript 1 or 2, depending on whether it is a prey or a predator, respectively thus $\mathcal{T}_{\text{active}, 1}$ and $\mathcal{T}_{\text{active}, 2}$ represent the active periods of the prey and predator, respectively. To accurately incorporate this interaction into our spatial framework, we must assign appropriate signs to the nonlocal attraction parameters, $\chi_{ij}$. Because these parameters dictate how strongly a population is attracted to or repulsed by another, we set a positive attraction strength ($\chi_{21}>0$) to indicate that predators actively move toward perceived prey. Conversely, we assign a negative attraction strength ($\chi_{12}<0$) to reflect the prey's movement to avoid perceived predators. As for the choice of parameters $\chi_{ii}$ representing self-attraction, we can set them positive to model the natural tendency of individuals within the same population to aggregate. Furthermore, we must introduce reaction terms to capture the demographic changes of the populations over time. While the classic Lotka-Volterra system provides a foundational framework for predator-prey growth and decay, it assumes continuous interaction. However, as established in our modeling of circadian rhythms, biological populations only engage in movement and growth activities during their specific active periods, defined mathematically by $\mathcal{T}_{\text{active}}$. To maintain consistency with the assumption that population reproduction is zero during resting phases, we must modify the Lotka-Volterra terms using indicator functions, similar to our approach for the single-population intrinsic growth rate.
+
+ \begin{equation*}
+    \begin{cases}
+
+        f_1(u_1, u_2, t) = \mathbf{1}_{\mathcal{T}_{active, 1}}(t) r_1 u_1 - \mathbf{1}_{\mathcal{T}_{active, 2}}(t) a u_1 u_2, \\
+        f_2(u_1, u_2, t) = -r_2 u_2 + \mathbf{1}_{\mathcal{T}_{active, 2}}(t) b u_1 u_2,
+    \end{cases}
+\end{equation*}
+
+
+
 \subsection{A game-theoretical approach}
+
+Our goal is to compare the different sleep-wake patterns defined in Table~\ref{tab:circadian_patterns} and in Figure~\ref{fig-circadian-activity} in terms of which one is the best strategy for the prey to avoid predation and for the predator to catch the prey. To do this, we can use a game-theoretical approach, where we run simulations for each combination of activity patterns for the prey and the predator, and then we can compare the outcomes. However, we need to define a metric to compare the outcomes of the simulations. Drawing inspiration from optimal foraging theory, we can quantify the success of these spatial strategies by measuring the spatiotemporal overlap between the two populations \citep{wang2023open}. In our framework, the prey ($u_1$) acts as the dynamic resource for the predator ($u_2$).
+
+\begin{equation*}
+\mathcal{E} = \int_{T}^{T+1} \int_{\Omega} \sqrt{u_1(x,t) u_2(x,t)} \,dx \,dt
+\end{equation*}
+
+In this game-theoretical context, the predator's objective is to maximize $\mathcal{E}$ (optimizing resource acquisition), whereas the prey's objective is to minimize $\mathcal{E}$ (optimizing survival). By calculating $\mathcal{E}$ for each paired combination of circadian activity cycles, we can construct a payoff matrix to identify optimal evolutionary strategies driven by daylight-dependent perception. We denote by $\mathcal{E}_{X,Y}$, where $X, Y \in \{\text{D, N, M1, M2, P1, P2}\}$, the value of $\mathcal{E}$ when the prey has activity pattern $X$ and the predator has activity pattern $Y$. For example, $\mathcal{E}_{\text{D,N}}$ represents the overlap when the prey is diurnal and the predator is nocturnal.
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \renewcommand{\arraystretch}{1.4}
+    \setlength{\tabcolsep}{4pt}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{Prey / Predator} & \textbf{Diurnal} & \textbf{Nocturnal} & \textbf{Polyphasic 1} & \textbf{Polyphasic 2} & \textbf{Matutinal 1} & \textbf{Matutinal 2} \\
+        \hline\hline
+        \textbf{Diurnal} & \payoffentry{D}{D} & \payoffentry{D}{N} & \payoffentry{D}{\mathrm{P}_1} & \payoffentry{D}{\mathrm{P}_2} & \payoffentry{D}{\mathrm{M}_1} & \payoffentry{D}{\mathrm{M}_2} \\
+        \hline
+        \textbf{Nocturnal} & \payoffentry{N}{D} & \payoffentry{N}{N} & \payoffentry{N}{\mathrm{P}_1} & \payoffentry{N}{\mathrm{P}_2} & \payoffentry{N}{\mathrm{M}_1} & \payoffentry{N}{\mathrm{M}_2} \\
+        \hline
+        \textbf{Polyphasic 1} & \payoffentry{\mathrm{P}_1}{D} & \payoffentry{\mathrm{P}_1}{N} & \payoffentry{\mathrm{P}_1}{\mathrm{P}_1} & \payoffentry{\mathrm{P}_1}{\mathrm{P}_2} & \payoffentry{\mathrm{P}_1}{\mathrm{M}_1} & \payoffentry{\mathrm{P}_1}{\mathrm{M}_2} \\
+        \hline
+        \textbf{Polyphasic 2} & \payoffentry{\mathrm{P}_2}{D} & \payoffentry{\mathrm{P}_2}{N} & \payoffentry{\mathrm{P}_2}{\mathrm{P}_1} & \payoffentry{\mathrm{P}_2}{\mathrm{P}_2} & \payoffentry{\mathrm{P}_2}{\mathrm{M}_1} & \payoffentry{\mathrm{P}_2}{\mathrm{M}_2} \\
+        \hline
+        \textbf{Matutinal 1} & \payoffentry{\mathrm{M}_1}{D} & \payoffentry{\mathrm{M}_1}{N} & \payoffentry{\mathrm{M}_1}{\mathrm{P}_1} & \payoffentry{\mathrm{M}_1}{\mathrm{P}_2} & \payoffentry{\mathrm{M}_1}{\mathrm{M}_1} & \payoffentry{\mathrm{M}_1}{\mathrm{M}_2} \\
+        \hline
+        \textbf{Matutinal 2} & \payoffentry{\mathrm{M}_2}{D} & \payoffentry{\mathrm{M}_2}{N} & \payoffentry{\mathrm{M}_2}{\mathrm{P}_1} & \payoffentry{\mathrm{M}_2}{\mathrm{P}_2} & \payoffentry{\mathrm{M}_2}{\mathrm{M}_1} & \payoffentry{\mathrm{M}_2}{\mathrm{M}_2} \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Payoff matrix for the prey-predator game based on foraging efficiency ($\mathcal{E}$).}
+    \label{tab:payoff_matrix}
+\end{table}
+
+
 
 \subsection{Results}
 
-\color{black}
 
 \section{Discussion}
 
