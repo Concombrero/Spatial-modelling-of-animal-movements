@@ -65,8 +65,14 @@ class DayNightModel1D:
             sight_weight,
             argument_name="sight_weight",
         )
-        self.sight_radius = float(sight_radius)
-        self.smell_radius = float(smell_radius)
+        self.sight_radius = self._coerce_population_parameter(
+            sight_radius,
+            argument_name="sight_radius",
+        )
+        self.smell_radius = self._coerce_population_parameter(
+            smell_radius,
+            argument_name="smell_radius",
+        )
         self.reaction_term = reaction_term
 
         self.length = self._compute_domain_length()
@@ -409,11 +415,17 @@ class DayNightModel1D:
                 "Each sight_weight must lie in the interval [0, 1]."
             )
 
-        if not np.isfinite(self.sight_radius) or self.sight_radius <= 0.0:
-            raise ValueError("sight_radius must be positive.")
+        if not np.all(np.isfinite(self.sight_radius)):
+            raise ValueError("sight_radius must be finite.")
 
-        if not np.isfinite(self.smell_radius) or self.smell_radius <= 0.0:
-            raise ValueError("smell_radius must be positive.")
+        if np.any(self.sight_radius <= 0.0):
+            raise ValueError("Each sight_radius must be positive.")
+
+        if not np.all(np.isfinite(self.smell_radius)):
+            raise ValueError("smell_radius must be finite.")
+
+        if np.any(self.smell_radius <= 0.0):
+            raise ValueError("Each smell_radius must be positive.")
 
         if self.reaction_term is not None and not callable(self.reaction_term):
             raise ValueError("reaction_term must be callable or None.")
@@ -601,14 +613,16 @@ class DayNightModel1D:
         offsets = np.arange(self.number_of_points, dtype=float) * self.dx
         return np.where(offsets < 0.5 * self.length, offsets, offsets - self.length)
 
-    def _smell_kernel(self, values):
+    def _smell_kernel(self, values, radius):
         values = np.asarray(values, dtype=float)
-        denominator = self.smell_radius * np.sqrt(2.0 * np.pi)
-        return np.exp(-0.5 * (values / self.smell_radius) ** 2) / denominator
+        radius = float(radius)
+        denominator = radius * np.sqrt(2.0 * np.pi)
+        return np.exp(-0.5 * (values / radius) ** 2) / denominator
 
-    def _sight_kernel(self, values):
+    def _sight_kernel(self, values, radius):
         values = np.asarray(values, dtype=float)
-        return 0.5 * np.exp(-np.abs(values) / self.sight_radius) / self.sight_radius
+        radius = float(radius)
+        return 0.5 * np.exp(-np.abs(values) / radius) / radius
 
     def _normalise_kernel_values(self, kernel_values):
         normalisation = self.dx * np.sum(kernel_values)
@@ -616,17 +630,34 @@ class DayNightModel1D:
             raise ValueError("Kernel must have positive mass.")
         return kernel_values / normalisation
 
+    def _generate_population_kernel_values(self, radii, kernel_builder):
+        kernel_columns = [
+            self._normalise_kernel_values(
+                kernel_builder(self.kernel_grid, float(radii[population_index]))
+            )
+            for population_index in range(self.number_of_population)
+        ]
+        if self.number_of_population == 1:
+            return kernel_columns[0]
+        return np.column_stack(kernel_columns)
+
     def _generate_smell_kernel_values(self):
-        return self._normalise_kernel_values(self._smell_kernel(self.kernel_grid))
+        return self._generate_population_kernel_values(
+            self.smell_radius,
+            self._smell_kernel,
+        )
 
     def _generate_sight_kernel_values(self):
-        return self._normalise_kernel_values(self._sight_kernel(self.kernel_grid))
+        return self._generate_population_kernel_values(
+            self.sight_radius,
+            self._sight_kernel,
+        )
 
     def _fft_vector(self, values):
-        return np.fft.fft(values)
+        return np.fft.fft(values, axis=0)
 
     def _ifft_vector(self, values):
-        return np.fft.ifft(values).real
+        return np.fft.ifft(values, axis=0).real
 
     def _fft_matrix(self, values):
         return np.fft.fft(values, axis=0)
@@ -711,20 +742,32 @@ class DayNightModel1D:
         sight_factor = self._sight_factor(time)
 
         if population_index is not None:
+            if np.ndim(smell_values) == 2:
+                smell_values = smell_values[:, population_index]
+            if np.ndim(sight_values) == 2:
+                sight_values = sight_values[:, population_index]
             sight_weight = float(self.sight_weight[population_index])
             smell_part = (1.0 - sight_weight) * smell_values
             sight_part = sight_weight * sight_factor * sight_values
             return smell_part, sight_part
 
         if self.number_of_population == 1:
+            if np.ndim(smell_values) == 2:
+                smell_values = smell_values[:, 0]
+            if np.ndim(sight_values) == 2:
+                sight_values = sight_values[:, 0]
             sight_weight = float(self.sight_weight[0])
             smell_part = (1.0 - sight_weight) * smell_values
             sight_part = sight_weight * sight_factor * sight_values
             return smell_part, sight_part
 
+        if np.ndim(smell_values) == 1:
+            smell_values = smell_values[:, np.newaxis]
+        if np.ndim(sight_values) == 1:
+            sight_values = sight_values[:, np.newaxis]
         weight_vector = self.sight_weight[np.newaxis, :]
-        smell_part = smell_values[:, np.newaxis] * (1.0 - weight_vector)
-        sight_part = sight_values[:, np.newaxis] * (sight_factor * weight_vector)
+        smell_part = smell_values * (1.0 - weight_vector)
+        sight_part = sight_values * (sight_factor * weight_vector)
         return smell_part, sight_part
 
     def _combined_kernel_values(self, time, population_index=None):
@@ -877,11 +920,16 @@ class DayNightModel1D:
         if target_mass is None:
             return None
 
-        negative_tolerance = max(
-            1.0e-10,
-            1.0e-6 * float(np.max(np.abs(candidate_population))),
+        max_population_by_species = np.max(
+            np.abs(candidate_population),
+            axis=0,
+            keepdims=True,
         )
-        if float(np.min(candidate_population)) < -negative_tolerance:
+        negative_tolerance = np.maximum(
+            1.0e-10,
+            1.0e-5 * max_population_by_species,
+        )
+        if np.any(candidate_population < -negative_tolerance):
             return None
 
         clipped_population = np.maximum(candidate_population, 0.0)
@@ -1001,6 +1049,19 @@ class DayNightModel1D:
         self._ensure_solution_computed()
         return self.dx * np.sum(self.U, axis=1)
 
+    def _normalise_density_time_series(self, density_values):
+        density_values = np.maximum(np.asarray(density_values, dtype=float), 0.0)
+        masses = self.dx * np.sum(density_values, axis=1, keepdims=True)
+        normalised_density = np.zeros_like(density_values)
+        positive_mass_mask = masses[:, 0] > 0.0
+
+        if np.any(positive_mass_mask):
+            normalised_density[positive_mass_mask, :] = (
+                density_values[positive_mass_mask, :] / masses[positive_mass_mask, :]
+            )
+
+        return normalised_density
+
     def get_overlap_energy(self, population_indices=(0, 1), observation_window=None):
         self._ensure_solution_computed()
 
@@ -1035,9 +1096,13 @@ class DayNightModel1D:
         window_mask = self.time >= (window_start - 1.0e-12)
         window_time = self.time[window_mask]
 
-        density_a = self.U[window_mask, :, population_a]
-        density_b = self.U[window_mask, :, population_b]
-        overlap_density = np.sqrt(np.maximum(density_a, 0.0) * np.maximum(density_b, 0.0))
+        density_a = self._normalise_density_time_series(
+            self.U[window_mask, :, population_a]
+        )
+        density_b = self._normalise_density_time_series(
+            self.U[window_mask, :, population_b]
+        )
+        overlap_density = np.sqrt(density_a * density_b)
         spatial_overlap = self.dx * np.sum(overlap_density, axis=1)
         return float(self._integrate_trapezoid(spatial_overlap, window_time))
 

@@ -353,8 +353,10 @@ We can apply the generalized multi-population model to study the impact of the d
 Our goal is to compare the different sleep-wake patterns defined in Table~\ref{tab:circadian_patterns} and in Figure~\ref{fig-circadian-activity} in terms of which one is the best strategy for the prey to avoid predation and for the predator to catch the prey. To do this, we can use a game-theoretical approach, where we run simulations for each combination of activity patterns for the prey and the predator, and then we can compare the outcomes. However, we need to define a metric to compare the outcomes of the simulations. Drawing inspiration from optimal foraging theory, we can quantify the success of these spatial strategies by measuring the spatiotemporal overlap between the two populations \citep{wang2023open}. In our framework, the prey ($u_1$) acts as the dynamic resource for the predator ($u_2$).
 
 \begin{equation*}
-\mathcal{E} = \int_{T}^{T+1} \int_{\Omega} \sqrt{u_1(x,t) u_2(x,t)} \,dx \,dt
+\mathcal{E} = \int_{T}^{T+1} \int_{\Omega} \sqrt{\bar{u}_1(x,t) \bar{u}_2(x,t)} \,dx \,dt
 \end{equation*}
+
+where $\bar{u}_i(x,t) = \dfrac{u_i(x,t)}{\int_{\Omega} u_i(y,t) \,dy}$ denotes the spatially normalized density of population $i$ at time $t$. We note that we don't have mass concervation thanks to the adding of the reactions term on our system.
 
 In this game-theoretical context, the predator's objective is to maximize $\mathcal{E}$ (optimizing resource acquisition), whereas the prey's objective is to minimize $\mathcal{E}$ (optimizing survival). By calculating $\mathcal{E}$ for each paired combination of circadian activity cycles, we can construct a payoff matrix to identify optimal evolutionary strategies driven by daylight-dependent perception. We denote by $\mathcal{E}_{X,Y}$, where $X, Y \in \{\text{D, N, M1, M2, P1, P2}\}$, the value of $\mathcal{E}$ when the prey has activity pattern $X$ and the predator has activity pattern $Y$. For example, $\mathcal{E}_{\text{D,N}}$ represents the overlap when the prey is diurnal and the predator is nocturnal.
 

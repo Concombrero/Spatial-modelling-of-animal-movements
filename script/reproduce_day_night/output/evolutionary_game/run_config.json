@@ -1,0 +1,47 @@
+{
+  "attraction": [
+    [
+      0.1,
+      -0.2
+    ],
+    [
+      0.2,
+      0.1
+    ]
+  ],
+  "diffusion": [
+    0.04,
+    0.04
+  ],
+  "dt": 0.1,
+  "initial_centers": [
+    0.25,
+    0.7
+  ],
+  "initial_width": 0.1,
+  "minimum_share_percentage": 1.0,
+  "number_of_cycles": 4,
+  "number_of_points": 64,
+  "payoff_definition": "weighted overlap from model.get_overlap_energy()",
+  "predator_objective": "maximize payoff",
+  "predator_total_mass": 1.0,
+  "prey_objective": "minimize payoff",
+  "prey_total_mass": 1.0,
+  "reaction_rates": {
+    "conversion_rate": 0.08,
+    "predation_rate": 0.15,
+    "predator_decay": 0.1,
+    "prey_growth": 0.2
+  },
+  "rounds": 30,
+  "selection_events": 1,
+  "selection_percentage": 10.0,
+  "selection_update": "Each selection step transfers a fixed percentage of the losing regime's current share to the winning regime while keeping every regime above the minimum share floor.",
+  "sight_radius": 0.1,
+  "smell_radius": 0.2,
+  "t_sunset": 0.5,
+  "weights": [
+    0.25,
+    0.75
+  ]
+}
