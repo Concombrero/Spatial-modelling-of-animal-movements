@@ -10,6 +10,12 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
+from common_utils import (
+    DEFAULT_SMELL_RADIUS,
+    DEFAULT_SIGHT_RADIUS,
+    compute_spread_indicator,
+    gaussian_initial_condition,
+)
 from solver import DayNightModel1D
 
 
@@ -115,15 +121,6 @@ def build_lighting_regimes(sunset_values):
     return tuple(build_lighting_regime(t_sunset) for t_sunset in sunset_values)
 
 
-def gaussian_initial_condition(x, center=0.5, width=0.08):
-    x = np.asarray(x, dtype=float)
-    dx = x[1] - x[0]
-    length = (x[-1] - x[0]) + dx
-    wrapped_distance = ((x - center + 0.5 * length) % length) - 0.5 * length
-    values = np.exp(-0.5 * (wrapped_distance / width) ** 2)
-    return values / (dx * np.sum(values))
-
-
 def build_solver(sight_weight, lighting_regime, activity_regime, number_of_points, dt):
     return DayNightModel1D(
         a_border=0.0,
@@ -142,47 +139,17 @@ def build_solver(sight_weight, lighting_regime, activity_regime, number_of_point
         activity_mode="always",
         activity_periods=activity_regime["periods"],
         sight_weight=sight_weight,
-        sight_radius=0.1,
-        smell_radius=0.2,
+        sight_radius=DEFAULT_SIGHT_RADIUS,
+        smell_radius=DEFAULT_SMELL_RADIUS,
     )
-
-
-def build_periodic_squared_distance_matrix(x, length):
-    wrapped_distances = (
-        (x[np.newaxis, :] - x[:, np.newaxis] + 0.5 * length) % length
-    ) - 0.5 * length
-    return wrapped_distances**2
-
-
-def integrate_trapezoid(values, time_grid):
-    if hasattr(np, "trapezoid"):
-        return np.trapezoid(values, x=time_grid)
-    return np.trapz(values, x=time_grid)
 
 
 def compute_psi(model, observation_window=OBSERVATION_WINDOW, population_index=0):
-    if not 0 <= population_index < model.number_of_population:
-        raise IndexError("population_index is out of bounds.")
-
-    window_start = max(model.time[-1] - observation_window, model.time[0])
-    window_mask = model.time >= (window_start - 1.0e-12)
-    window_time = model.time[window_mask]
-    window_density = model.U[window_mask, :, population_index]
-    masses = model.dx * np.sum(window_density, axis=1, keepdims=True)
-    normalised_density = window_density / masses
-
-    squared_distance_matrix = build_periodic_squared_distance_matrix(
-        model.x,
-        model.length,
+    return compute_spread_indicator(
+        model,
+        observation_window,
+        population_index=population_index,
     )
-    centred_second_moments = model.dx * normalised_density @ squared_distance_matrix.T
-    minimum_second_moments = np.min(centred_second_moments, axis=1)
-
-    psi = (12.0 / (model.length**2)) * integrate_trapezoid(
-        minimum_second_moments,
-        window_time,
-    )
-    return float(np.clip(psi, 0.0, 1.0))
 
 
 def run_single_case(

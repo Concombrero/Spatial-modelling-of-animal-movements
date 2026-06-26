@@ -309,6 +309,62 @@ def resolve_parameter_axes(args):
     }
 
 
+def validate_args(args):
+    axes = resolve_parameter_axes(args)
+
+    if args.t_sunset < 0.0 or args.t_sunset > 1.0:
+        raise ValueError("t_sunset must lie in [0, 1].")
+
+    if args.number_of_points < 2:
+        raise ValueError("number_of_points must be at least 2.")
+
+    if args.dt <= 0.0:
+        raise ValueError("dt must be positive.")
+
+    if args.number_of_cycles < 1:
+        raise ValueError("number_of_cycles must be at least 1.")
+
+    if args.rounds < 1:
+        raise ValueError("rounds must be at least 1.")
+
+    if args.selection_events < 0:
+        raise ValueError("selection_events must be non-negative.")
+
+    if args.selection_percentage < 0.0 or args.selection_percentage > 100.0:
+        raise ValueError("selection_percentage must lie in [0, 100].")
+
+    if args.prey_total_mass <= 0.0 or args.predator_total_mass <= 0.0:
+        raise ValueError("Total prey and predator masses must be positive.")
+
+    if args.initial_width <= 0.0:
+        raise ValueError("initial_width must be positive.")
+
+    if not args.share_plot_name:
+        raise ValueError("share_plot_name must not be empty.")
+
+    if Path(args.share_plot_name).name != args.share_plot_name:
+        raise ValueError("share_plot_name must be a filename, not a path.")
+
+    if args.output_dir.exists() and not args.output_dir.is_dir():
+        raise ValueError("output_dir must be a directory path.")
+
+    for parameter_name, values in axes.items():
+        if len(values) < 1:
+            raise ValueError(f"{parameter_name} must contain at least one value.")
+        if any(not math.isfinite(value) for value in values):
+            raise ValueError(f"{parameter_name} values must be finite.")
+
+    for parameter_name in ("w1", "w2"):
+        if any(value < 0.0 or value > 1.0 for value in axes[parameter_name]):
+            raise ValueError(f"{parameter_name} values must lie in [0, 1].")
+
+    for parameter_name in ("r_smell_1", "r_sight_1", "r_smell_2", "r_sight_2"):
+        if any(value <= 0.0 for value in axes[parameter_name]):
+            raise ValueError(f"{parameter_name} values must be positive.")
+
+    return axes
+
+
 def build_case_output_directory(output_dir, case_parameters):
     return Path(output_dir) / (
         f"w1_{format_value_label(case_parameters['w1'])}"
@@ -366,8 +422,9 @@ def move_share_plot(source_path, target_path):
     return target_path
 
 
-def run_parameter_sweep(args):
-    axes = resolve_parameter_axes(args)
+def run_parameter_sweep(args, axes=None):
+    if axes is None:
+        axes = resolve_parameter_axes(args)
     parameter_names = tuple(parameter_name for parameter_name, _, _ in PARAMETER_SPECS)
     axis_sizes = [len(axes[parameter_name]) for parameter_name in parameter_names]
     total_cases = math.prod(axis_sizes)
@@ -435,7 +492,8 @@ def run_parameter_sweep(args):
 
 def main():
     args = parse_args()
-    return run_parameter_sweep(args)
+    axes = validate_args(args)
+    return run_parameter_sweep(args, axes)
 
 
 if __name__ == "__main__":

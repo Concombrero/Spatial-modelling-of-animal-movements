@@ -1,121 +1,108 @@
-# Day-Night Solver
+# Day-Night Modeling
 
-This folder contains a 1D multi-population day-night solver.
+This folder contains the 1D periodic day-night solver and the scripts used to
+generate payoff matrices, spread indicators, and evolutionary-game figures.
 
-The solver class is `DayNightModel1D` in `solver.py`.
+The core class is `DayNightModel1D` in `solver.py`. Shared plotting and spread
+helpers used by the visualization scripts live in `common_utils.py`.
 
-## Quick Use
+## Setup
 
-Run the example script:
+Run the commands below from the repository root:
 
 ```bash
-python3 script/reproduce_day_night/main.py
+python3 -m pip install -r requirements.txt
 ```
 
-This creates outputs in `script/reproduce_day_night/output/`.
+All plotting scripts use a non-interactive Matplotlib backend and save figures
+to `script/reproduce_day_night/output/` by default.
 
-To compute the 6x6 prey-predator payoff matrix defined in the paper at
-`t_sunset = 0.5` with default `w_1 = w_2 = 0.5`, run:
+## Circadian regime codes
+
+The payoff and evolutionary scripts use the following activity codes:
+
+| Code | Label | Active intervals in phase coordinates |
+| --- | --- | --- |
+| `D` | Diurnal | `[0.0, 0.5]` |
+| `N` | Nocturnal | `[0.5, 1.0]` |
+| `P1` | Polyphasic 1 | `[0.0, 0.25] + [0.5, 0.75]` |
+| `P2` | Polyphasic 2 | `[0.25, 0.5] + [0.75, 1.0]` |
+| `M1` | Matutinal 1 | `[0.0, 0.25] + [0.75, 1.0]` |
+| `M2` | Matutinal 2 | `[0.25, 0.75]` |
+
+## Main workflows
+
+### 1. Compute one payoff matrix
+
+`payoff_matrix.py` computes the 6x6 prey-predator payoff matrix from the final
+overlap energy.
 
 ```bash
 python3 script/reproduce_day_night/payoff_matrix.py
 ```
 
-This writes:
+Default outputs:
 
 - `script/reproduce_day_night/output/Pay-off/payoff_matrix.csv`
+- `script/reproduce_day_night/output/Pay-off/case_payoffs.csv`
+- `script/reproduce_day_night/output/Pay-off/run_config.json`
 - `script/reproduce_day_night/output/Pay-off/payoff_matrix.png`
 - `script/reproduce_day_night/output/Pay-off/population_heatmaps/`
 
-By default, the payoff script now saves one two-panel population heatmap per
-prey/predator activity pair, with filenames such as
-`prey_D_predator_N.png` inside
-`script/reproduce_day_night/output/Pay-off/population_heatmaps/`.
-
-To save the heatmap for a specific pair only, pass both activity codes
-explicitly:
-
-```bash
-python3 script/reproduce_day_night/payoff_matrix.py --heatmap-prey D --heatmap-predator N
-```
-
-To choose a different sight weight for each population, pass two values:
+Useful variations:
 
 ```bash
 python3 script/reproduce_day_night/payoff_matrix.py --weights 0.25 0.75
+python3 script/reproduce_day_night/payoff_matrix.py --t-sunset 0.7
+python3 script/reproduce_day_night/payoff_matrix.py --heatmap-prey D --heatmap-predator N
 ```
 
-To run the payoff-matrix workflow for every pair
-$(w_1, w_2) \in \{0.3, 0.5, 0.7\}^2$ and save each matrix in a separate
-folder, run:
+### 2. Sweep the payoff matrix over sight weights
+
+`payoff_matrix_weight_sweep.py` repeats the payoff workflow over a grid of
+weight pairs.
 
 ```bash
-python3 script/reproduce_day_night/payoff_matrix_weight_sweep.py
+python3 script/reproduce_day_night/payoff_matrix_weight_sweep.py --weights 0.25 0.5 0.75
 ```
 
-This creates one folder per weight pair under
-`script/reproduce_day_night/output/Pay-off/weight_sweep/`, for example
-`w1_0.3_w2_0.5/`, and each folder contains that run's payoff CSV, payoff
-heatmap, and population heatmaps.
+Notes:
 
-To rerun only the missing cases with `w_1 = 0.7` and
-`w_2 \in \{0.3, 0.5, 0.7\}` while skipping folders that already finished,
-run:
+- `--weights` and `--weight-values` are equivalent.
+- `--w1-values` and `--w2-values` can override each axis independently.
+- `--skip-existing` reuses a completed folder only when the saved run
+  configuration matches the current parameters.
+
+Example:
 
 ```bash
-python3 script/reproduce_day_night/payoff_matrix_weight_sweep.py --w1-values 0.7 --skip-existing
+python3 script/reproduce_day_night/payoff_matrix_weight_sweep.py \
+    --w1-values 0.7 \
+    --weights 0.25 0.5 0.75 \
+    --skip-existing
 ```
 
-The `--skip-existing` option only skips a folder when its saved run
-configuration matches the current settings. If the payoff defaults change, the
-script will recompute that folder instead of mixing results from different
-parameter sets.
+### 3. Analyze saved payoff outputs
 
-To search for parameter sets that make nocturnal prey (`N`) the dominant or
-best prey circadian regime while varying
-`w1`, `w2`, `R_smell_1`, `R_sight_1`, `R_smell_2`, and `R_sight_2`, run:
+`payoff_mean_analysis.py` reads either a single payoff run directory or a
+parent directory containing many runs and plots the mean payoff against one
+parameter.
 
 ```bash
-python3 script/reproduce_day_night/nocturnal_parameter_search.py \
-    --w1-values 0.25 0.5 0.75 \
-    --w2-values 0.25 0.5 0.75 \
-    --r-smell-1-values 0.15 0.2 \
-    --r-sight-1-values 0.08 0.12 \
-    --r-smell-2-values 0.15 0.2 \
-    --r-sight-2-values 0.08 0.12 \
-    --objective dominant
+python3 script/reproduce_day_night/payoff_mean_analysis.py \
+    --x-axis w1 \
+    --payoff-dir script/reproduce_day_night/output/Pay-off/weight_sweep \
+    --output script/reproduce_day_night/output/Pay-off/mean_vs_w1.png \
+    --show-variance true
 ```
 
-This script evaluates the full 6x6 payoff matrix for each parameter set,
-writes one CSV row per candidate to
-`script/reproduce_day_night/output/Pay-off/nocturnal_search/candidate_summary.csv`,
-and saves the best candidate's payoff matrix plus a JSON summary in the same
-folder. Use `--objective mean` if you only want the parameter set that gives
-the smallest mean payoff for nocturnal prey, even when nocturnal prey is not a
-dominant response against every predator regime.
+Supported x-axis values are `w1`, `w2`, `cycle1`, and `cycle2`.
 
-If you prefer intervals with a step instead of explicit value lists, each
-parameter also accepts a `--*-range START STOP STEP` form. For example:
+### 4. Run the evolutionary game
 
-```bash
-python3 script/reproduce_day_night/nocturnal_parameter_search.py \
-    --w1-range 0.2 0.8 0.1 \
-    --w2-range 0.2 0.8 0.1 \
-    --r-smell-1-range 0.15 0.25 0.05 \
-    --r-sight-1-range 0.08 0.16 0.04 \
-    --r-smell-2-range 0.15 0.25 0.05 \
-    --r-sight-2-range 0.08 0.16 0.04
-```
-
-Range values are generated as `start, start + step, ...` while they stay below
-or equal to `stop` up to a small floating-point tolerance. When a range is
-provided, it overrides the corresponding `--*-values` option.
-
-To run an evolutionary game with fixed $w_1$ and $w_2$, start from an equal
-distribution over all circadian regimes, simulate one ecological round,
-compute each prey and predator subgroup payoff from the solver overlap metric
-$\mathcal{E}$, and then transfer a percentage of population share from the
-worst groups to the best ones, run:
+`evolutionary_game.py` evolves shares of the six circadian regimes for prey and
+predator populations while keeping ecological parameters fixed during each PDE
+round.
 
 ```bash
 python3 script/reproduce_day_night/evolutionary_game.py \
@@ -126,7 +113,7 @@ python3 script/reproduce_day_night/evolutionary_game.py \
     --selection-percentage 10
 ```
 
-This writes:
+Default outputs:
 
 - `script/reproduce_day_night/output/evolutionary_game/run_config.json`
 - `script/reproduce_day_night/output/evolutionary_game/round_payoffs.csv`
@@ -134,42 +121,65 @@ This writes:
 - `script/reproduce_day_night/output/evolutionary_game/selection_events.csv`
 - `script/reproduce_day_night/output/evolutionary_game/strategy_shares.png`
 
-The evolutionary script keeps the ecological parameters fixed across rounds.
-Each species starts from an equal share over the circadian subgroups, and after
-every round those shares are updated by the percentage-transfer selection step.
-Here `--selection-percentage` means percentage points of the whole prey or
-predator population share, not a percentage of the losing subgroup itself. The
-script also keeps every circadian regime at or above a 1% share floor, so a
-regime never disappears completely. The predator objective is to maximize the
-overlap payoff $\mathcal{E}$, while the prey objective is to minimize it.
+The prey objective is to minimize overlap payoff. The predator objective is to
+maximize it. Every regime is kept above a 1% share floor.
 
-To analyze saved payoff outputs and plot the mean payoff as a function of one
-parameter, run:
+### 5. Sweep the evolutionary game over weights and radii
+
+`evolutionary_game_parameter_sweep.py` runs the evolutionary game over the
+Cartesian product of `w1`, `w2`, `R_smell_1`, `R_sight_1`, `R_smell_2`, and
+`R_sight_2`.
 
 ```bash
-python3 script/reproduce_day_night/payoff_mean_analysis.py \
-    --x-axis w1 \
-    --payoff-dir script/reproduce_day_night/output/Pay-off/weight_sweep \
-    --output script/reproduce_day_night/output/Pay-off/mean_vs_w1.png \
-    --show-variance true
+python3 script/reproduce_day_night/evolutionary_game_parameter_sweep.py \
+    --w1-values 0.25 0.5 \
+    --w2-values 0.25 0.5 \
+    --r-smell-1-values 0.2 \
+    --r-sight-1-values 0.1 \
+    --r-smell-2-values 0.2 \
+    --r-sight-2-values 0.1
 ```
 
-The analysis script accepts `w1`, `w2`, `cycle1`, or `cycle2` on the x axis.
-The input folder can be either one payoff run folder containing
-`case_payoffs.csv` and `run_config.json`, or a parent folder containing many
-such runs, for example the full `weight_sweep/` directory.
-
-To change the daylight proportion, pass a different `t_sunset` value:
+Range syntax is also supported for every swept parameter:
 
 ```bash
-python3 script/reproduce_day_night/payoff_matrix.py --t-sunset 0.7
+python3 script/reproduce_day_night/evolutionary_game_parameter_sweep.py \
+    --w1-range 0.2 0.8 0.1 \
+    --w2-range 0.2 0.8 0.1 \
+    --r-smell-1-range 0.15 0.25 0.05 \
+    --r-sight-1-range 0.08 0.16 0.04 \
+    --r-smell-2-range 0.15 0.25 0.05 \
+    --r-sight-2-range 0.08 0.16 0.04
 ```
 
-The payoff script defaults to a coarser grid (`64` points, `dt = 0.1`) so the
-full 6x6 matrix remains practical to compute. Use `--number-of-points` and
-`--dt` to refine the simulation if needed.
+By default, this sweep only keeps one share plot per parameter set in
+`script/reproduce_day_night/output/evolutionary_game_parameter_sweep/`.
 
-## Minimal Example
+## Visualization scripts
+
+These scripts focus on single-population spread or heatmap figures.
+
+| Script | Purpose | Default output |
+| --- | --- | --- |
+| `activity_const_heatmaps.py` | Heatmaps for an always-active population under full day, half day, and full night | `output/sight_weight_sunset_heatmaps.png` |
+| `activity_const_spread.py` | Normalized spread indicator $\Omega$ versus sight weight for the same lighting regimes | `output/sight_weight_sunset_spread.png` |
+| `sleep_pattern_heatmaps.py` | Heatmaps for diurnal, nocturnal, polyphasic, and matutinal schedules | `output/sleep_pattern_heatmaps.png` |
+| `sleep_pattern_spread.py` | Spread indicator $\Psi$ versus sight weight for several sleep schedules and several `t_sunset` values | `output/sleep_pattern_spread.png` |
+| `spread_diurnal_vs_nocturnal.py` | Direct $\Psi$ comparison between diurnal and nocturnal schedules at fixed `t_sunset = 0.5` | `output/spread_diurnal_vs_nocturnal.png` |
+| `spread_polyphasic_matutinal.py` | $\Psi$ comparison for polyphasic and matutinal schedules across several `t_sunset` values | `output/spread_polyphasic_matutinal.png` |
+
+Example commands:
+
+```bash
+python3 script/reproduce_day_night/activity_const_heatmaps.py --weights 0 0.5 1
+python3 script/reproduce_day_night/sleep_pattern_spread.py --weights 0 0.5 1 --sunset-values 0.25 0.5 0.75
+python3 script/reproduce_day_night/spread_diurnal_vs_nocturnal.py --weights 0 0.5 1
+```
+
+## Minimal solver example
+
+The example below assumes your working directory is
+`script/reproduce_day_night/` or that this folder is on `PYTHONPATH`.
 
 ```python
 import numpy as np
@@ -221,111 +231,45 @@ model = DayNightModel1D(
 
 time, solution = model.solve()
 mass = model.get_mass()
-parameters = model.get_effective_parameters(0.2)
+overlap = model.get_overlap_energy(population_indices=(0, 1))
+effective_parameters = model.get_effective_parameters(0.2)
 ```
 
-## Important Inputs
+## Key solver inputs
 
-- `number_of_population`: number of populations.
+- `number_of_population`: number of interacting populations.
 - `coefficient_attraction`: interaction matrix of shape `(m, m)`.
 - `coefficient_diffusion`: diffusion vector of length `m`.
-- `cycle_period`: simulation duration of one full 24-hour cycle.
-- `time_input_mode="clock"`: interpret `day_start`, `day_end`, and `activity_periods` as clock times in hours.
-- `day_start`, `day_end`: daytime clock values. With `cycle_period=1.0`, `day_start=8`, `day_end=22` gives day on `[0, 14/24]`.
-- `activity_periods`: one list of active clock intervals per population, for example `[[ (0, 8) ], [ (1, 6), (13, 22) ]]`.
-- `initial_condition(x)`: should return one density per population.
-- `sight_weight`: either one scalar shared by every population or one value per population.
-- `reaction_term`: optional callable `reaction_term(population, time, model)` returning one source term per population.
+- `cycle_period`: duration of one full circadian cycle.
+- `time_input_mode="phase"`: interpret day and activity intervals directly on
+  the solver cycle.
+- `time_input_mode="clock"`: convert clock-hour inputs into the repeated solver
+  cycle.
+- `activity_periods`: one list of active intervals per population. Multiple
+  intervals are allowed.
+- `initial_condition(x)`: for `m` populations, return an array of shape
+  `(number_of_points, m)`.
+- `sight_weight`, `sight_radius`, `smell_radius`: each can be a scalar or a
+  per-population vector.
+- `reaction_term(population, time, model)`: optional local source term with the
+  same output shape as `population`.
 
-For `payoff_matrix.py`, the two populations also share the same `sight_radius` and `smell_radius` by default. These can be changed with `--sight-radius` and `--smell-radius`.
+## Useful solver methods
 
-For several populations, `initial_condition(x)` should return an array of shape `(number_of_points, number_of_population)`.
-
-When `reaction_term` is provided, the callback receives:
-
-- `population`: the current state with shape `(number_of_points, number_of_population)`.
-- `time`: the current simulation time.
-- `model`: the current `DayNightModel1D` instance, which gives access to helpers such as `is_active(...)` and `get_activity_mask(...)`.
-
-The callback must return an array with the same shape as `population`.
-
-## Reaction-Term Example
-
-The solver can now include local reaction terms in addition to diffusion and nonlocal advection. For the modified Lotka-Volterra system from the paper,
-
-```python
-import numpy as np
-
-from solver import DayNightModel1D
-
-
-def modified_lotka_volterra(population, time, model):
-    u1 = population[:, 0]
-    u2 = population[:, 1]
-
-    active_1 = float(model.is_active(time, population_index=0))
-    active_2 = float(model.is_active(time, population_index=1))
-
-    r1 = 0.6
-    r2 = 0.4
-    a = 0.8
-    b = 0.5
-
-    return np.column_stack(
-        (
-            active_1 * r1 * u1 - active_2 * a * u1 * u2,
-            -r2 * u2 + active_2 * b * u1 * u2,
-        )
-    )
-
-
-model = DayNightModel1D(
-    a_border=0.0,
-    b_border=1.0,
-    number_of_points=128,
-    total_time=2.0,
-    dt=1.0e-3,
-    number_of_population=2,
-    coefficient_attraction=np.array([
-        [0.12, -0.04],
-        [0.06, 0.10],
-    ]),
-    coefficient_diffusion=np.array([0.05, 0.03]),
-    cycle_period=1.0,
-    activity_periods=[
-        [(0.0, 0.5)],
-        [(0.5, 1.0)],
-    ],
-    sight_weight=[0.4, 0.7],
-    sight_radius=0.12,
-    smell_radius=0.18,
-    reaction_term=modified_lotka_volterra,
-)
-
-time, solution = model.solve()
-```
-
-This implements
-
-```text
-f_1(u_1, u_2, t) = 1_{T_active,1}(t) r_1 u_1 - 1_{T_active,2}(t) a u_1 u_2
-f_2(u_1, u_2, t) = -r_2 u_2 + 1_{T_active,2}(t) b u_1 u_2
-```
-
-through the solver's built-in activity schedule. The reaction callback is evaluated at every RK4 stage, so it should be deterministic and free of side effects.
-
-## Useful Methods
-
-- `solve()`: runs the simulation.
-- `get_mass()`: returns the mass of each population over time.
-- `get_overlap_energy()`: computes $\int_T^{T+\tau}\int_\Omega \sqrt{\bar{u}_i(x,t)\bar{u}_j(x,t)}\,dx\,dt$ over the final observation window, with each population normalized over $\Omega$ at every time snapshot and `tau=cycle_period` by default.
-- `get_effective_parameters(t)`: returns the active diffusion, attraction, and per-population activity mask at time `t`.
-- `plot_solution_heatmaps(...)`: plots one heatmap per population.
-- `create_solution_gif(...)`: creates an animation of the densities.
+- `solve()`: run the simulation.
+- `get_mass()`: return the mass of each population over time.
+- `get_overlap_energy()`: compute the overlap functional over the final
+  observation window.
+- `get_effective_parameters(t)`: inspect the active diffusion, attraction, and
+  activity mask at time `t`.
+- `plot_solution_heatmaps(...)`: save one heatmap per population.
+- `create_solution_gif(...)`: save an animation of the densities.
 
 ## Notes
 
-- In `time_input_mode="clock"`, one cycle still repeats forever, but the solver converts clock times into the matching interval inside each cycle.
-- During inactive periods, the diffusion of an inactive population is zero and that population's attraction row is set to zero.
-- When `reaction_term` is set, the total mass is allowed to grow or decay. The solver only clips small negative values and rescales back to the RK4 candidate mass for that step.
-- The solver supports several cycles by setting `total_time` larger than `cycle_period`.
+- This folder is a collection of standalone scripts, not an installed Python
+  package.
+- For quick smoke tests, reduce `--number-of-points`, shorten
+  `--number-of-cycles`, or increase `--dt`.
+- The most useful entry points for new runs are usually `payoff_matrix.py` and
+  `evolutionary_game.py`.

@@ -36,6 +36,7 @@ def parse_args():
     )
     parser.add_argument(
         "--weight-values",
+        "--weights",
         nargs="+",
         type=float,
         default=list(DEFAULT_WEIGHT_VALUES),
@@ -264,6 +265,36 @@ def is_completed_run_directory(run_output_dir, config):
 def validate_args(args):
     if len(args.weight_values) < 1:
         raise ValueError("weight_values must contain at least one value.")
+
+    if args.t_sunset < 0.0 or args.t_sunset > 1.0:
+        raise ValueError("t_sunset must lie in [0, 1].")
+
+    if args.number_of_points < 2:
+        raise ValueError("number_of_points must be at least 2.")
+
+    if args.dt <= 0.0:
+        raise ValueError("dt must be positive.")
+
+    if args.number_of_cycles < 1:
+        raise ValueError("number_of_cycles must be at least 1.")
+
+    if args.observation_window <= 0.0:
+        raise ValueError("observation_window must be positive.")
+
+    if args.sight_radius <= 0.0:
+        raise ValueError("sight_radius must be positive.")
+
+    if args.smell_radius <= 0.0:
+        raise ValueError("smell_radius must be positive.")
+
+    if args.initial_width <= 0.0:
+        raise ValueError("initial_width must be positive.")
+
+    if args.max_workers < 1:
+        raise ValueError("max_workers must be at least 1.")
+
+    if args.output_dir.exists() and not args.output_dir.is_dir():
+        raise ValueError("output_dir must be a directory path.")
 
     weight_lists = [args.weight_values]
     if args.w1_values is not None:

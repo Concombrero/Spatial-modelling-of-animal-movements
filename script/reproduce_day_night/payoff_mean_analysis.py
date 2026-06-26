@@ -329,7 +329,8 @@ def main():
     summary = compute_group_statistics(records, args.x_axis)
     save_plot(summary, args.x_axis, args.output, args.show_variance)
     print_summary(summary, args.x_axis, run_directories, args.output, args.show_variance)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

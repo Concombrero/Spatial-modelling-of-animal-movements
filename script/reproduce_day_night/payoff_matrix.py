@@ -20,7 +20,7 @@ if str(CURRENT_DIRECTORY) not in sys.path:
 from solver import DayNightModel1D
 
 
-OUTPUT_DIRECTORY = Path(__file__).resolve().parent / "output/Pay-off" 
+OUTPUT_DIRECTORY = Path(__file__).resolve().parent / "output/Pay-off"
 CSV_OUTPUT_PATH = OUTPUT_DIRECTORY / "payoff_matrix.csv"
 CASE_PAYOFF_OUTPUT_PATH = OUTPUT_DIRECTORY / "case_payoffs.csv"
 RUN_CONFIG_OUTPUT_PATH = OUTPUT_DIRECTORY / "run_config.json"
@@ -942,6 +942,8 @@ def validate_config(
         raise ValueError("initial_width must be positive.")
 
     build_lighting_regime(config["t_sunset"], config["dt"])
+
+
 def build_config_from_args(args):
     return build_config(
         t_sunset=args.t_sunset,

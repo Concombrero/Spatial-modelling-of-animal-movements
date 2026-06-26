@@ -1,3 +1,4 @@
+import argparse
 import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
@@ -9,6 +10,11 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
+from common_utils import (
+    DEFAULT_SMELL_RADIUS,
+    DEFAULT_SIGHT_RADIUS,
+    gaussian_initial_condition,
+)
 from solver import DayNightModel1D
 
 
@@ -19,6 +25,7 @@ NUMBER_OF_POPULATIONS = 1
 NUMBER_OF_CYCLES = 2
 CYCLE_PERIOD = 1.0
 TOTAL_TIME = NUMBER_OF_CYCLES * CYCLE_PERIOD
+DT = 0.01
 COEFFICIENT_ATTRACTION = np.array([[0.2]])
 COEFFICIENT_DIFFUSION = np.array([0.05])
 SIGHT_WEIGHTS = (0.0, 0.5, 1.0)
@@ -35,26 +42,58 @@ ACTIVITY_REGIMES = (
 )
 
 
-def gaussian_initial_condition(x, center=0.5, width=0.08):
-    x = np.asarray(x, dtype=float)
-    dx = x[1] - x[0]
-    length = (x[-1] - x[0]) + dx
-    wrapped_distance = ((x - center + 0.5 * length) % length) - 0.5 * length
-    values = np.exp(-0.5 * (wrapped_distance / width) ** 2)
-    return values / (dx * np.sum(values))
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description=(
+            "Plot one density heatmap per sight weight and activity schedule for "
+            "the single-population sleep-pattern experiments."
+        )
+    )
+    parser.add_argument(
+        "--weights",
+        nargs="+",
+        type=float,
+        default=list(SIGHT_WEIGHTS),
+        help="Sight weights w to evaluate.",
+    )
+    parser.add_argument(
+        "--number-of-points",
+        type=int,
+        default=NUMBER_OF_POINTS,
+        help="Number of spatial grid points.",
+    )
+    parser.add_argument(
+        "--dt",
+        type=float,
+        default=DT,
+        help="Output time step used by the solver.",
+    )
+    parser.add_argument(
+        "--max-workers",
+        type=int,
+        default=MAX_WORKERS,
+        help="Maximum number of worker processes across all heatmap cases.",
+    )
+    parser.add_argument(
+        "--output-path",
+        type=Path,
+        default=OUTPUT_PATH,
+        help="Path of the saved figure.",
+    )
+    return parser.parse_args()
 
 
 def format_activity_periods(periods):
     return " + ".join(f"[{start:g}, {end:g}]" for start, end in periods)
 
 
-def build_solver(sight_weight, activity_regime):
+def build_solver(sight_weight, activity_regime, number_of_points, dt):
     return DayNightModel1D(
         a_border=0.0,
         b_border=1.0,
-        number_of_points=NUMBER_OF_POINTS,
+        number_of_points=number_of_points,
         total_time=TOTAL_TIME,
-        dt=0.01,
+        dt=dt,
         initial_condition=gaussian_initial_condition,
         coefficient_attraction=COEFFICIENT_ATTRACTION,
         coefficient_diffusion=COEFFICIENT_DIFFUSION,
@@ -66,18 +105,24 @@ def build_solver(sight_weight, activity_regime):
         activity_mode="always",
         activity_periods=activity_regime["periods"],
         sight_weight=sight_weight,
-        sight_radius=0.1,
-        smell_radius=0.2,
+        sight_radius=DEFAULT_SIGHT_RADIUS,
+        smell_radius=DEFAULT_SMELL_RADIUS,
     )
 
 
-def run_case(sight_weight, activity_regime):
-    model = build_solver(sight_weight, activity_regime)
+def run_case(sight_weight, activity_regime, number_of_points, dt):
+    model = build_solver(sight_weight, activity_regime, number_of_points, dt)
     model.solve()
     return model
 
 
-def run_all_cases(activity_regimes, sight_weights):
+def run_all_cases(
+    activity_regimes,
+    sight_weights,
+    number_of_points,
+    dt,
+    max_workers=None,
+):
     models = [[None for _ in sight_weights] for _ in activity_regimes]
     case_specs = [
         (row_index, column_index, sight_weight, activity_regime)
@@ -85,9 +130,29 @@ def run_all_cases(activity_regimes, sight_weights):
         for column_index, sight_weight in enumerate(sight_weights)
     ]
 
-    with ProcessPoolExecutor(max_workers=min(MAX_WORKERS, len(case_specs))) as executor:
+    if max_workers is None:
+        max_workers = MAX_WORKERS
+
+    if max_workers <= 1:
+        for row_index, column_index, sight_weight, activity_regime in case_specs:
+            models[row_index][column_index] = run_case(
+                sight_weight,
+                activity_regime,
+                number_of_points,
+                dt,
+            )
+            print(f"Finished {activity_regime['label']}, w={sight_weight:g}", flush=True)
+        return models
+
+    with ProcessPoolExecutor(max_workers=min(max_workers, len(case_specs))) as executor:
         future_to_case = {
-            executor.submit(run_case, sight_weight, activity_regime): (
+            executor.submit(
+                run_case,
+                sight_weight,
+                activity_regime,
+                number_of_points,
+                dt,
+            ): (
                 row_index,
                 column_index,
                 sight_weight,
@@ -159,10 +224,34 @@ def save_combined_heatmaps(models, sight_weights, activity_regimes, output_path)
     plt.close(figure)
 
 
+def validate_args(args):
+    if any(weight < 0.0 or weight > 1.0 for weight in args.weights):
+        raise ValueError("All weights must lie in the interval [0, 1].")
+
+    if args.number_of_points < 2:
+        raise ValueError("number_of_points must be at least 2.")
+
+    if args.dt <= 0.0:
+        raise ValueError("dt must be positive.")
+
+    if args.max_workers < 1:
+        raise ValueError("max_workers must be at least 1.")
+
+
 def main():
-    models = run_all_cases(ACTIVITY_REGIMES, SIGHT_WEIGHTS)
-    save_combined_heatmaps(models, SIGHT_WEIGHTS, ACTIVITY_REGIMES, OUTPUT_PATH)
-    print(f"Saved heatmap to {OUTPUT_PATH}")
+    args = parse_args()
+    validate_args(args)
+    sight_weights = tuple(float(weight) for weight in args.weights)
+    output_path = args.output_path.resolve()
+    models = run_all_cases(
+        ACTIVITY_REGIMES,
+        sight_weights,
+        args.number_of_points,
+        args.dt,
+        max_workers=args.max_workers,
+    )
+    save_combined_heatmaps(models, sight_weights, ACTIVITY_REGIMES, output_path)
+    print(f"Saved heatmap to {output_path}")
     return 0
 
 
