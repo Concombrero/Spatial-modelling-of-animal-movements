@@ -17,7 +17,7 @@ CURRENT_DIRECTORY = Path(__file__).resolve().parent
 if str(CURRENT_DIRECTORY) not in sys.path:
     sys.path.insert(0, str(CURRENT_DIRECTORY))
 
-from payoff_matrix import ACTIVITY_REGIMES
+from script.reproduce_day_night.TEST.payoff_matrix import ACTIVITY_REGIMES
 
 
 CASE_PAYOFF_FILENAME = "case_payoffs.csv"
@@ -125,7 +125,6 @@ def is_run_directory(path):
         (path / CASE_PAYOFF_FILENAME).is_file()
         and (path / RUN_CONFIG_FILENAME).is_file()
     )
-
 
 def discover_run_directories(payoff_dir):
     payoff_dir = Path(payoff_dir).expanduser().resolve()

@@ -54,6 +54,9 @@ Useful variations:
 ```bash
 python3 script/reproduce_day_night/payoff_matrix.py --weights 0.25 0.75
 python3 script/reproduce_day_night/payoff_matrix.py --t-sunset 0.7
+python3 script/reproduce_day_night/payoff_matrix.py \
+  --prey-sight-radius 0.08 --predator-sight-radius 0.14 \
+  --prey-smell-radius 0.18 --predator-smell-radius 0.25
 python3 script/reproduce_day_night/payoff_matrix.py --heatmap-prey D --heatmap-predator N
 ```
 
@@ -70,6 +73,8 @@ Notes:
 
 - `--weights` and `--weight-values` are equivalent.
 - `--w1-values` and `--w2-values` can override each axis independently.
+- `--sight-radius` and `--smell-radius` remain shared shorthands; use the
+  prey/predator-specific radius flags to split the two populations.
 - `--skip-existing` reuses a completed folder only when the saved run
   configuration matches the current parameters.
 
@@ -98,7 +103,49 @@ python3 script/reproduce_day_night/payoff_mean_analysis.py \
 
 Supported x-axis values are `w1`, `w2`, `cycle1`, and `cycle2`.
 
-### 4. Run the evolutionary game
+### 4. Compute minmax, maxmin, and Nash equilibria from one payoff matrix
+
+`payoff_minmax_maxmin.py` loads a saved `payoff_matrix.csv`, computes the prey
+minmax value and the predator maxmin value, and saves the result as JSON in the
+same folder as the matrix.
+
+```bash
+python3 script/reproduce_day_night/payoff_minmax_maxmin.py \
+  --payoff-matrix script/reproduce_day_night/output/Pay-off/payoff_matrix.csv
+```
+
+Default output:
+
+- `script/reproduce_day_night/output/Pay-off/payoff_minmax_maxmin.json`
+
+`payoff_nash_equilibrium.py` loads the same matrix, builds the corresponding
+zero-sum prey-predator game, computes Nash equilibria with Nashpy, and saves
+the equilibria as JSON in the same folder.
+
+```bash
+python3 script/reproduce_day_night/payoff_nash_equilibrium.py \
+  --payoff-matrix script/reproduce_day_night/output/Pay-off/payoff_matrix.csv
+```
+
+Default output:
+
+- `script/reproduce_day_night/output/Pay-off/payoff_nash_equilibrium.json`
+
+`payoff_replicator_analysis.py` loads a saved `payoff_matrix.csv`, prints Nash
+equilibria with Nashpy, and plots asymmetric prey/predator replicator dynamics
+from the uniform initial condition.
+
+```bash
+python3 script/reproduce_day_night/payoff_replicator_analysis.py \
+  --payoff-matrix script/reproduce_day_night/output/Pay-off/payoff_matrix.csv
+```
+
+Default outputs:
+
+- `script/reproduce_day_night/output/Pay-off/replicator_analysis/prey_strategy_frequencies.png`
+- `script/reproduce_day_night/output/Pay-off/replicator_analysis/predator_strategy_frequencies.png`
+
+### 5. Run the evolutionary game
 
 `evolutionary_game.py` evolves shares of the six circadian regimes for prey and
 predator populations while keeping ecological parameters fixed during each PDE
@@ -124,11 +171,13 @@ Default outputs:
 The prey objective is to minimize overlap payoff. The predator objective is to
 maximize it. Every regime is kept above a 1% share floor.
 
-### 5. Sweep the evolutionary game over weights and radii
+### 6. Sweep the evolutionary game over weights and radii
 
 `evolutionary_game_parameter_sweep.py` runs the evolutionary game over the
 Cartesian product of `w1`, `w2`, `R_smell_1`, `R_sight_1`, `R_smell_2`, and
 `R_sight_2`.
+
+Independent parameter cases can run in parallel with `--max-workers`.
 
 ```bash
 python3 script/reproduce_day_night/evolutionary_game_parameter_sweep.py \
@@ -137,7 +186,8 @@ python3 script/reproduce_day_night/evolutionary_game_parameter_sweep.py \
     --r-smell-1-values 0.2 \
     --r-sight-1-values 0.1 \
     --r-smell-2-values 0.2 \
-    --r-sight-2-values 0.1
+  --r-sight-2-values 0.1 \
+  --max-workers 4
 ```
 
 Range syntax is also supported for every swept parameter:
@@ -154,6 +204,8 @@ python3 script/reproduce_day_night/evolutionary_game_parameter_sweep.py \
 
 By default, this sweep only keeps one share plot per parameter set in
 `script/reproduce_day_night/output/evolutionary_game_parameter_sweep/`.
+When `--echo-round-progress` is combined with more than one worker, round logs
+from different cases can interleave on stdout.
 
 ## Visualization scripts
 

@@ -573,6 +573,18 @@ class DayNightModel1D:
         )
         return self._normalise_population_profiles(values)
 
+    def set_initial_state(self, population):
+        initial_state = self._coerce_population_state(
+            population,
+            argument_name="population",
+        )
+        if not np.all(np.isfinite(initial_state)):
+            raise ValueError("population must be finite.")
+
+        self.U[0, :, :] = initial_state
+        self.U_fourier[0, :, :] = self._fft_matrix(initial_state)
+        self._solution_computed = False
+
     def _build_default_initial_condition(self):
         if self.number_of_population == 1:
             centers = [self.a_border + 0.35 * self.length]

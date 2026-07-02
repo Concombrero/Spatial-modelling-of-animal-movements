@@ -26,7 +26,7 @@ CASE_PAYOFF_OUTPUT_PATH = OUTPUT_DIRECTORY / "case_payoffs.csv"
 RUN_CONFIG_OUTPUT_PATH = OUTPUT_DIRECTORY / "run_config.json"
 HEATMAP_OUTPUT_PATH = OUTPUT_DIRECTORY / "payoff_matrix.png"
 POPULATION_HEATMAP_OUTPUT_DIRECTORY = OUTPUT_DIRECTORY / "population_heatmaps"
-NUMBER_OF_POINTS = 64
+NUMBER_OF_POINTS = 128
 NUMBER_OF_POPULATIONS = 2
 NUMBER_OF_CYCLES = 4
 CYCLE_PERIOD = 1.0
@@ -34,7 +34,7 @@ TOTAL_TIME = NUMBER_OF_CYCLES * CYCLE_PERIOD
 OBSERVATION_WINDOW = 2 * CYCLE_PERIOD
 DT = 0.1
 DAY_START = 0.0
-DEFAULT_T_SUNSET = 0.5
+DEFAULT_T_SUNSET = 0.3
 DEFAULT_WEIGHTS = (0.5, 0.5)
 DEFAULT_SIGHT_RADIUS = 0.1
 DEFAULT_SMELL_RADIUS = 0.2
@@ -158,21 +158,64 @@ def parse_args():
         metavar=("W1", "W2"),
         default=list(DEFAULT_WEIGHTS),
         help=(
-            "Sight weights for the prey and predator. Default: 0.5 0.5. "
-            "Both populations share the same sight and smell radii."
+            "Sight weights for the prey and predator. Default: 0.5 0.5."
         ),
     )
     parser.add_argument(
         "--sight-radius",
         type=float,
-        default=DEFAULT_SIGHT_RADIUS,
-        help=f"Sight radius used by both populations. Default: {DEFAULT_SIGHT_RADIUS:g}.",
+        default=None,
+        help=(
+            "Shared sight-radius shorthand applied to prey and predator unless "
+            "overridden by a population-specific flag. Default when no override "
+            f"is provided: {DEFAULT_SIGHT_RADIUS:g}."
+        ),
+    )
+    parser.add_argument(
+        "--prey-sight-radius",
+        type=float,
+        default=None,
+        help=(
+            "Sight radius used by the prey. Defaults to --sight-radius or "
+            f"{DEFAULT_SIGHT_RADIUS:g}."
+        ),
+    )
+    parser.add_argument(
+        "--predator-sight-radius",
+        type=float,
+        default=None,
+        help=(
+            "Sight radius used by the predator. Defaults to --sight-radius or "
+            f"{DEFAULT_SIGHT_RADIUS:g}."
+        ),
     )
     parser.add_argument(
         "--smell-radius",
         type=float,
-        default=DEFAULT_SMELL_RADIUS,
-        help=f"Smell radius used by both populations. Default: {DEFAULT_SMELL_RADIUS:g}.",
+        default=None,
+        help=(
+            "Shared smell-radius shorthand applied to prey and predator unless "
+            "overridden by a population-specific flag. Default when no override "
+            f"is provided: {DEFAULT_SMELL_RADIUS:g}."
+        ),
+    )
+    parser.add_argument(
+        "--prey-smell-radius",
+        type=float,
+        default=None,
+        help=(
+            "Smell radius used by the prey. Defaults to --smell-radius or "
+            f"{DEFAULT_SMELL_RADIUS:g}."
+        ),
+    )
+    parser.add_argument(
+        "--predator-smell-radius",
+        type=float,
+        default=None,
+        help=(
+            "Smell radius used by the predator. Defaults to --smell-radius or "
+            f"{DEFAULT_SMELL_RADIUS:g}."
+        ),
     )
     parser.add_argument(
         "--number-of-points",
@@ -315,6 +358,22 @@ def parse_args():
     return parser.parse_args()
 
 
+def resolve_population_parameter_pair(
+    shared_value,
+    prey_value,
+    predator_value,
+    *,
+    default_value,
+):
+    if prey_value is None:
+        prey_value = shared_value if shared_value is not None else default_value
+
+    if predator_value is None:
+        predator_value = shared_value if shared_value is not None else default_value
+
+    return (float(prey_value), float(predator_value))
+
+
 def build_lighting_regime(t_sunset, dt):
     t_sunset = float(t_sunset)
     if t_sunset < 0.0 or t_sunset > 1.0:
@@ -415,11 +474,24 @@ def build_config(
 
 
 def build_config_from_args(args):
+    sight_radius = resolve_population_parameter_pair(
+        args.sight_radius,
+        args.prey_sight_radius,
+        args.predator_sight_radius,
+        default_value=DEFAULT_SIGHT_RADIUS,
+    )
+    smell_radius = resolve_population_parameter_pair(
+        args.smell_radius,
+        args.prey_smell_radius,
+        args.predator_smell_radius,
+        default_value=DEFAULT_SMELL_RADIUS,
+    )
+
     return build_config(
         t_sunset=args.t_sunset,
         weights=args.weights,
-        sight_radius=args.sight_radius,
-        smell_radius=args.smell_radius,
+        sight_radius=sight_radius,
+        smell_radius=smell_radius,
         number_of_points=args.number_of_points,
         dt=args.dt,
         number_of_cycles=args.number_of_cycles,
@@ -945,11 +1017,24 @@ def validate_config(
 
 
 def build_config_from_args(args):
+    sight_radius = resolve_population_parameter_pair(
+        args.sight_radius,
+        args.prey_sight_radius,
+        args.predator_sight_radius,
+        default_value=DEFAULT_SIGHT_RADIUS,
+    )
+    smell_radius = resolve_population_parameter_pair(
+        args.smell_radius,
+        args.prey_smell_radius,
+        args.predator_smell_radius,
+        default_value=DEFAULT_SMELL_RADIUS,
+    )
+
     return build_config(
         t_sunset=args.t_sunset,
         weights=args.weights,
-        sight_radius=args.sight_radius,
-        smell_radius=args.smell_radius,
+        sight_radius=sight_radius,
+        smell_radius=smell_radius,
         number_of_points=args.number_of_points,
         dt=args.dt,
         number_of_cycles=args.number_of_cycles,
