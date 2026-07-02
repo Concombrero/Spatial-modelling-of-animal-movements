@@ -17,7 +17,7 @@ CURRENT_DIRECTORY = Path(__file__).resolve().parent
 if str(CURRENT_DIRECTORY) not in sys.path:
     sys.path.insert(0, str(CURRENT_DIRECTORY))
 
-from script.reproduce_day_night.TEST.payoff_matrix import ACTIVITY_REGIMES
+from payoff_matrix import ACTIVITY_REGIMES
 
 
 CASE_PAYOFF_FILENAME = "case_payoffs.csv"
