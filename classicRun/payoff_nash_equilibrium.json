@@ -1,0 +1,23 @@
+{
+  "payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/classicRun/payoff_matrix.csv",
+  "row_player": "Prey",
+  "column_player": "Predator",
+  "row_player_objective": "maximize negative payoff",
+  "column_player_objective": "maximize payoff",
+  "equilibrium_count": 1,
+  "equilibria": [
+    {
+      "prey_mixed_strategy": {
+        "D": 0.42742226889768997,
+        "P2": 0.57257773110231
+      },
+      "predator_mixed_strategy": {
+        "P1": 0.8069009793278439,
+        "M2": 0.19309902067215617
+      },
+      "prey_expected_payoff": -0.9075533006677046,
+      "predator_expected_payoff": 0.9075533006677046
+    }
+  ],
+  "warnings": []
+}

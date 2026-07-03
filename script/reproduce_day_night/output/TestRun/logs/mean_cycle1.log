@@ -1,0 +1,11 @@
+Loaded 1 payoff run(s).
+Grouped by: Circadian cycle 1
+Variance subplot: off
+Saved figure: /home/tim/Documents/Spacial Modeling of Animal Displacment/TestRun/mean_analysis/mean_vs_cycle1.png
+value,count,mean,variance
+D,6,0.8638125421,0.0017986114
+N,6,0.8939399415,0.0015916510
+P1,6,0.9084356228,0.0007789932
+P2,6,0.8677336997,0.0058612378
+M1,6,0.9086451254,0.0009871670
+M2,6,0.8610860911,0.0059147961

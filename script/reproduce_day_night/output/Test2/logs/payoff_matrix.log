@@ -1,0 +1,51 @@
+Existing case data in /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/Test2 was generated with a different configuration; restarting this folder from scratch.
+  Solving 36 payoff case(s) with 16 worker(s).
+  Finished case 1/36: prey=N, predator=N: E=0.741644
+  Finished case 2/36: prey=D, predator=D: E=0.987009
+  Finished case 3/36: prey=P1, predator=P1: E=0.973899
+  Finished case 4/36: prey=D, predator=M2: E=0.996000
+  Finished case 5/36: prey=D, predator=P2: E=0.995468
+  Finished case 6/36: prey=D, predator=M1: E=0.698898
+  Finished case 7/36: prey=N, predator=M2: E=0.972201
+  Finished case 8/36: prey=D, predator=P1: E=0.717715
+  Finished case 9/36: prey=P1, predator=N: E=0.566496
+  Finished case 10/36: prey=N, predator=M1: E=0.972058
+  Finished case 11/36: prey=N, predator=P1: E=0.986605
+  Finished case 12/36: prey=P1, predator=D: E=0.752113
+  Finished case 13/36: prey=N, predator=P2: E=0.956850
+  Finished case 14/36: prey=D, predator=N: E=0.371192
+  Finished case 15/36: prey=N, predator=D: E=0.712815
+  Finished case 16/36: prey=P1, predator=P2: E=0.911876
+  Finished case 17/36: prey=P1, predator=M1: E=0.975927
+  Finished case 18/36: prey=P1, predator=M2: E=0.994581
+  Finished case 19/36: prey=P2, predator=P2: E=0.971942
+  Finished case 20/36: prey=P2, predator=D: E=0.924319
+  Finished case 21/36: prey=M1, predator=M1: E=0.979302
+  Finished case 22/36: prey=P2, predator=N: E=0.579922
+  Finished case 23/36: prey=P2, predator=M2: E=0.974405
+  Finished case 24/36: prey=M1, predator=N: E=0.528289
+  Finished case 25/36: prey=M1, predator=P1: E=0.982804
+  Finished case 26/36: prey=M1, predator=D: E=0.834541
+  Finished case 27/36: prey=M1, predator=P2: E=0.996968
+  Finished case 28/36: prey=P2, predator=M1: E=0.533450
+  Finished case 29/36: prey=M2, predator=D: E=0.930284
+  Finished case 30/36: prey=M2, predator=N: E=0.615509
+  Finished case 31/36: prey=P2, predator=P1: E=0.564316
+  Finished case 32/36: prey=M1, predator=M2: E=0.998558
+  Finished case 33/36: prey=M2, predator=M2: E=0.966504
+  Finished case 34/36: prey=M2, predator=P2: E=0.970658
+  Finished case 35/36: prey=M2, predator=P1: E=0.541663
+  Finished case 36/36: prey=M2, predator=M1: E=0.515188
+
+Computed payoff matrix:
+Prey/Pred       D       N      P1      P2      M1      M2
+        D  0.9870  0.3712  0.7177  0.9955  0.6989  0.9960
+        N  0.7128  0.7416  0.9866  0.9568  0.9721  0.9722
+       P1  0.7521  0.5665  0.9739  0.9119  0.9759  0.9946
+       P2  0.9243  0.5799  0.5643  0.9719  0.5334  0.9744
+       M1  0.8345  0.5283  0.9828  0.9970  0.9793  0.9986
+       M2  0.9303  0.6155  0.5417  0.9707  0.5152  0.9665
+
+Saved payoff matrix CSV to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/Test2/payoff_matrix.csv
+Saved payoff matrix heatmap to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/Test2/payoff_matrix.png
+Saved 36 population heatmap file(s) to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/Test2/population_heatmaps
