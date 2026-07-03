@@ -401,7 +401,7 @@ For every ordered strategy pair $(X, Y) \in \mathcal{S} \times \mathcal{S}$, we 
 To extract evolutionary predictions, we formalize this interaction as a finite, two-player, zero-sum game defined by the matrix $\mathbf{A} = (\mathcal{E}_{X,Y})_{X,Y \in \mathcal{S}}$. Here, $\mathbf{A}$ serves as the payoff matrix for the predator, while $-\mathbf{A}$ represents the payoff matrix for the prey. We evaluate this game through a three-stage computational pipeline:
 
 \paragraph{1. Pure-Strategy Security Levels.} 
-We first determine whether deterministic, strictly unyielding behavioral strategies can guarantee survival or capture. For each prey strategy $X \in \mathcal{S}$, the worst-case predation risk is defined by its maximum exposure:
+Following the foundational principles of zero-sum games \citep{von1928zur, osborne1994course}, we first determine whether deterministic, strictly unyielding behavioral strategies can guarantee survival or capture. For each prey strategy $X \in \mathcal{S}$, the worst-case predation risk is defined by its maximum exposure:
 \begin{equation*}
     W_X = \max_{Y \in \mathcal{S}} \mathcal{E}_{X,Y}.
 \end{equation*}
@@ -416,7 +416,7 @@ The optimal pure-strategy security levels are then given by the minimax and maxi
 If $v_{\mathrm{prey}} = v_{\mathrm{pred}}$, any pair $(X^*, Y^*)$ achieving these optima constitutes a pure-strategy saddle point, indicating a stable, deterministic equilibrium.
 
 \paragraph{2. Mixed Nash Equilibria.} 
-When no pure saddle point exists, populations may polymorphicly divide into distinct behavioral phenotypes or randomly alternate between schedules over evolutionary timescales. Let $p, q \in \Delta(\mathcal{S})$ denote probability distribution vectors over the strategy space $\mathcal{S}$ for the prey and predator, respectively. The expected payoff to the predator is given by the bilinear form $p^\top \mathbf{A} q$. A mixed Nash equilibrium is a pair of strategy distributions $(p^*, q^*)$ such that neither population can unilaterally improve its expected payoff:
+When no pure saddle point exists, populations may polymorphicly divide into distinct behavioral phenotypes or randomly alternate between schedules over evolutionary timescales. Building on the seminal framework of non-cooperative games \citep{nash1951non,osborne1994course}, let $p, q \in \Delta(\mathcal{S})$ denote probability distribution vectors over the strategy space $\mathcal{S}$ for the prey and predator, respectively. The expected payoff to the predator is given by the bilinear form $p^\top \mathbf{A} q$. A mixed Nash equilibrium is a pair of strategy distributions $(p^*, q^*)$ such that neither population can unilaterally improve its expected payoff:
 \begin{equation*}
     (p^*)^\top \mathbf{A} q \leq (p^*)^\top \mathbf{A} q^* \leq p^\top \mathbf{A} q^*, \qquad \text{for all } p, q \in \Delta(\mathcal{S}).
 \end{equation*}
