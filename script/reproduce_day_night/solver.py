@@ -1074,18 +1074,40 @@ class DayNightModel1D:
 
         return normalised_density
 
-    def get_overlap_energy(self, population_indices=(0, 1), observation_window=None):
-        self._ensure_solution_computed()
-
-        if self.number_of_population < 2:
-            raise ValueError("get_overlap_energy requires at least two populations.")
-
+    def _resolve_observation_window_time(self, observation_window):
         if observation_window is None:
             observation_window = self.cycle_period
 
         observation_window = float(observation_window)
         if observation_window <= 0.0:
             raise ValueError("observation_window must be positive.")
+
+        window_start = max(self.time[-1] - observation_window, self.time[0])
+        window_mask = self.time >= (window_start - 1.0e-12)
+        return window_mask, self.time[window_mask]
+
+    def get_population_window_integral(self, population_index, observation_window=None):
+        self._ensure_solution_computed()
+
+        population_index = int(population_index)
+        if not 0 <= population_index < self.number_of_population:
+            raise IndexError("population index is out of bounds.")
+
+        window_mask, window_time = self._resolve_observation_window_time(
+            observation_window
+        )
+        density_values = np.maximum(
+            np.asarray(self.U[window_mask, :, population_index], dtype=float),
+            0.0,
+        )
+        spatial_mass = self.dx * np.sum(density_values, axis=1)
+        return float(self._integrate_trapezoid(spatial_mass, window_time))
+
+    def get_overlap_energy(self, population_indices=(0, 1), observation_window=None):
+        self._ensure_solution_computed()
+
+        if self.number_of_population < 2:
+            raise ValueError("get_overlap_energy requires at least two populations.")
 
         try:
             population_a, population_b = population_indices
@@ -1104,9 +1126,9 @@ class DayNightModel1D:
         if population_a == population_b:
             raise ValueError("population_indices must refer to two distinct populations.")
 
-        window_start = max(self.time[-1] - observation_window, self.time[0])
-        window_mask = self.time >= (window_start - 1.0e-12)
-        window_time = self.time[window_mask]
+        window_mask, window_time = self._resolve_observation_window_time(
+            observation_window
+        )
 
         density_a = self._normalise_density_time_series(
             self.U[window_mask, :, population_a]

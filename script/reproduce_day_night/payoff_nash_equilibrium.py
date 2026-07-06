@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from payoff_csv_utils import load_payoff_matrix_csv
+from payoff_csv_utils import load_payoff_game_data
 
 
 DEFAULT_PAYOFF_MATRIX_PATH = Path(__file__).resolve().parent / "output/Pay-off/payoff_matrix.csv"
@@ -15,8 +15,8 @@ DEFAULT_OUTPUT_FILENAME = "payoff_nash_equilibrium.json"
 def parse_args():
     parser = argparse.ArgumentParser(
         description=(
-            "Load a payoff matrix CSV, compute Nash equilibria with Nashpy, and "
-            "save the results as JSON next to the CSV."
+            "Load a payoff matrix file or run directory, compute Nash equilibria "
+            "with Nashpy, and save the results as JSON next to the source."
         )
     )
     parser.add_argument(
@@ -24,7 +24,7 @@ def parse_args():
         type=Path,
         default=DEFAULT_PAYOFF_MATRIX_PATH,
         help=(
-            "Path to the payoff_matrix.csv file. Default: "
+            "Path to either payoff_matrix.csv or a payoff output directory. Default: "
             f"{DEFAULT_PAYOFF_MATRIX_PATH}."
         ),
     )
@@ -42,9 +42,10 @@ def parse_args():
 
 def resolve_output_path(payoff_matrix_path, output_path):
     if output_path is None:
-        return Path(payoff_matrix_path).expanduser().resolve().with_name(
-            DEFAULT_OUTPUT_FILENAME
-        )
+        source_path = Path(payoff_matrix_path).expanduser().resolve()
+        if source_path.is_dir():
+            return source_path / DEFAULT_OUTPUT_FILENAME
+        return source_path.with_name(DEFAULT_OUTPUT_FILENAME)
     return Path(output_path).expanduser().resolve()
 
 
@@ -73,11 +74,11 @@ def _equilibrium_key(prey_probabilities, predator_probabilities):
     return rounded_prey, rounded_predator
 
 
-def compute_nash_equilibria(payoff_matrix_data):
+def compute_nash_equilibria(payoff_game_data):
     import nashpy as nash
 
-    predator_payoff_matrix = payoff_matrix_data.values
-    prey_payoff_matrix = -predator_payoff_matrix
+    prey_payoff_matrix = payoff_game_data.prey_values
+    predator_payoff_matrix = payoff_game_data.predator_values
     game = nash.Game(prey_payoff_matrix, predator_payoff_matrix)
 
     unique_equilibria = []
@@ -99,20 +100,23 @@ def compute_nash_equilibria(payoff_matrix_data):
             continue
 
         seen_keys.add(equilibrium_key)
+        prey_expected_payoff = float(
+            normalized_prey @ prey_payoff_matrix @ normalized_predator
+        )
         predator_expected_payoff = float(
             normalized_prey @ predator_payoff_matrix @ normalized_predator
         )
         unique_equilibria.append(
             {
                 "prey_mixed_strategy": _strategy_as_mapping(
-                    payoff_matrix_data.row_strategies,
+                    payoff_game_data.row_strategies,
                     normalized_prey,
                 ),
                 "predator_mixed_strategy": _strategy_as_mapping(
-                    payoff_matrix_data.column_strategies,
+                    payoff_game_data.column_strategies,
                     normalized_predator,
                 ),
-                "prey_expected_payoff": float(-predator_expected_payoff),
+                "prey_expected_payoff": prey_expected_payoff,
                 "predator_expected_payoff": predator_expected_payoff,
             }
         )
@@ -120,24 +124,38 @@ def compute_nash_equilibria(payoff_matrix_data):
     if not unique_equilibria:
         raise ValueError("Nashpy did not return any Nash equilibrium for this matrix.")
 
-    return {
-        "payoff_matrix": str(payoff_matrix_data.source_path),
-        "row_player": payoff_matrix_data.row_player_label,
-        "column_player": payoff_matrix_data.column_player_label,
-        "row_player_objective": "maximize negative payoff",
+    first_predator_path = str(payoff_game_data.predator_source_path)
+    first_prey_path = str(payoff_game_data.prey_source_path)
+
+    result = {
+        "payoff_mode": payoff_game_data.payoff_mode,
+        "prey_payoff_matrix": first_prey_path,
+        "predator_payoff_matrix": first_predator_path,
+        "row_player": payoff_game_data.row_player_label,
+        "column_player": payoff_game_data.column_player_label,
+        "row_player_objective": (
+            "maximize negative payoff"
+            if payoff_game_data.is_zero_sum
+            else "maximize payoff"
+        ),
         "column_player_objective": "maximize payoff",
         "equilibrium_count": len(unique_equilibria),
         "equilibria": unique_equilibria,
         "warnings": warning_messages,
     }
 
+    if payoff_game_data.is_zero_sum:
+        result["payoff_matrix"] = first_predator_path
+
+    return result
+
 
 def main():
     args = parse_args()
-    payoff_matrix_data = load_payoff_matrix_csv(args.payoff_matrix)
-    equilibria = compute_nash_equilibria(payoff_matrix_data)
+    payoff_game_data = load_payoff_game_data(args.payoff_matrix)
+    equilibria = compute_nash_equilibria(payoff_game_data)
 
-    output_path = resolve_output_path(payoff_matrix_data.source_path, args.output)
+    output_path = resolve_output_path(args.payoff_matrix, args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8") as handle:
         json.dump(equilibria, handle, indent=2)

@@ -15,6 +15,7 @@ MEAN_SHOW_VARIANCE="false"
 REPLICATOR_TIME_SPAN="40"
 REPLICATOR_TIME_STEPS="800"
 REPLICATOR_PLOT_STYLE="line"
+PAYOFF_MODE="overlap"
 HEATMAP_PREY_SET="false"
 HEATMAP_PREDATOR_SET="false"
 PAYOFF_ARGS=()
@@ -39,8 +40,10 @@ General options:
   --replicator-time-span FLOAT    Replicator final time. Default: 40.
   --replicator-time-steps INT     Replicator sample count. Default: 800.
   --replicator-plot-style STYLE   line or stacked. Default: line.
+    --payoff-mode MODE              overlap or population-integral. Default: overlap.
 
 Payoff-matrix options:
+    --strategy-codes LIST          Comma-separated subset of activity codes.
   --t-sunset FLOAT
   --weights W1 W2
   --sight-radius FLOAT
@@ -173,12 +176,17 @@ while (($# > 0)); do
             REPLICATOR_PLOT_STYLE=$2
             shift 2
             ;;
+        --payoff-mode)
+            require_value "$1" "$@"
+            PAYOFF_MODE=$2
+            shift 2
+            ;;
         --weights|--diffusion|--initial-centers)
             require_two_values "$1" "$@"
             PAYOFF_ARGS+=("$1" "$2" "$3")
             shift 3
             ;;
-        --t-sunset|--sight-radius|--prey-sight-radius|--predator-sight-radius|--smell-radius|--prey-smell-radius|--predator-smell-radius|--number-of-points|--dt|--number-of-cycles|--observation-window|--prey-growth|--predator-decay|--predation-rate|--conversion-rate|--chi11|--chi12|--chi21|--chi22|--initial-width|--max-workers)
+        --strategy-codes|--t-sunset|--sight-radius|--prey-sight-radius|--predator-sight-radius|--smell-radius|--prey-smell-radius|--predator-smell-radius|--number-of-points|--dt|--number-of-cycles|--observation-window|--prey-growth|--predator-decay|--predation-rate|--conversion-rate|--chi11|--chi12|--chi21|--chi22|--initial-width|--max-workers)
             require_value "$1" "$@"
             PAYOFF_ARGS+=("$1" "$2")
             shift 2
@@ -235,6 +243,8 @@ LOG_DIR=$OUTPUT_DIR/logs
 MEAN_OUTPUT_DIR=$OUTPUT_DIR/mean_analysis
 REPLICATOR_OUTPUT_DIR=$OUTPUT_DIR/replicator_analysis
 PAYOFF_MATRIX_PATH=$OUTPUT_DIR/payoff_matrix.csv
+PREY_PAYOFF_MATRIX_PATH=$OUTPUT_DIR/payoff_matrix_prey.csv
+PREDATOR_PAYOFF_MATRIX_PATH=$OUTPUT_DIR/payoff_matrix_predator.csv
 
 mkdir -p -- "$LOG_DIR" "$MEAN_OUTPUT_DIR" "$REPLICATOR_OUTPUT_DIR"
 
@@ -250,29 +260,42 @@ cd -- "$REPO_ROOT"
 run_step payoff_matrix \
     "$PYTHON_BIN" "$SCRIPT_DIR/payoff_matrix.py" \
     --output-dir "$OUTPUT_DIR" \
+    --payoff-mode "$PAYOFF_MODE" \
     "${PAYOFF_ARGS[@]}"
 
 for axis in "${MEAN_AXES[@]}"; do
     axis_slug=${axis//[^[:alnum:]_-]/_}
-    run_step "mean_${axis_slug}" \
-        "$PYTHON_BIN" "$SCRIPT_DIR/payoff_mean_analysis.py" \
-        --x-axis "$axis" \
-        --payoff-dir "$OUTPUT_DIR" \
-        --output "$MEAN_OUTPUT_DIR/mean_vs_${axis_slug}.png" \
-        --show-variance "$MEAN_SHOW_VARIANCE"
+    if [[ "$PAYOFF_MODE" == "overlap" ]]; then
+        run_step "mean_${axis_slug}" \
+            "$PYTHON_BIN" "$SCRIPT_DIR/payoff_mean_analysis.py" \
+            --x-axis "$axis" \
+            --payoff-dir "$OUTPUT_DIR" \
+            --output "$MEAN_OUTPUT_DIR/mean_vs_${axis_slug}.png" \
+            --show-variance "$MEAN_SHOW_VARIANCE"
+    else
+        for payoff_player in prey predator; do
+            run_step "mean_${axis_slug}_${payoff_player}" \
+                "$PYTHON_BIN" "$SCRIPT_DIR/payoff_mean_analysis.py" \
+                --x-axis "$axis" \
+                --payoff-dir "$OUTPUT_DIR" \
+                --output "$MEAN_OUTPUT_DIR/mean_vs_${axis_slug}_${payoff_player}.png" \
+                --show-variance "$MEAN_SHOW_VARIANCE" \
+                --payoff-player "$payoff_player"
+        done
+    fi
 done
 
 run_step minmax \
     "$PYTHON_BIN" "$SCRIPT_DIR/payoff_minmax_maxmin.py" \
-    --payoff-matrix "$PAYOFF_MATRIX_PATH"
+    --payoff-matrix "$OUTPUT_DIR"
 
 run_step nash \
     "$PYTHON_BIN" "$SCRIPT_DIR/payoff_nash_equilibrium.py" \
-    --payoff-matrix "$PAYOFF_MATRIX_PATH"
+    --payoff-matrix "$OUTPUT_DIR"
 
 run_step replicator \
     "$PYTHON_BIN" "$SCRIPT_DIR/payoff_replicator_analysis.py" \
-    --payoff-matrix "$PAYOFF_MATRIX_PATH" \
+    --payoff-matrix "$OUTPUT_DIR" \
     --time-span "$REPLICATOR_TIME_SPAN" \
     --time-steps "$REPLICATOR_TIME_STEPS" \
     --output-dir "$REPLICATOR_OUTPUT_DIR" \
@@ -280,7 +303,12 @@ run_step replicator \
 
 printf '\nPipeline completed successfully.\n'
 printf 'Main artifacts:\n'
-printf '  %s\n' "$PAYOFF_MATRIX_PATH"
+if [[ "$PAYOFF_MODE" == "overlap" ]]; then
+    printf '  %s\n' "$PAYOFF_MATRIX_PATH"
+else
+    printf '  %s\n' "$PREY_PAYOFF_MATRIX_PATH"
+    printf '  %s\n' "$PREDATOR_PAYOFF_MATRIX_PATH"
+fi
 printf '  %s\n' "$OUTPUT_DIR/payoff_minmax_maxmin.json"
 printf '  %s\n' "$OUTPUT_DIR/payoff_nash_equilibrium.json"
 printf '  %s\n' "$MEAN_OUTPUT_DIR"

@@ -57,32 +57,32 @@
 We begin with the nonlocal PDE model of population dynamics introduced by \citep{wang2023open}, which describes the evolution of a population density $u(x,t)$ over time and space. The model incorporates both diffusion and nonlocal attraction, where the attraction is mediated by a perception kernel $K$ that captures how individuals perceive their environment. The equation is given by:
 
 \begin{equation*}
-    \frac{\partial u}{\partial t}=\nabla\cdot\left[D(t)\nabla u-\chi (t) u\nabla h\right]+f(u, t),\quad h(x,t) = \int_{\Omega} K(x-y,t)m(y,t)\,dy.
+    \frac{\partial u}{\partial t}=\nabla\cdot\left[D(t)\nabla u-\chi(t) u\nabla h\right]+f(u, t),\quad h(x,t) = \int_{\Omega} K(x-y,t)m(y,t)\,dy.
 \end{equation*}
 
-Here $D$ is the diffusion coefficient corresponding to random movement, $\chi$ is the strength of the nonlocal attraction perception, it captures how strongly individuals are attracted (or repulsed) by the perceived environment if $\chi$ is positive (or negative). The function $f(u)$ is the reaction term that models local population growth or decay.  $h(x,t)$ corresponds to the perceived environment at location $x$ and time $t$ which in this case is given by the perception of the environment density $m$ at all locations $y$ and time $t$ weighted by the perception kernel $K(x-y,t)$. The perception kernel $K$ captures how individuals perceive their environment, and it can depend on both space and time. In particular, we will allow $K$ to depend on time in order to capture the impact of daylight on perception. We allow all the parameters of the model to depend on time in order to capture later the impact of the day-night cycle on the population dynamics. The function $m$ corresponds to the environment density, which can be the population density itself or another environmental factor like a resource density or an obstacle. We will firstly consider the case where $m$ is equal to the population density $u$.
+Here $D$ is the diffusion coefficient corresponding to random movement, $\chi$ is the strength of the nonlocal attraction perception. This parameter captures how strongly individuals are attracted (or repulsed) by the perceived environment if $\chi$ is positive (or negative). The function $f$ is the reaction term that models local population growth or decay.  $h(x,t)$ corresponds to the perceived environment at location $x$ and time $t$ which in this case is given by the perception of the environment density $m$ weighted by the perception kernel $K$. We allow all the parameters and function of the model to depend on time in order to capture later the impact of the day-night cycle on the population dynamics. The function $m$ corresponds to the environment density, which can be the population density itself or another environmental factor like a resource density or an obstacle. First, we consider the case where $m$ is equal to the population density $u$.
 
-For the sake of simplicity, we will consider the spatial domain $\Omega$ to be a one-dimensional periodic domain of size $L$, that is $\Omega = [0,L)$ with periodic boundary conditions. This choice allows us to focus on the impact of the day-night cycle on the population dynamics without having to deal with the additional complexity of higher-dimensional domains or different boundary conditions. For the reaction term we can consider a logistic growth term of the form $f(u,t) = r(t)u(1-u)$, where $r$ is the intrinsic growth rate of the population. However, for now we will not use it as we want to focus on the impact of the day-night cycle on the movement of the population.
+For the sake of simplicity, we will consider the spatial domain $\Omega$ to be a one-dimensional periodic domain of size $L$, that is $\Omega = [0,L)$ with periodic boundary conditions. We restrict our mathematical analysis to a one-dimensional periodic domain $\Omega = [0,L)$. This methodological choice allows us to clearly observe the impact of circadian rhythms and nonlocal perception on the population landscape, independent of complex multidimensional geometries. For the reaction term $f$, we will consider the case where $f=0$ to focus on the movement of the population. However it's possible to include a reaction term in the model to study the impact on the population growth or decay.
 
 
 \subsection{Day-night cycle}
 
-We now introduce the day-night cycle we will use to study the impact of daylight on resulting population landscapes. To begin we make the simplifying assumption that the times of sunset ($t_{\mathrm{sunset}}$) and sunrise ($t_{\mathrm{sunrise}}$) are constant. Although in reality these times vary with geographical location and time of year, our spatial domain of interest is sufficiently small to neglect geographical variation, and the seasonal variation is small enough that we do not expect it to have a significant impact on the results. We also assume that our initial condition is at sunrise, which is equivalent to the condition $t_{\mathrm{sunrise}}=0$, and that we are measuring time in days so that the cycle has period 1. Under these assumptions we define a day-night cycle as follows.
+We now introduce the day-night cycle we will use to study the impact of daylight on resulting population landscapes. To begin, we make the simplifying assumption that the times of sunset ($t_{\mathrm{sunset}}$) and sunrise ($t_{\mathrm{sunrise}}$) are constant. Although in reality these times vary with geographical location and time of year, our spatial domain of interest is sufficiently small to neglect spatial disparities, and the seasonal changes are minimal enough that we do not expect it to have a significant impact on the results. We also assume that our initial condition is at sunrise, which is equivalent to the condition $t_{\mathrm{sunrise}}=0$, and that we are measuring time in days so that the cycle has period 1. Under these assumptions we define a day-night cycle as follows.
 
 
 \begin{definition}[Day-night cycle]
-    For some $t_{\mathrm{sunset}}\in[0,1]$ we define $\mathcal{T}_{day}:=\{t\in\mathbb{R}^+:t\pmod{1}\in[0,t_{\mathrm{sunset}})\}$ and $\mathcal{T}_{night}:=\{t\in\mathbb{R}^+:t\pmod{1}\in[t_{\mathrm{sunset}},1)\}$. Then we say the partition $\mathcal{T}_{day}\oplus\mathcal{T}_{night}=\mathbb{R}^+$ is a day-night cycle.
+    For some $t_{\text{sunset}}\in[0,1]$ we define $\mathcal{T}_{\text{day}}:=\{t\in\mathbb{R}^+:t\pmod{1}\in[0,t_{\text{sunset}})\}$ and $\mathcal{T}_{\text{night}}:=\{t\in\mathbb{R}^+:t\pmod{1}\in[t_{\text{sunset}},1)\}$. Then we say the partition $\mathcal{T}_{\text{day}}\sqcup\mathcal{T}_{\text{night}}=\mathbb{R}^+$ is a day-night cycle.
 \label{daynight}
 \end{definition}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/day_night_cycle_definition.png}
-    \caption{Visualization the day-night cycle defined in Definition~\ref{daynight} with $t_{\mathrm{sunset}}=0.65$.}
+    \caption{Visualization the day-night cycle defined in Definition~\ref{daynight} with $t_{\text{sunset}}=0.65$.}
     \label{fig:day-night-cycle-definition}
 \end{figure}
 
-We see from this definition that as a result of the simplifying assumptions, namely 1-periodicity and $t_\text{sunrise}=0$, that $t_\text{sunset}$ can be interpreted as the proportion of daylight in a given day. For studying large timescale dynamics (for example over a year), these assumptions breakdown for habitats far from the equator. In the extreme example of populations living in the polar regions, a "day-night cycle" happens approximately annually rather than daily. However for populations living close to the equator, we expect these assumptions to fit the actual daily cycle. On the equator the times of both sunset and sunrise have very little deviation throughout the year (less than 30 minutes) and are approximately 12 hours apart. Therefore the day-night cycle given by Definition~\ref{daynight} with $t_{\mathrm{sunset}}=0.5$ would give an appropriate framework for studying species at the equator.
+We see from this definition, as a result of the simplifying assumptions, namely 1-periodicity and $t_\text{sunrise}=0$, that $t_\text{sunset}$ can be interpreted as the proportion of daylight in a given day. For studying large timescale dynamics (for example over a year), these assumptions break down for habitats far from the equator. In the extreme example of populations living in the polar regions, a "day-night cycle" happens approximately annually rather than daily. However, for populations living close to the equator, we expect these assumptions to fit the actual daily cycle. On the equator, the times of both sunset and sunrise have very little deviation throughout the year (less than 30 minutes) and are approximately 12 hours apart. Therefore the day-night cycle given by Definition~\ref{daynight} with $t_{\mathrm{sunset}}=0.5$ would give an appropriate framework for studying species at the equator.
 
 \subsection{Weighting perception}
 
@@ -430,6 +430,11 @@ initialized from a uniform distribution across all strategies ($p_i(0) = q_j(0) 
 
 
 \subsection{Results}
+
+\subsubsection{Sensory asymmetry and temporal arms races}
+
+To investigate the evolutionary consequences of sensory asymmetry, we simulate a scenario where a highly visual predator ($w_2 = 0.7$ and $R_{\text{sight}_2} \gg R_{\text{smell}_2}$) interacts with a primarily olfaction-reliant prey ($w_1 = 0.3$ and $R_{\text{smell}_1} \gg R_{\text{sight}_1}$) under balanced daylight conditions ($t_{\mathrm{sunset}} = 0.5$). The replicator dynamics, initialized from a uniform strategy distribution, reveal a distinct, multi-phase evolutionary trajectory characterizing a temporal arms race between the two populations.
+
 
 
 \section{Discussion}

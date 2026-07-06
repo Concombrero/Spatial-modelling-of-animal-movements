@@ -1,0 +1,37 @@
+{
+  "payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/Story_2_official/payoff_matrix.csv",
+  "row_player": "Prey",
+  "column_player": "Predator",
+  "prey": {
+    "objective": "minimize payoff",
+    "row_worst_case_values": {
+      "D": 0.998872585,
+      "N": 0.9991496616,
+      "P1": 0.9988223262,
+      "P2": 0.9988054585,
+      "M1": 0.9990344572,
+      "M2": 0.9980237091
+    },
+    "minmax_value": 0.9980237091,
+    "optimal_strategies": [
+      "M2"
+    ]
+  },
+  "predator": {
+    "objective": "maximize payoff",
+    "column_guaranteed_values": {
+      "D": 0.8983677767,
+      "N": 0.9876270687,
+      "P1": 0.9689876947,
+      "P2": 0.9759690031,
+      "M1": 0.7937599329,
+      "M2": 0.9774646823
+    },
+    "maxmin_value": 0.9876270687,
+    "optimal_strategies": [
+      "N"
+    ]
+  },
+  "saddle_point_exists": false,
+  "saddle_points": []
+}

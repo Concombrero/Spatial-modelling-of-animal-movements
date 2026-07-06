@@ -10,6 +10,11 @@
 
 Le script écrit aussi un fichier `pipeline_command.sh` pour rejouer exactement la même commande, ainsi qu'un dossier `logs/` avec un log par étape.
 
+La pipeline supporte deux définitions du payoff:
+
+1. `overlap` pour le payoff historique basé sur $\int \sqrt{u_1u_2}$.
+2. `population-integral` pour un payoff proie basé sur $\int u_1$ et un payoff prédateur basé sur $\int u_2$ sur la même fenêtre finale.
+
 ## Emplacement
 
 Script:
@@ -23,6 +28,14 @@ Depuis la racine du dépôt:
 ```bash
 bash script/reproduce_day_night/run_payoff_pipeline.sh \
   --output-dir script/reproduce_day_night/output/full_pipeline_run
+```
+
+Version avec payoffs séparés:
+
+```bash
+bash script/reproduce_day_night/run_payoff_pipeline.sh \
+  --output-dir script/reproduce_day_night/output/full_pipeline_population_integral \
+  --payoff-mode population-integral
 ```
 
 ## Exemples
@@ -69,18 +82,30 @@ bash script/reproduce_day_night/run_payoff_pipeline.sh \
 
 Le dossier passé à `--output-dir` contient normalement:
 
-- `payoff_matrix.csv`
 - `case_payoffs.csv`
 - `run_config.json`
-- `payoff_matrix.png`
 - `payoff_minmax_maxmin.json`
 - `payoff_nash_equilibrium.json`
-- `mean_analysis/mean_vs_*.png`
 - `replicator_analysis/prey_strategy_frequencies.png`
 - `replicator_analysis/predator_strategy_frequencies.png`
 - `population_heatmaps/` si tu demandes les heatmaps ou la sortie complète
 - `logs/*.log`
 - `pipeline_command.sh`
+
+En mode `overlap`, tu obtiens aussi:
+
+- `payoff_matrix.csv`
+- `payoff_matrix.png`
+- `mean_analysis/mean_vs_*.png`
+
+En mode `population-integral`, tu obtiens à la place:
+
+- `payoff_matrix_prey.csv`
+- `payoff_matrix_predator.csv`
+- `payoff_matrix_prey.png`
+- `payoff_matrix_predator.png`
+- `mean_analysis/mean_vs_*_prey.png`
+- `mean_analysis/mean_vs_*_predator.png`
 
 ## Paramètres configurables
 
@@ -101,6 +126,8 @@ Le dossier passé à `--output-dir` contient normalement:
   Nombre de points de sortie pour les courbes du replicateur.
 - `--replicator-plot-style STYLE`
   `line` ou `stacked`.
+- `--payoff-mode MODE`
+  `overlap` ou `population-integral`.
 
 ### Paramètres jour/nuit et perception
 
@@ -139,7 +166,7 @@ Interprétation pratique:
 - `--number-of-cycles INT`
   Nombre de cycles simulés.
 - `--observation-window FLOAT`
-  Fenêtre finale utilisée pour intégrer le payoff d'overlap.
+  Fenêtre finale utilisée pour intégrer le payoff choisi.
 
 ### Paramètres de réaction Lotka-Volterra
 
@@ -167,7 +194,7 @@ Ces paramètres changent la pression écologique globale et peuvent rendre l'év
 - `--diffusion D1 D2`
   Diffusions des proies et des prédateurs.
 
-Ces paramètres modifient la séparation ou le regroupement spatial, donc directement l'overlap utilisé comme payoff.
+Ces paramètres modifient la séparation ou le regroupement spatial, donc directement le payoff intégré sur la fenêtre finale.
 
 ### Conditions initiales
 

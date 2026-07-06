@@ -49,6 +49,7 @@ PARAMETER_LABELS = {
     "cycle1": "Circadian cycle 1",
     "cycle2": "Circadian cycle 2",
 }
+PAYOFF_PLAYER_CHOICES = ("auto", "legacy", "prey", "predator")
 
 
 def parse_bool(value):
@@ -117,6 +118,17 @@ def parse_args():
             "Default: false."
         ),
     )
+    parser.add_argument(
+        "--payoff-player",
+        choices=PAYOFF_PLAYER_CHOICES,
+        default="auto",
+        help=(
+            "Which payoff column to average. 'legacy' uses the historical single "
+            "payoff column, 'prey' uses prey_payoff, 'predator' uses predator_payoff. "
+            "'auto' uses 'payoff' when it is the only available value column and "
+            "otherwise requires an explicit prey/predator choice. Default: auto."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -155,20 +167,64 @@ def load_run_weights(run_directory):
     return float(weights[0]), float(weights[1])
 
 
-def load_records(run_directory):
+def resolve_payoff_column(case_payoff_path, fieldnames, payoff_player):
+    available_fields = set(fieldnames or [])
+
+    if payoff_player == "legacy":
+        if "payoff" not in available_fields:
+            raise ValueError(
+                f"Column 'payoff' is not available in {case_payoff_path}."
+            )
+        return "payoff", "payoff"
+
+    if payoff_player == "prey":
+        if "prey_payoff" not in available_fields:
+            raise ValueError(
+                f"Column 'prey_payoff' is not available in {case_payoff_path}."
+            )
+        return "prey_payoff", "prey"
+
+    if payoff_player == "predator":
+        if "predator_payoff" not in available_fields:
+            raise ValueError(
+                f"Column 'predator_payoff' is not available in {case_payoff_path}."
+            )
+        return "predator_payoff", "predator"
+
+    if "payoff" in available_fields:
+        return "payoff", "payoff"
+
+    if {"prey_payoff", "predator_payoff"}.issubset(available_fields):
+        raise ValueError(
+            "This run stores separate prey and predator payoffs. "
+            "Choose --payoff-player prey or --payoff-player predator."
+        )
+
+    raise ValueError(
+        f"Could not find a supported payoff column in {case_payoff_path}."
+    )
+
+
+def load_records(run_directory, payoff_player):
     w1, w2 = load_run_weights(run_directory)
     case_payoff_path = run_directory / CASE_PAYOFF_FILENAME
     records = []
 
     with case_payoff_path.open("r", encoding="utf-8", newline="") as handle:
         reader = csv.DictReader(handle)
-        required_fields = {"prey", "predator", "payoff"}
+        required_fields = {"prey", "predator"}
         missing_fields = required_fields.difference(reader.fieldnames or [])
         if missing_fields:
             missing_as_text = ", ".join(sorted(missing_fields))
             raise ValueError(
                 f"Missing columns {missing_as_text} in {case_payoff_path}."
             )
+
+        payoff_column, _ = resolve_payoff_column(
+            case_payoff_path,
+            reader.fieldnames,
+            payoff_player,
+        )
 
         for row in reader:
             records.append(
@@ -177,14 +233,14 @@ def load_records(run_directory):
                     "w2": w2,
                     "cycle1": row["prey"].strip(),
                     "cycle2": row["predator"].strip(),
-                    "payoff": float(row["payoff"]),
+                    "payoff": float(row[payoff_column]),
                 }
             )
 
     return records
 
 
-def collect_records(payoff_dir):
+def collect_records(payoff_dir, payoff_player):
     run_directories = discover_run_directories(payoff_dir)
     if not run_directories:
         raise FileNotFoundError(
@@ -194,7 +250,7 @@ def collect_records(payoff_dir):
 
     records = []
     for run_directory in run_directories:
-        records.extend(load_records(run_directory))
+        records.extend(load_records(run_directory, payoff_player))
 
     if not records:
         raise ValueError("The selected payoff folder does not contain any payoff rows.")
@@ -251,7 +307,26 @@ def plot_categorical_series(axis, x_labels, y_values, y_label, color):
     axis.grid(True, axis="y", alpha=0.25)
 
 
-def save_plot(summary, parameter, output_path, show_variance):
+def payoff_axis_label(payoff_player):
+    if payoff_player == "prey":
+        return "Mean prey payoff"
+    if payoff_player == "predator":
+        return "Mean predator payoff"
+    return "Mean payoff"
+
+
+def payoff_title(parameter, payoff_player):
+    if payoff_player == "prey":
+        return PARAMETER_TITLES[parameter].replace("Mean payoff", "Mean prey payoff")
+    if payoff_player == "predator":
+        return PARAMETER_TITLES[parameter].replace(
+            "Mean payoff",
+            "Mean predator payoff",
+        )
+    return PARAMETER_TITLES[parameter]
+
+
+def save_plot(summary, parameter, output_path, show_variance, payoff_player):
     output_path = Path(output_path).expanduser().resolve()
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -259,6 +334,7 @@ def save_plot(summary, parameter, output_path, show_variance):
     x_values = [item["x"] for item in summary]
     means = [item["mean"] for item in summary]
     variances = [item["variance"] for item in summary]
+    mean_label = payoff_axis_label(payoff_player)
 
     if show_variance:
         figure, axes = plt.subplots(
@@ -275,7 +351,7 @@ def save_plot(summary, parameter, output_path, show_variance):
 
     if is_numeric:
         numeric_x_values = [float(value) for value in x_values]
-        plot_numeric_series(mean_axis, numeric_x_values, means, "Mean payoff", "tab:blue")
+        plot_numeric_series(mean_axis, numeric_x_values, means, mean_label, "tab:blue")
         mean_axis.set_xlabel(PARAMETER_LABELS[parameter])
         if variance_axis is not None:
             plot_numeric_series(
@@ -288,7 +364,7 @@ def save_plot(summary, parameter, output_path, show_variance):
             variance_axis.set_xlabel(PARAMETER_LABELS[parameter])
     else:
         category_labels = [format_cycle_tick_label(value) for value in x_values]
-        plot_categorical_series(mean_axis, category_labels, means, "Mean payoff", "tab:blue")
+        plot_categorical_series(mean_axis, category_labels, means, mean_label, "tab:blue")
         mean_axis.set_xlabel(PARAMETER_LABELS[parameter])
         if variance_axis is not None:
             plot_categorical_series(
@@ -300,14 +376,23 @@ def save_plot(summary, parameter, output_path, show_variance):
             )
             variance_axis.set_xlabel(PARAMETER_LABELS[parameter])
 
-    figure.suptitle(PARAMETER_TITLES[parameter])
+    figure.suptitle(payoff_title(parameter, payoff_player))
     figure.savefig(output_path, dpi=300)
     plt.close(figure)
 
 
-def print_summary(summary, parameter, run_directories, output_path, show_variance):
+def print_summary(
+    summary,
+    parameter,
+    run_directories,
+    output_path,
+    show_variance,
+    payoff_player,
+):
     print(f"Loaded {len(run_directories)} payoff run(s).")
     print(f"Grouped by: {PARAMETER_LABELS[parameter]}")
+    if payoff_player != "auto":
+        print(f"Payoff column: {payoff_player}")
     print(f"Variance subplot: {'on' if show_variance else 'off'}")
     print(f"Saved figure: {output_path}")
     print("value,count,mean,variance")
@@ -324,10 +409,23 @@ def print_summary(summary, parameter, run_directories, output_path, show_varianc
 
 def main():
     args = parse_args()
-    run_directories, records = collect_records(args.payoff_dir)
+    run_directories, records = collect_records(args.payoff_dir, args.payoff_player)
     summary = compute_group_statistics(records, args.x_axis)
-    save_plot(summary, args.x_axis, args.output, args.show_variance)
-    print_summary(summary, args.x_axis, run_directories, args.output, args.show_variance)
+    save_plot(
+        summary,
+        args.x_axis,
+        args.output,
+        args.show_variance,
+        args.payoff_player,
+    )
+    print_summary(
+        summary,
+        args.x_axis,
+        run_directories,
+        args.output,
+        args.show_variance,
+        args.payoff_player,
+    )
     return 0
 
 

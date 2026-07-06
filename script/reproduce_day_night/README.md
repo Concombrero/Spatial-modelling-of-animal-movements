@@ -34,8 +34,8 @@ The payoff and evolutionary scripts use the following activity codes:
 
 ### 1. Compute one payoff matrix
 
-`payoff_matrix.py` computes the 6x6 prey-predator payoff matrix from the final
-overlap energy.
+`payoff_matrix.py` computes the 6x6 prey-predator payoff data from the final
+observation window.
 
 ```bash
 python3 script/reproduce_day_night/payoff_matrix.py
@@ -48,6 +48,41 @@ Default outputs:
 - `script/reproduce_day_night/output/Pay-off/run_config.json`
 - `script/reproduce_day_night/output/Pay-off/payoff_matrix.png`
 - `script/reproduce_day_night/output/Pay-off/population_heatmaps/`
+
+By default the script uses the legacy overlap payoff
+
+$$
+\int \sqrt{u_1 u_2}
+$$
+
+over the final observation window and writes the single predator payoff matrix
+used by the zero-sum workflow.
+
+You can switch to a population-specific payoff with:
+
+```bash
+python3 script/reproduce_day_night/payoff_matrix.py --payoff-mode population-integral
+```
+
+In that mode the script keeps the same observation window but writes two payoff
+matrices instead:
+
+- `script/reproduce_day_night/output/Pay-off/payoff_matrix_prey.csv`
+- `script/reproduce_day_night/output/Pay-off/payoff_matrix_predator.csv`
+- `script/reproduce_day_night/output/Pay-off/payoff_matrix_prey.png`
+- `script/reproduce_day_night/output/Pay-off/payoff_matrix_predator.png`
+
+where the prey payoff is based on
+
+$$
+\int u_1
+$$
+
+and the predator payoff is based on
+
+$$
+\int u_2.
+$$
 
 Useful variations:
 
@@ -101,43 +136,55 @@ python3 script/reproduce_day_night/payoff_mean_analysis.py \
     --show-variance true
 ```
 
+For population-specific payoff runs, choose which matrix to average:
+
+```bash
+python3 script/reproduce_day_night/payoff_mean_analysis.py \
+  --x-axis cycle1 \
+  --payoff-dir script/reproduce_day_night/output/Pay-off \
+  --output script/reproduce_day_night/output/Pay-off/mean_vs_cycle1_prey.png \
+  --payoff-player prey
+```
+
 Supported x-axis values are `w1`, `w2`, `cycle1`, and `cycle2`.
 
 ### 4. Compute minmax, maxmin, and Nash equilibria from one payoff matrix
 
-`payoff_minmax_maxmin.py` loads a saved `payoff_matrix.csv`, computes the prey
-minmax value and the predator maxmin value, and saves the result as JSON in the
-same folder as the matrix.
+`payoff_minmax_maxmin.py` loads either a saved `payoff_matrix.csv` or a payoff
+run directory. For the legacy overlap workflow it computes the prey minmax
+value and the predator maxmin value. For the population-specific payoff mode it
+computes each player's own maximin security value from its own matrix and saves
+the result as JSON in the same folder.
 
 ```bash
 python3 script/reproduce_day_night/payoff_minmax_maxmin.py \
-  --payoff-matrix script/reproduce_day_night/output/Pay-off/payoff_matrix.csv
+  --payoff-matrix script/reproduce_day_night/output/Pay-off
 ```
 
 Default output:
 
 - `script/reproduce_day_night/output/Pay-off/payoff_minmax_maxmin.json`
 
-`payoff_nash_equilibrium.py` loads the same matrix, builds the corresponding
-zero-sum prey-predator game, computes Nash equilibria with Nashpy, and saves
-the equilibria as JSON in the same folder.
+`payoff_nash_equilibrium.py` loads the same source, builds the corresponding
+zero-sum or two-matrix prey-predator game, computes Nash equilibria with
+Nashpy, and saves the equilibria as JSON in the same folder.
 
 ```bash
 python3 script/reproduce_day_night/payoff_nash_equilibrium.py \
-  --payoff-matrix script/reproduce_day_night/output/Pay-off/payoff_matrix.csv
+  --payoff-matrix script/reproduce_day_night/output/Pay-off
 ```
 
 Default output:
 
 - `script/reproduce_day_night/output/Pay-off/payoff_nash_equilibrium.json`
 
-`payoff_replicator_analysis.py` loads a saved `payoff_matrix.csv`, prints Nash
-equilibria with Nashpy, and plots asymmetric prey/predator replicator dynamics
-from the uniform initial condition.
+`payoff_replicator_analysis.py` loads a saved `payoff_matrix.csv` or a payoff
+run directory, prints Nash equilibria with Nashpy, and plots asymmetric
+prey/predator replicator dynamics from the uniform initial condition.
 
 ```bash
 python3 script/reproduce_day_night/payoff_replicator_analysis.py \
-  --payoff-matrix script/reproduce_day_night/output/Pay-off/payoff_matrix.csv
+  --payoff-matrix script/reproduce_day_night/output/Pay-off
 ```
 
 Default outputs:

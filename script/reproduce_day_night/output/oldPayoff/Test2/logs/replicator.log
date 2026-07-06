@@ -1,0 +1,33 @@
+Predator payoff matrix A:
+[[0.999  0.8862 0.9928 0.9886 0.9888 0.9889]
+ [0.992  0.9894 0.9951 0.9914 0.9959 0.9896]
+ [0.9926 0.9946 0.9983 0.996  0.997  0.9912]
+ [0.9994 0.9879 0.9967 0.9976 0.9952 0.9986]
+ [0.9934 0.9787 0.9983 0.991  0.9982 0.9592]
+ [0.9994 0.997  0.9969 0.9961 0.9852 0.9977]]
+
+Prey strategies:
+  1. D
+  2. N
+  3. P1
+  4. P2
+  5. M1
+  6. M2
+
+Predator strategies:
+  1. D
+  2. N
+  3. P1
+  4. P2
+  5. M1
+  6. M2
+
+Found 1 Nash equilibrium result(s):
+  Equilibrium 1:
+    Algorithm: support_enumeration
+    Prey mixed strategy: D=0.330700, N=0.669300
+    Predator mixed strategy: D=0.253211, P1=0.746789
+    Expected payoffs: prey=-0.994344, predator=0.994344
+
+Saved prey strategy plot to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/Test2/replicator_analysis/prey_strategy_frequencies.png
+Saved predator strategy plot to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/Test2/replicator_analysis/predator_strategy_frequencies.png

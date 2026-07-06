@@ -22,9 +22,13 @@ from solver import DayNightModel1D
 
 OUTPUT_DIRECTORY = Path(__file__).resolve().parent / "output/Pay-off"
 CSV_OUTPUT_PATH = OUTPUT_DIRECTORY / "payoff_matrix.csv"
+PREY_CSV_OUTPUT_PATH = OUTPUT_DIRECTORY / "payoff_matrix_prey.csv"
+PREDATOR_CSV_OUTPUT_PATH = OUTPUT_DIRECTORY / "payoff_matrix_predator.csv"
 CASE_PAYOFF_OUTPUT_PATH = OUTPUT_DIRECTORY / "case_payoffs.csv"
 RUN_CONFIG_OUTPUT_PATH = OUTPUT_DIRECTORY / "run_config.json"
 HEATMAP_OUTPUT_PATH = OUTPUT_DIRECTORY / "payoff_matrix.png"
+PREY_HEATMAP_OUTPUT_PATH = OUTPUT_DIRECTORY / "payoff_matrix_prey.png"
+PREDATOR_HEATMAP_OUTPUT_PATH = OUTPUT_DIRECTORY / "payoff_matrix_predator.png"
 POPULATION_HEATMAP_OUTPUT_DIRECTORY = OUTPUT_DIRECTORY / "population_heatmaps"
 NUMBER_OF_POINTS = 128
 NUMBER_OF_POPULATIONS = 2
@@ -52,6 +56,12 @@ DEFAULT_REACTION_RATES = {
     "conversion_rate": 0.08,
 }
 MAX_WORKERS = min(16, os.cpu_count() or 1)
+OVERLAP_PAYOFF_MODE = "overlap"
+POPULATION_INTEGRAL_PAYOFF_MODE = "population-integral"
+PAYOFF_MODE_CHOICES = (
+    OVERLAP_PAYOFF_MODE,
+    POPULATION_INTEGRAL_PAYOFF_MODE,
+)
 ACTIVITY_REGIMES = (
     {"code": "D", "label": "Diurnal", "periods": [(0.0, 0.5)]},
     {"code": "N", "label": "Nocturnal", "periods": [(0.5, 1.0)]},
@@ -142,7 +152,8 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description=(
             "Compute the 6x6 prey-predator payoff matrix defined in the paper "
-            "using the final-cycle overlap energy."
+            "using either the legacy overlap energy or population-specific "
+            "final-window integrals."
         )
     )
     parser.add_argument(
@@ -242,6 +253,17 @@ def parse_args():
         help="Final-time window used in the overlap integral. Default: 1.0.",
     )
     parser.add_argument(
+        "--payoff-mode",
+        choices=PAYOFF_MODE_CHOICES,
+        default=OVERLAP_PAYOFF_MODE,
+        help=(
+            "Payoff functional used over the final observation window. "
+            "'overlap' keeps the legacy sqrt(u1*u2) overlap payoff. "
+            "'population-integral' uses the raw u1 integral for the prey payoff "
+            "and the raw u2 integral for the predator payoff. Default: overlap."
+        ),
+    )
+    parser.add_argument(
         "--prey-growth",
         type=float,
         default=DEFAULT_REACTION_RATES["prey_growth"],
@@ -333,6 +355,14 @@ def parse_args():
         help="Directory where the CSV and figures are saved.",
     )
     parser.add_argument(
+        "--strategy-codes",
+        type=str,
+        help=(
+            "Optional comma-separated subset of activity codes to include in the "
+            "payoff matrix, for example D,N,P1,M1. Default: all six codes."
+        ),
+    )
+    parser.add_argument(
         "--heatmap-prey",
         choices=ACTIVITY_REGIME_CODES,
         help=(
@@ -372,6 +402,30 @@ def resolve_population_parameter_pair(
         predator_value = shared_value if shared_value is not None else default_value
 
     return (float(prey_value), float(predator_value))
+
+
+def resolve_activity_regimes(strategy_codes_text):
+    if strategy_codes_text is None:
+        return ACTIVITY_REGIMES
+
+    regime_by_code = {regime["code"]: regime for regime in ACTIVITY_REGIMES}
+    selected_regimes = []
+    seen_codes = set()
+    for raw_code in str(strategy_codes_text).split(","):
+        strategy_code = raw_code.strip()
+        if not strategy_code:
+            continue
+        if strategy_code not in regime_by_code:
+            raise ValueError(f"Unknown strategy code: {strategy_code}")
+        if strategy_code in seen_codes:
+            continue
+        selected_regimes.append(regime_by_code[strategy_code])
+        seen_codes.add(strategy_code)
+
+    if not selected_regimes:
+        raise ValueError("--strategy-codes must include at least one valid code.")
+
+    return tuple(selected_regimes)
 
 
 def build_lighting_regime(t_sunset, dt):
@@ -440,6 +494,7 @@ def build_config(
     dt,
     number_of_cycles,
     observation_window,
+    payoff_mode=OVERLAP_PAYOFF_MODE,
     initial_centers,
     initial_width,
     diffusion,
@@ -461,6 +516,7 @@ def build_config(
         "dt": float(dt),
         "number_of_cycles": int(number_of_cycles),
         "observation_window": float(observation_window),
+        "payoff_mode": str(payoff_mode),
         "initial_centers": tuple(float(center) for center in initial_centers),
         "initial_width": float(initial_width),
         "diffusion": tuple(float(value) for value in diffusion),
@@ -548,12 +604,37 @@ def build_solver(prey_regime, predator_regime, config):
 def solve_case(prey_regime, predator_regime, config):
     model = build_solver(prey_regime, predator_regime, config)
     model.solve()
-    raw_payoff_value = model.get_overlap_energy(
-        population_indices=(0, 1),
-        observation_window=config["observation_window"],
-    )
-    payoff_value = raw_payoff_value / (config["observation_window"] / CYCLE_PERIOD)
-    return model, float(payoff_value)
+
+    payoff_mode = config.get("payoff_mode", OVERLAP_PAYOFF_MODE)
+    normalisation = config["observation_window"] / CYCLE_PERIOD
+
+    if payoff_mode == OVERLAP_PAYOFF_MODE:
+        raw_predator_payoff = model.get_overlap_energy(
+            population_indices=(0, 1),
+            observation_window=config["observation_window"],
+        )
+        predator_payoff = float(raw_predator_payoff / normalisation)
+        prey_payoff = -predator_payoff
+        return model, prey_payoff, predator_payoff
+
+    if payoff_mode == POPULATION_INTEGRAL_PAYOFF_MODE:
+        prey_payoff = float(
+            model.get_population_window_integral(
+                0,
+                observation_window=config["observation_window"],
+            )
+            / normalisation
+        )
+        predator_payoff = float(
+            model.get_population_window_integral(
+                1,
+                observation_window=config["observation_window"],
+            )
+            / normalisation
+        )
+        return model, prey_payoff, predator_payoff
+
+    raise ValueError(f"Unsupported payoff_mode: {payoff_mode!r}")
 
 
 def build_population_heatmap_output_path(output_directory, prey_regime, predator_regime):
@@ -613,6 +694,26 @@ def should_save_population_heatmaps(
     )
 
 
+def format_case_payoff_summary(prey_payoff, predator_payoff, payoff_mode):
+    if payoff_mode == OVERLAP_PAYOFF_MODE:
+        return f"E={predator_payoff:.6f}"
+
+    return (
+        f"prey={prey_payoff:.6f}, "
+        f"predator={predator_payoff:.6f}"
+    )
+
+
+def format_population_heatmap_payoff_summary(prey_payoff, predator_payoff, payoff_mode):
+    if payoff_mode == OVERLAP_PAYOFF_MODE:
+        return f"$\\mathcal{{E}}={predator_payoff:.3f}$"
+
+    return (
+        f"prey payoff={prey_payoff:.3f}, "
+        f"predator payoff={predator_payoff:.3f}"
+    )
+
+
 def run_single_case(
     prey_index,
     predator_index,
@@ -623,7 +724,11 @@ def run_single_case(
     heatmap_prey_code=None,
     heatmap_predator_code=None,
 ):
-    model, payoff_value = solve_case(prey_regime, predator_regime, config)
+    model, prey_payoff, predator_payoff = solve_case(
+        prey_regime,
+        predator_regime,
+        config,
+    )
 
     if population_heatmap_output_directory is not None and should_save_population_heatmaps(
         prey_regime,
@@ -642,17 +747,27 @@ def run_single_case(
             ),
             config["t_sunset"],
             config["weights"],
-            payoff_value,
+            prey_payoff,
+            predator_payoff,
+            config.get("payoff_mode", OVERLAP_PAYOFF_MODE),
         )
 
-    return prey_index, predator_index, float(payoff_value)
+    return prey_index, predator_index, float(prey_payoff), float(predator_payoff)
 
 
-def load_case_payoff_matrix(activity_regimes, output_path):
-    matrix = np.full((len(activity_regimes), len(activity_regimes)), np.nan, dtype=float)
+def build_empty_payoff_matrices(activity_regimes):
+    shape = (len(activity_regimes), len(activity_regimes))
+    return {
+        "prey": np.full(shape, np.nan, dtype=float),
+        "predator": np.full(shape, np.nan, dtype=float),
+    }
+
+
+def load_case_payoff_matrices(activity_regimes, output_path, payoff_mode):
+    matrices = build_empty_payoff_matrices(activity_regimes)
     output_path = Path(output_path)
     if not output_path.exists():
-        return matrix
+        return matrices
 
     regime_index_by_code = {
         regime["code"]: index for index, regime in enumerate(activity_regimes)
@@ -663,23 +778,46 @@ def load_case_payoff_matrix(activity_regimes, output_path):
         for row in reader:
             prey_code = row.get("prey")
             predator_code = row.get("predator")
-            payoff_text = row.get("payoff")
-            if (
-                prey_code not in regime_index_by_code
-                or predator_code not in regime_index_by_code
-                or payoff_text is None
-            ):
+            if prey_code not in regime_index_by_code or predator_code not in regime_index_by_code:
                 continue
 
-            matrix[
-                regime_index_by_code[prey_code],
-                regime_index_by_code[predator_code],
-            ] = float(payoff_text)
+            if payoff_mode == OVERLAP_PAYOFF_MODE:
+                payoff_text = row.get("payoff")
+                prey_text = row.get("prey_payoff")
+                predator_text = row.get("predator_payoff")
+                if payoff_text not in {None, ""}:
+                    predator_payoff = float(payoff_text)
+                    prey_payoff = -predator_payoff
+                elif prey_text not in {None, ""} and predator_text not in {None, ""}:
+                    prey_payoff = float(prey_text)
+                    predator_payoff = float(predator_text)
+                else:
+                    continue
+            else:
+                prey_text = row.get("prey_payoff")
+                predator_text = row.get("predator_payoff")
+                if prey_text in {None, ""} or predator_text in {None, ""}:
+                    continue
+                prey_payoff = float(prey_text)
+                predator_payoff = float(predator_text)
 
-    return matrix
+            row_index = regime_index_by_code[prey_code]
+            column_index = regime_index_by_code[predator_code]
+            matrices["prey"][row_index, column_index] = prey_payoff
+            matrices["predator"][row_index, column_index] = predator_payoff
+
+    return matrices
 
 
-def initialise_case_payoff_output(output_path):
+def load_case_payoff_matrix(activity_regimes, output_path):
+    return load_case_payoff_matrices(
+        activity_regimes,
+        output_path,
+        OVERLAP_PAYOFF_MODE,
+    )["predator"]
+
+
+def initialise_case_payoff_output(output_path, payoff_mode):
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     if output_path.exists():
@@ -687,14 +825,42 @@ def initialise_case_payoff_output(output_path):
 
     with output_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
-        writer.writerow(["prey", "predator", "payoff"])
+        if payoff_mode == OVERLAP_PAYOFF_MODE:
+            writer.writerow(["prey", "predator", "payoff", "prey_payoff", "predator_payoff"])
+        else:
+            writer.writerow(["prey", "predator", "prey_payoff", "predator_payoff"])
 
 
-def append_case_payoff(output_path, prey_code, predator_code, payoff_value):
-    initialise_case_payoff_output(output_path)
+def append_case_payoff(
+    output_path,
+    prey_code,
+    predator_code,
+    prey_payoff,
+    predator_payoff,
+    payoff_mode,
+):
+    initialise_case_payoff_output(output_path, payoff_mode)
     with Path(output_path).open("a", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
-        writer.writerow([prey_code, predator_code, f"{float(payoff_value):.10f}"])
+        if payoff_mode == OVERLAP_PAYOFF_MODE:
+            writer.writerow(
+                [
+                    prey_code,
+                    predator_code,
+                    f"{float(predator_payoff):.10f}",
+                    f"{float(prey_payoff):.10f}",
+                    f"{float(predator_payoff):.10f}",
+                ]
+            )
+        else:
+            writer.writerow(
+                [
+                    prey_code,
+                    predator_code,
+                    f"{float(prey_payoff):.10f}",
+                    f"{float(predator_payoff):.10f}",
+                ]
+            )
 
 
 def run_all_cases(
@@ -707,23 +873,32 @@ def run_all_cases(
     case_payoff_output_path=None,
     echo=True,
 ):
+    payoff_mode = config.get("payoff_mode", OVERLAP_PAYOFF_MODE)
     if case_payoff_output_path is None:
-        matrix = np.full((len(activity_regimes), len(activity_regimes)), np.nan, dtype=float)
+        payoff_matrices = build_empty_payoff_matrices(activity_regimes)
     else:
-        matrix = load_case_payoff_matrix(activity_regimes, case_payoff_output_path)
+        payoff_matrices = load_case_payoff_matrices(
+            activity_regimes,
+            case_payoff_output_path,
+            payoff_mode,
+        )
+
+    completed_mask = np.isfinite(payoff_matrices["prey"]) & np.isfinite(
+        payoff_matrices["predator"]
+    )
 
     case_specs = [
         (prey_index, predator_index, prey_regime, predator_regime)
         for prey_index, prey_regime in enumerate(activity_regimes)
         for predator_index, predator_regime in enumerate(activity_regimes)
-        if not np.isfinite(matrix[prey_index, predator_index])
+        if not completed_mask[prey_index, predator_index]
     ]
 
     if case_payoff_output_path is not None:
-        initialise_case_payoff_output(case_payoff_output_path)
+        initialise_case_payoff_output(case_payoff_output_path, payoff_mode)
 
     if not case_specs:
-        return matrix
+        return payoff_matrices
 
     total_case_count = len(case_specs)
 
@@ -740,7 +915,7 @@ def run_all_cases(
             prey_regime,
             predator_regime,
         ) in enumerate(case_specs, start=1):
-            _, _, payoff_value = run_single_case(
+            _, _, prey_payoff, predator_payoff = run_single_case(
                 prey_index,
                 predator_index,
                 prey_regime,
@@ -750,22 +925,25 @@ def run_all_cases(
                 heatmap_prey_code,
                 heatmap_predator_code,
             )
-            matrix[prey_index, predator_index] = payoff_value
+            payoff_matrices["prey"][prey_index, predator_index] = prey_payoff
+            payoff_matrices["predator"][prey_index, predator_index] = predator_payoff
             if case_payoff_output_path is not None:
                 append_case_payoff(
                     case_payoff_output_path,
                     prey_regime["code"],
                     predator_regime["code"],
-                    payoff_value,
+                    prey_payoff,
+                    predator_payoff,
+                    payoff_mode,
                 )
             if echo:
                 print(
                     f"  Finished case {completed_case_count}/{total_case_count}: "
                     f"prey={prey_regime['code']}, predator={predator_regime['code']}: "
-                    f"E={payoff_value:.6f}",
+                    f"{format_case_payoff_summary(prey_payoff, predator_payoff, payoff_mode)}",
                     flush=True,
                 )
-        return matrix
+        return payoff_matrices
 
     worker_count = min(max_workers, len(case_specs))
     if echo:
@@ -794,19 +972,23 @@ def run_all_cases(
 
         for completed_case_count, future in enumerate(as_completed(future_to_case), start=1):
             prey_code, predator_code = future_to_case[future]
-            prey_index, predator_index, payoff_value = future.result()
-            matrix[prey_index, predator_index] = payoff_value
+            prey_index, predator_index, prey_payoff, predator_payoff = future.result()
+            payoff_matrices["prey"][prey_index, predator_index] = prey_payoff
+            payoff_matrices["predator"][prey_index, predator_index] = predator_payoff
             if case_payoff_output_path is not None:
                 append_case_payoff(
                     case_payoff_output_path,
                     prey_code,
                     predator_code,
-                    payoff_value,
+                    prey_payoff,
+                    predator_payoff,
+                    payoff_mode,
                 )
             if echo:
                 print(
                     f"  Finished case {completed_case_count}/{total_case_count}: "
-                    f"prey={prey_code}, predator={predator_code}: E={payoff_value:.6f}",
+                    f"prey={prey_code}, predator={predator_code}: "
+                    f"{format_case_payoff_summary(prey_payoff, predator_payoff, payoff_mode)}",
                     flush=True,
                 )
     except KeyboardInterrupt:
@@ -822,7 +1004,7 @@ def run_all_cases(
         if not interrupted:
             executor.shutdown(wait=True)
 
-    return matrix
+    return payoff_matrices
 
 
 def save_payoff_csv(matrix, activity_regimes, output_path):
@@ -834,7 +1016,16 @@ def save_payoff_csv(matrix, activity_regimes, output_path):
             writer.writerow([prey_regime["code"]] + [f"{value:.10f}" for value in row])
 
 
-def save_payoff_heatmap(matrix, activity_regimes, output_path, t_sunset, weights):
+def save_payoff_heatmap(
+    matrix,
+    activity_regimes,
+    output_path,
+    t_sunset,
+    weights,
+    *,
+    title,
+    colorbar_label,
+):
     output_path.parent.mkdir(parents=True, exist_ok=True)
     labels = [regime["code"] for regime in activity_regimes]
 
@@ -845,7 +1036,7 @@ def save_payoff_heatmap(matrix, activity_regimes, output_path, t_sunset, weights
     axis.set_xlabel("Predator activity pattern")
     axis.set_ylabel("Prey activity pattern")
     axis.set_title(
-        "Predator-prey payoff matrix\n"
+        f"{title}\n"
         f"$t_{{sunset}}={t_sunset:g}$, $w_1={weights[0]:g}$, $w_2={weights[1]:g}$"
     )
 
@@ -865,7 +1056,7 @@ def save_payoff_heatmap(matrix, activity_regimes, output_path, t_sunset, weights
                 fontsize=9,
             )
 
-    figure.colorbar(image, ax=axis, label=r"$\mathcal{E}$")
+    figure.colorbar(image, ax=axis, label=colorbar_label)
     figure.savefig(output_path, bbox_inches="tight", dpi=200)
     plt.close(figure)
 
@@ -877,7 +1068,9 @@ def save_population_heatmaps(
     output_path,
     t_sunset,
     weights,
-    payoff_value,
+    prey_payoff,
+    predator_payoff,
+    payoff_mode,
 ):
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -927,7 +1120,7 @@ def save_population_heatmaps(
     figure.suptitle(
         "Predator-prey population heatmaps\n"
         f"prey={prey_regime['code']}, predator={predator_regime['code']}, "
-        f"$\\mathcal{{E}}={payoff_value:.3f}$, "
+        f"{format_population_heatmap_payoff_summary(prey_payoff, predator_payoff, payoff_mode)}, "
         f"$t_{{sunset}}={t_sunset:g}$, "
         f"$w_1={weights[0]:g}$, $w_2={weights[1]:g}$"
     )
@@ -956,9 +1149,17 @@ def format_matrix_for_console(matrix, activity_regimes):
 def validate_config(
     config,
     max_workers,
+    activity_regimes,
     heatmap_prey_code=None,
     heatmap_predator_code=None,
 ):
+    if config.get("payoff_mode") not in PAYOFF_MODE_CHOICES:
+        raise ValueError(
+            "payoff_mode must be one of: "
+            + ", ".join(PAYOFF_MODE_CHOICES)
+            + "."
+        )
+
     if config["number_of_points"] < 2:
         raise ValueError("number_of_points must be at least 2.")
 
@@ -979,6 +1180,8 @@ def validate_config(
             "--heatmap-prey and --heatmap-predator must be provided together."
         )
 
+    selected_codes = {regime["code"] for regime in activity_regimes}
+
     if heatmap_prey_code is not None and heatmap_prey_code not in ACTIVITY_REGIME_CODES:
         raise ValueError(f"Unknown prey activity code: {heatmap_prey_code}")
 
@@ -987,6 +1190,17 @@ def validate_config(
         and heatmap_predator_code not in ACTIVITY_REGIME_CODES
     ):
         raise ValueError(f"Unknown predator activity code: {heatmap_predator_code}")
+
+    if heatmap_prey_code is not None and heatmap_prey_code not in selected_codes:
+        raise ValueError(
+            f"Heatmap prey code {heatmap_prey_code} is not included in --strategy-codes."
+        )
+
+    if heatmap_predator_code is not None and heatmap_predator_code not in selected_codes:
+        raise ValueError(
+            "Heatmap predator code "
+            f"{heatmap_predator_code} is not included in --strategy-codes."
+        )
 
     if any(weight < 0.0 or weight > 1.0 for weight in config["weights"]):
         raise ValueError("Each sight weight must lie in [0, 1].")
@@ -1030,7 +1244,7 @@ def build_config_from_args(args):
         default_value=DEFAULT_SMELL_RADIUS,
     )
 
-    return build_config(
+    config = build_config(
         t_sunset=args.t_sunset,
         weights=args.weights,
         sight_radius=sight_radius,
@@ -1039,6 +1253,7 @@ def build_config_from_args(args):
         dt=args.dt,
         number_of_cycles=args.number_of_cycles,
         observation_window=args.observation_window,
+        payoff_mode=args.payoff_mode,
         initial_centers=args.initial_centers,
         initial_width=args.initial_width,
         diffusion=args.diffusion,
@@ -1053,6 +1268,9 @@ def build_config_from_args(args):
             "conversion_rate": args.conversion_rate,
         },
     )
+    selected_activity_regimes = resolve_activity_regimes(args.strategy_codes)
+    config["strategy_codes"] = tuple(regime["code"] for regime in selected_activity_regimes)
+    return config
 
 
 def build_output_paths(output_dir):
@@ -1060,9 +1278,13 @@ def build_output_paths(output_dir):
     return {
         "output_dir": output_dir,
         "csv_output_path": output_dir / CSV_OUTPUT_PATH.name,
+        "prey_csv_output_path": output_dir / PREY_CSV_OUTPUT_PATH.name,
+        "predator_csv_output_path": output_dir / PREDATOR_CSV_OUTPUT_PATH.name,
         "case_payoff_output_path": output_dir / CASE_PAYOFF_OUTPUT_PATH.name,
         "run_config_output_path": output_dir / RUN_CONFIG_OUTPUT_PATH.name,
         "heatmap_output_path": output_dir / HEATMAP_OUTPUT_PATH.name,
+        "prey_heatmap_output_path": output_dir / PREY_HEATMAP_OUTPUT_PATH.name,
+        "predator_heatmap_output_path": output_dir / PREDATOR_HEATMAP_OUTPUT_PATH.name,
         "population_heatmap_output_directory": (
             output_dir / POPULATION_HEATMAP_OUTPUT_DIRECTORY.name
         ),
@@ -1101,6 +1323,7 @@ def run_payoff_experiment(
     output_dir,
     config,
     max_workers,
+    activity_regimes=ACTIVITY_REGIMES,
     heatmap_prey_code=None,
     heatmap_predator_code=None,
     echo=True,
@@ -1108,19 +1331,22 @@ def run_payoff_experiment(
     validate_config(
         config,
         max_workers,
+        activity_regimes,
         heatmap_prey_code=heatmap_prey_code,
         heatmap_predator_code=heatmap_predator_code,
     )
+    payoff_mode = config.get("payoff_mode", OVERLAP_PAYOFF_MODE)
     output_paths = build_output_paths(output_dir)
     prepare_output_directory_for_run(output_paths, config, echo=echo)
+    completed_case_matrices = load_case_payoff_matrices(
+        activity_regimes,
+        output_paths["case_payoff_output_path"],
+        payoff_mode,
+    )
     completed_case_count = int(
         np.count_nonzero(
-            np.isfinite(
-                load_case_payoff_matrix(
-                    ACTIVITY_REGIMES,
-                    output_paths["case_payoff_output_path"],
-                )
-            )
+            np.isfinite(completed_case_matrices["prey"])
+            & np.isfinite(completed_case_matrices["predator"])
         )
     )
     if echo and completed_case_count > 0:
@@ -1130,8 +1356,8 @@ def run_payoff_experiment(
             flush=True,
         )
 
-    payoff_matrix = run_all_cases(
-        ACTIVITY_REGIMES,
+    payoff_matrices = run_all_cases(
+        activity_regimes,
         config,
         max_workers,
         population_heatmap_output_directory=output_paths[
@@ -1142,36 +1368,88 @@ def run_payoff_experiment(
         case_payoff_output_path=output_paths["case_payoff_output_path"],
         echo=echo,
     )
-    save_payoff_csv(
-        payoff_matrix,
-        ACTIVITY_REGIMES,
-        output_paths["csv_output_path"],
-    )
-    save_payoff_heatmap(
-        payoff_matrix,
-        ACTIVITY_REGIMES,
-        output_paths["heatmap_output_path"],
-        config["t_sunset"],
-        config["weights"],
-    )
+    if payoff_mode == OVERLAP_PAYOFF_MODE:
+        save_payoff_csv(
+            payoff_matrices["predator"],
+            activity_regimes,
+            output_paths["csv_output_path"],
+        )
+        save_payoff_heatmap(
+            payoff_matrices["predator"],
+            activity_regimes,
+            output_paths["heatmap_output_path"],
+            config["t_sunset"],
+            config["weights"],
+            title="Predator-prey payoff matrix",
+            colorbar_label=r"$\mathcal{E}$",
+        )
+    else:
+        save_payoff_csv(
+            payoff_matrices["prey"],
+            activity_regimes,
+            output_paths["prey_csv_output_path"],
+        )
+        save_payoff_csv(
+            payoff_matrices["predator"],
+            activity_regimes,
+            output_paths["predator_csv_output_path"],
+        )
+        save_payoff_heatmap(
+            payoff_matrices["prey"],
+            activity_regimes,
+            output_paths["prey_heatmap_output_path"],
+            config["t_sunset"],
+            config["weights"],
+            title="Prey payoff matrix",
+            colorbar_label="prey payoff",
+        )
+        save_payoff_heatmap(
+            payoff_matrices["predator"],
+            activity_regimes,
+            output_paths["predator_heatmap_output_path"],
+            config["t_sunset"],
+            config["weights"],
+            title="Predator payoff matrix",
+            colorbar_label="predator payoff",
+        )
 
     saved_heatmap_count = (
-        1 if heatmap_prey_code is not None else len(ACTIVITY_REGIMES) ** 2
+        1 if heatmap_prey_code is not None else len(activity_regimes) ** 2
     )
     if echo:
-        print("\nComputed payoff matrix:")
-        print(format_matrix_for_console(payoff_matrix, ACTIVITY_REGIMES))
-        print(f"\nSaved payoff matrix CSV to {output_paths['csv_output_path']}")
-        print(
-            f"Saved payoff matrix heatmap to {output_paths['heatmap_output_path']}"
-        )
+        if payoff_mode == OVERLAP_PAYOFF_MODE:
+            print("\nComputed payoff matrix:")
+            print(format_matrix_for_console(payoff_matrices["predator"], activity_regimes))
+            print(f"\nSaved payoff matrix CSV to {output_paths['csv_output_path']}")
+            print(
+                f"Saved payoff matrix heatmap to {output_paths['heatmap_output_path']}"
+            )
+        else:
+            print("\nComputed prey payoff matrix:")
+            print(format_matrix_for_console(payoff_matrices["prey"], activity_regimes))
+            print("\nComputed predator payoff matrix:")
+            print(format_matrix_for_console(payoff_matrices["predator"], activity_regimes))
+            print(
+                f"\nSaved prey payoff matrix CSV to {output_paths['prey_csv_output_path']}"
+            )
+            print(
+                f"Saved predator payoff matrix CSV to {output_paths['predator_csv_output_path']}"
+            )
+            print(
+                f"Saved prey payoff heatmap to {output_paths['prey_heatmap_output_path']}"
+            )
+            print(
+                f"Saved predator payoff heatmap to {output_paths['predator_heatmap_output_path']}"
+            )
         print(
             f"Saved {saved_heatmap_count} population heatmap file(s) to "
             f"{output_paths['population_heatmap_output_directory']}"
         )
 
     return {
-        "matrix": payoff_matrix,
+        "matrix": payoff_matrices["predator"],
+        "prey_matrix": payoff_matrices["prey"],
+        "predator_matrix": payoff_matrices["predator"],
         "saved_heatmap_count": saved_heatmap_count,
         **output_paths,
     }
@@ -1180,10 +1458,12 @@ def run_payoff_experiment(
 def main():
     args = parse_args()
     config = build_config_from_args(args)
+    activity_regimes = resolve_activity_regimes(args.strategy_codes)
     run_payoff_experiment(
         output_dir=args.output_dir,
         config=config,
         max_workers=args.max_workers,
+        activity_regimes=activity_regimes,
         heatmap_prey_code=args.heatmap_prey,
         heatmap_predator_code=args.heatmap_predator,
     )

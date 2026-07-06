@@ -1,0 +1,50 @@
+  Solving 36 payoff case(s) with 16 worker(s).
+  Finished case 1/36: prey=N, predator=N: E=0.993609
+  Finished case 2/36: prey=D, predator=D: E=0.998873
+  Finished case 3/36: prey=P1, predator=P1: E=0.998822
+  Finished case 4/36: prey=D, predator=M2: E=0.998850
+  Finished case 5/36: prey=N, predator=M2: E=0.998197
+  Finished case 6/36: prey=P1, predator=D: E=0.910824
+  Finished case 7/36: prey=D, predator=P2: E=0.998749
+  Finished case 8/36: prey=D, predator=P1: E=0.996826
+  Finished case 9/36: prey=N, predator=P1: E=0.999150
+  Finished case 10/36: prey=D, predator=M1: E=0.995863
+  Finished case 11/36: prey=N, predator=M1: E=0.981756
+  Finished case 12/36: prey=P1, predator=N: E=0.991114
+  Finished case 13/36: prey=N, predator=P2: E=0.975969
+  Finished case 14/36: prey=N, predator=D: E=0.898368
+  Finished case 15/36: prey=P1, predator=P2: E=0.988959
+  Finished case 16/36: prey=D, predator=N: E=0.991520
+  Finished case 17/36: prey=P1, predator=M2: E=0.995373
+  Finished case 18/36: prey=P1, predator=M1: E=0.998056
+  Finished case 19/36: prey=P2, predator=D: E=0.993215
+  Finished case 20/36: prey=P2, predator=P2: E=0.998084
+  Finished case 21/36: prey=M1, predator=M1: E=0.998898
+  Finished case 22/36: prey=P2, predator=M1: E=0.956923
+  Finished case 23/36: prey=P2, predator=N: E=0.991460
+  Finished case 24/36: prey=M1, predator=D: E=0.947316
+  Finished case 25/36: prey=M1, predator=P1: E=0.999034
+  Finished case 26/36: prey=P2, predator=M2: E=0.998805
+  Finished case 27/36: prey=M1, predator=N: E=0.987627
+  Finished case 28/36: prey=M1, predator=P2: E=0.995762
+  Finished case 29/36: prey=M2, predator=D: E=0.991452
+  Finished case 30/36: prey=P2, predator=P1: E=0.987607
+  Finished case 31/36: prey=M2, predator=N: E=0.993705
+  Finished case 32/36: prey=M1, predator=M2: E=0.977465
+  Finished case 33/36: prey=M2, predator=M2: E=0.998024
+  Finished case 34/36: prey=M2, predator=P1: E=0.968988
+  Finished case 35/36: prey=M2, predator=P2: E=0.996939
+  Finished case 36/36: prey=M2, predator=M1: E=0.793760
+
+Computed payoff matrix:
+Prey/Pred       D       N      P1      P2      M1      M2
+        D  0.9989  0.9915  0.9968  0.9987  0.9959  0.9989
+        N  0.8984  0.9936  0.9991  0.9760  0.9818  0.9982
+       P1  0.9108  0.9911  0.9988  0.9890  0.9981  0.9954
+       P2  0.9932  0.9915  0.9876  0.9981  0.9569  0.9988
+       M1  0.9473  0.9876  0.9990  0.9958  0.9989  0.9775
+       M2  0.9915  0.9937  0.9690  0.9969  0.7938  0.9980
+
+Saved payoff matrix CSV to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/Story_2_official/payoff_matrix.csv
+Saved payoff matrix heatmap to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/Story_2_official/payoff_matrix.png
+Saved 36 population heatmap file(s) to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/Story_2_official/population_heatmaps

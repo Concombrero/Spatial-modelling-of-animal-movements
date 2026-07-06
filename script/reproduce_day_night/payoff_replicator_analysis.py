@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import solve_ivp
 
-from payoff_csv_utils import load_payoff_matrix_csv
+from payoff_csv_utils import load_payoff_game_data
 
 
 DEFAULT_PAYOFF_MATRIX_PATH = Path(__file__).resolve().parent / "output/Pay-off/payoff_matrix.csv"
@@ -22,9 +22,9 @@ DEFAULT_TIME_STEPS = 800
 def parse_args():
     parser = argparse.ArgumentParser(
         description=(
-            "Load a predator-prey payoff matrix CSV, compute Nash equilibria, "
+            "Load a payoff matrix file or run directory, compute Nash equilibria, "
             "and plot asymmetric replicator dynamics for the corresponding "
-            "zero-sum game."
+            "two-population game."
         )
     )
     parser.add_argument(
@@ -32,7 +32,7 @@ def parse_args():
         type=Path,
         default=DEFAULT_PAYOFF_MATRIX_PATH,
         help=(
-            "Path to the payoff_matrix.csv file. Default: "
+            "Path to either payoff_matrix.csv or a payoff output directory. Default: "
             f"{DEFAULT_PAYOFF_MATRIX_PATH}."
         ),
     )
@@ -69,7 +69,31 @@ def parse_args():
     return parser.parse_args()
 
 
-def _append_equilibria(equilibria, seen_pairs, payoff_matrix, algorithm_name, raw_pairs):
+def resolve_payoff_matrices(prey_payoff_matrix, predator_payoff_matrix=None):
+    if predator_payoff_matrix is None:
+        predator_matrix = np.asarray(prey_payoff_matrix, dtype=float)
+        prey_matrix = -predator_matrix
+    else:
+        prey_matrix = np.asarray(prey_payoff_matrix, dtype=float)
+        predator_matrix = np.asarray(predator_payoff_matrix, dtype=float)
+
+    if prey_matrix.shape != predator_matrix.shape:
+        raise ValueError("Prey and predator payoff matrices must have the same shape.")
+
+    if prey_matrix.ndim != 2:
+        raise ValueError("Payoff matrices must be two-dimensional.")
+
+    return prey_matrix, predator_matrix
+
+
+def _append_equilibria(
+    equilibria,
+    seen_pairs,
+    prey_payoff_matrix,
+    predator_payoff_matrix,
+    algorithm_name,
+    raw_pairs,
+):
     appended = 0
     for prey_strategy, predator_strategy in raw_pairs:
         prey_strategy = normalize_distribution(prey_strategy)
@@ -82,25 +106,32 @@ def _append_equilibria(equilibria, seen_pairs, payoff_matrix, algorithm_name, ra
             continue
 
         seen_pairs.add(equilibrium_key)
-        predator_payoff = float(prey_strategy @ payoff_matrix @ predator_strategy)
+        prey_payoff = float(prey_strategy @ prey_payoff_matrix @ predator_strategy)
+        predator_payoff = float(
+            prey_strategy @ predator_payoff_matrix @ predator_strategy
+        )
         equilibria.append(
             {
                 "algorithm": algorithm_name,
                 "prey_strategy": prey_strategy,
                 "predator_strategy": predator_strategy,
                 "predator_payoff": predator_payoff,
-                "prey_payoff": -predator_payoff,
+                "prey_payoff": prey_payoff,
             }
         )
         appended += 1
     return appended
 
 
-def compute_nash_equilibria(payoff_matrix):
-    """Find Nash equilibria with Nashpy, falling back if support enumeration misses one."""
+def compute_nash_equilibria(prey_payoff_matrix, predator_payoff_matrix=None):
+    """Find Nash equilibria with Nashpy for either a zero-sum or general-sum game."""
     import nashpy as nash
 
-    game = nash.Game(-payoff_matrix, payoff_matrix)
+    prey_matrix, predator_matrix = resolve_payoff_matrices(
+        prey_payoff_matrix,
+        predator_payoff_matrix,
+    )
+    game = nash.Game(prey_matrix, predator_matrix)
     equilibria = []
     seen_pairs = set()
 
@@ -118,7 +149,8 @@ def compute_nash_equilibria(payoff_matrix):
         appended = _append_equilibria(
             equilibria,
             seen_pairs,
-            payoff_matrix,
+            prey_matrix,
+            predator_matrix,
             algorithm_name,
             raw_equilibria,
         )
@@ -138,14 +170,19 @@ def normalize_distribution(values, *, atol=1.0e-12):
     return distribution / total
 
 
-def asymmetric_replicator_rhs(_time, state, payoff_matrix):
-    """Replicator dynamics for a two-population zero-sum game."""
-    prey_strategy_count, predator_strategy_count = payoff_matrix.shape
+def asymmetric_replicator_rhs(
+    _time,
+    state,
+    prey_payoff_matrix,
+    predator_payoff_matrix,
+):
+    """Replicator dynamics for a two-population game."""
+    prey_strategy_count, predator_strategy_count = prey_payoff_matrix.shape
     prey_distribution = normalize_distribution(state[:prey_strategy_count])
     predator_distribution = normalize_distribution(state[prey_strategy_count:])
 
-    prey_payoffs = (-payoff_matrix) @ predator_distribution
-    predator_payoffs = payoff_matrix.T @ prey_distribution
+    prey_payoffs = prey_payoff_matrix @ predator_distribution
+    predator_payoffs = predator_payoff_matrix.T @ prey_distribution
 
     mean_prey_payoff = float(prey_distribution @ prey_payoffs)
     mean_predator_payoff = float(predator_distribution @ predator_payoffs)
@@ -157,9 +194,18 @@ def asymmetric_replicator_rhs(_time, state, payoff_matrix):
     return np.concatenate([prey_derivative, predator_derivative])
 
 
-def simulate_replicator_dynamics(payoff_matrix, time_span, time_steps):
+def simulate_replicator_dynamics(
+    payoff_matrix,
+    time_span,
+    time_steps,
+    predator_payoff_matrix=None,
+):
     """Simulate prey and predator strategy shares from a uniform initial condition."""
-    prey_strategy_count, predator_strategy_count = payoff_matrix.shape
+    prey_matrix, predator_matrix = resolve_payoff_matrices(
+        payoff_matrix,
+        predator_payoff_matrix,
+    )
+    prey_strategy_count, predator_strategy_count = prey_matrix.shape
     initial_prey_distribution = np.full(
         prey_strategy_count,
         1.0 / prey_strategy_count,
@@ -180,7 +226,7 @@ def simulate_replicator_dynamics(payoff_matrix, time_span, time_steps):
         t_span=(0.0, time_span),
         y0=initial_state,
         t_eval=evaluation_times,
-        args=(payoff_matrix,),
+        args=(prey_matrix, predator_matrix),
         rtol=1.0e-8,
         atol=1.0e-10,
     )
@@ -209,18 +255,24 @@ def format_mixed_strategy(strategy_labels, strategy):
     return ", ".join(nonzero_terms) if nonzero_terms else "None"
 
 
-def print_analysis(payoff_matrix_data, equilibria):
+def print_analysis(payoff_game_data, equilibria):
     np.set_printoptions(precision=4, suppress=True)
-    payoff_matrix = payoff_matrix_data.values
-    print("Predator payoff matrix A:")
-    print(payoff_matrix)
+    if payoff_game_data.is_zero_sum:
+        print("Predator payoff matrix A:")
+        print(payoff_game_data.predator_values)
+    else:
+        print("Prey payoff matrix A:")
+        print(payoff_game_data.prey_values)
+        print()
+        print("Predator payoff matrix B:")
+        print(payoff_game_data.predator_values)
     print()
-    print(f"{payoff_matrix_data.row_player_label} strategies:")
-    for index, label in enumerate(payoff_matrix_data.row_strategies, start=1):
+    print(f"{payoff_game_data.row_player_label} strategies:")
+    for index, label in enumerate(payoff_game_data.row_strategies, start=1):
         print(f"  {index}. {label}")
     print()
-    print(f"{payoff_matrix_data.column_player_label} strategies:")
-    for index, label in enumerate(payoff_matrix_data.column_strategies, start=1):
+    print(f"{payoff_game_data.column_player_label} strategies:")
+    for index, label in enumerate(payoff_game_data.column_strategies, start=1):
         print(f"  {index}. {label}")
     print()
 
@@ -233,12 +285,12 @@ def print_analysis(payoff_matrix_data, equilibria):
         print(f"  Equilibrium {index}:")
         print(f"    Algorithm: {equilibrium['algorithm']}")
         print(
-            f"    {payoff_matrix_data.row_player_label} mixed strategy: "
-            f"{format_mixed_strategy(payoff_matrix_data.row_strategies, equilibrium['prey_strategy'])}"
+            f"    {payoff_game_data.row_player_label} mixed strategy: "
+            f"{format_mixed_strategy(payoff_game_data.row_strategies, equilibrium['prey_strategy'])}"
         )
         print(
-            f"    {payoff_matrix_data.column_player_label} mixed strategy: "
-            f"{format_mixed_strategy(payoff_matrix_data.column_strategies, equilibrium['predator_strategy'])}"
+            f"    {payoff_game_data.column_player_label} mixed strategy: "
+            f"{format_mixed_strategy(payoff_game_data.column_strategies, equilibrium['predator_strategy'])}"
         )
         print(
             "    Expected payoffs: "
@@ -295,15 +347,18 @@ def main():
     if args.time_span <= 0.0:
         raise ValueError("--time-span must be positive.")
 
-    payoff_matrix_data = load_payoff_matrix_csv(args.payoff_matrix)
-    payoff_matrix = payoff_matrix_data.values
-    equilibria = compute_nash_equilibria(payoff_matrix)
-    print_analysis(payoff_matrix_data, equilibria)
+    payoff_game_data = load_payoff_game_data(args.payoff_matrix)
+    equilibria = compute_nash_equilibria(
+        payoff_game_data.prey_values,
+        payoff_game_data.predator_values,
+    )
+    print_analysis(payoff_game_data, equilibria)
 
     time_grid, prey_history, predator_history = simulate_replicator_dynamics(
-        payoff_matrix,
+        payoff_game_data.prey_values,
         args.time_span,
         args.time_steps,
+        payoff_game_data.predator_values,
     )
 
     output_directory = Path(args.output_dir).expanduser().resolve()
@@ -311,17 +366,17 @@ def main():
     prey_plot_path = output_directory / "prey_strategy_frequencies.png"
     predator_plot_path = output_directory / "predator_strategy_frequencies.png"
     prey_colors = plt.get_cmap("tab10")(
-        np.linspace(0.0, 0.9, len(payoff_matrix_data.row_strategies))
+        np.linspace(0.0, 0.9, len(payoff_game_data.row_strategies))
     )
     predator_colors = plt.get_cmap("tab10")(
-        np.linspace(0.0, 0.9, len(payoff_matrix_data.column_strategies))
+        np.linspace(0.0, 0.9, len(payoff_game_data.column_strategies))
     )
 
     plot_strategy_frequencies(
         time_grid,
         prey_history,
-        strategy_labels=payoff_matrix_data.row_strategies,
-        title=f"{payoff_matrix_data.row_player_label} Replicator Dynamics",
+        strategy_labels=payoff_game_data.row_strategies,
+        title=f"{payoff_game_data.row_player_label} Replicator Dynamics",
         output_path=prey_plot_path,
         colors=prey_colors,
         plot_style=args.plot_style,
@@ -329,8 +384,8 @@ def main():
     plot_strategy_frequencies(
         time_grid,
         predator_history,
-        strategy_labels=payoff_matrix_data.column_strategies,
-        title=f"{payoff_matrix_data.column_player_label} Replicator Dynamics",
+        strategy_labels=payoff_game_data.column_strategies,
+        title=f"{payoff_game_data.column_player_label} Replicator Dynamics",
         output_path=predator_plot_path,
         colors=predator_colors,
         plot_style=args.plot_style,
