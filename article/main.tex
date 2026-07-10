@@ -351,89 +351,10 @@ We can apply the generalized multi-population model to study the impact of the d
 \subsection{A game-theoretical approach}
 \label{sec:game-theory}
 
-To evaluate the ecological viability of the diverse sleep-wake patterns defined in Table~\ref{tab:circadian_patterns} and Figure~\ref{fig-circadian-activity}, we evaluate which circadian alignments allow the prey to optimally minimize predation risk and the predator to maximize foraging efficiency. While simulating isolated pairs of strategies yields valuable qualitative insights, a systematic comparison across all possible temporal configurations requires a structured analytical framework. To achieve this, we bridge our continuous spatiotemporal PDE model with classical game theory, treating the selection of a circadian activity cycle as an evolutionary strategy.
-
-Drawing inspiration from optimal foraging theory, we quantify the success of these spatial strategies by measuring the time-averaged spatiotemporal overlap between the two populations \citep{wang2023open}. In our framework, the prey density ($u_1$) represents a dynamic, non-uniformly distributed resource for the predator ($u_2$). To evaluate system dynamics independently of absolute population sizes—which fluctuate due to the non-conservative reaction terms—we introduce the spatially normalized population density:
-\begin{equation*}
-    \bar{u}_i(x,t) = \frac{u_i(x,t)}{\int_{\Omega} u_i(y,t) \,dy}, \quad i \in \{1,2\}.
-\end{equation*}
-
-Let $T_f$ denote the final simulation time and $\tau > 0$ an observation window sufficiently large to exclude initial transient behaviors. We define the foraging efficiency indicator, $\mathcal{E}$, as the time-averaged Bhattacharyya overlap coefficient over the asymptotic or periodic regime:
-\begin{equation*}
-    \mathcal{E} = \frac{1}{\tau} \int_{T_f-\tau}^{T_f} \int_{\Omega} \sqrt{\bar{u}_1(x,t) \bar{u}_2(x,t)} \,dx \,dt.
-\end{equation*}
-
-In this interspecific contest, the predator seeks to maximize $\mathcal{E}$ (optimizing resource discovery and capture), whereas the prey seeks to minimize $\mathcal{E}$ (optimizing spatial evasion and survival). Let $\mathcal{S}$ denote the discrete set of admissible circadian strategies available to both species:
-\begin{equation*}
-    \mathcal{S} = \{\mathrm{D}, \mathrm{N}, \mathrm{P}_1, \mathrm{P}_2, \mathrm{M}_1, \mathrm{M}_2\}.
-\end{equation*}
-
-For every ordered strategy pair $(X, Y) \in \mathcal{S} \times \mathcal{S}$, we solve the coupled system of PDEs where the prey adopts strategy $X$ and the predator adopts strategy $Y$, holding all other ecological and perceptual parameters constant. The resulting asymptotic overlap is recorded as the payoff entry $\mathcal{E}_{X,Y}$. Assembling these values yields the comprehensive payoff matrix presented in Table~\ref{tab:payoff_matrix}.
-
-\begin{table}[H]
-    \centering
-    \footnotesize
-    \renewcommand{\arraystretch}{1.4}
-    \setlength{\tabcolsep}{4pt}
-    \resizebox{\textwidth}{!}{
-    \begin{tabular}{|c|c|c|c|c|c|c|}
-        \hline
-        \textbf{Prey / Predator} & \textbf{Diurnal} & \textbf{Nocturnal} & \textbf{Polyphasic 1} & \textbf{Polyphasic 2} & \textbf{Matutinal 1} & \textbf{Matutinal 2} \\
-        \hline\hline
-        \textbf{Diurnal} & \payoffentry{D}{D} & \payoffentry{D}{N} & \payoffentry{D}{\mathrm{P}_1} & \payoffentry{D}{\mathrm{P}_2} & \payoffentry{D}{\mathrm{M}_1} & \payoffentry{D}{\mathrm{M}_2} \\
-        \hline
-        \textbf{Nocturnal} & \payoffentry{N}{D} & \payoffentry{N}{N} & \payoffentry{N}{\mathrm{P}_1} & \payoffentry{N}{\mathrm{P}_2} & \payoffentry{N}{\mathrm{M}_1} & \payoffentry{N}{\mathrm{M}_2} \\
-        \hline
-        \textbf{Polyphasic 1} & \payoffentry{\mathrm{P}_1}{D} & \payoffentry{\mathrm{P}_1}{N} & \payoffentry{\mathrm{P}_1}{\mathrm{P}_1} & \payoffentry{\mathrm{P}_1}{\mathrm{P}_2} & \payoffentry{\mathrm{P}_1}{\mathrm{M}_1} & \payoffentry{\mathrm{P}_1}{\mathrm{M}_2} \\
-        \hline
-        \textbf{Polyphasic 2} & \payoffentry{\mathrm{P}_2}{D} & \payoffentry{\mathrm{P}_2}{N} & \payoffentry{\mathrm{P}_2}{\mathrm{P}_1} & \payoffentry{\mathrm{P}_2}{\mathrm{P}_2} & \payoffentry{\mathrm{P}_2}{\mathrm{M}_1} & \payoffentry{\mathrm{P}_2}{\mathrm{M}_2} \\
-        \hline
-        \textbf{Matutinal 1} & \payoffentry{\mathrm{M}_1}{D} & \payoffentry{\mathrm{M}_1}{N} & \payoffentry{\mathrm{M}_1}{\mathrm{P}_1} & \payoffentry{\mathrm{M}_1}{\mathrm{P}_2} & \payoffentry{\mathrm{M}_1}{\mathrm{M}_1} & \payoffentry{\mathrm{M}_1}{\mathrm{M}_2} \\
-        \hline
-        \textbf{Matutinal 2} & \payoffentry{\mathrm{M}_2}{D} & \payoffentry{\mathrm{M}_2}{N} & \payoffentry{\mathrm{M}_2}{\mathrm{P}_1} & \payoffentry{\mathrm{M}_2}{\mathrm{P}_2} & \payoffentry{\mathrm{M}_2}{\mathrm{M}_1} & \payoffentry{\mathrm{M}_2}{\mathrm{M}_2} \\
-        \hline
-    \end{tabular}
-    }
-    \caption{Payoff matrix for the predator-prey game based on foraging efficiency ($\mathcal{E}_{X,Y}$). Columns represent the predator's strategy; rows represent the prey's strategy.}
-    \label{tab:payoff_matrix}
-\end{table}
-
-To extract evolutionary predictions, we formalize this interaction as a finite, two-player, zero-sum game defined by the matrix $\mathbf{A} = (\mathcal{E}_{X,Y})_{X,Y \in \mathcal{S}}$. Here, $\mathbf{A}$ serves as the payoff matrix for the predator, while $-\mathbf{A}$ represents the payoff matrix for the prey. We evaluate this game through a three-stage computational pipeline:
-
-\paragraph{1. Pure-Strategy Security Levels.} 
-Following the foundational principles of zero-sum games \citep{von1928zur, osborne1994course}, we first determine whether deterministic, strictly unyielding behavioral strategies can guarantee survival or capture. For each prey strategy $X \in \mathcal{S}$, the worst-case predation risk is defined by its maximum exposure:
-\begin{equation*}
-    W_X = \max_{Y \in \mathcal{S}} \mathcal{E}_{X,Y}.
-\end{equation*}
-Conversely, for each predator strategy $Y \in \mathcal{S}$, the guaranteed minimum resource acquisition across all possible prey defenses is:
-\begin{equation*}
-    G_Y = \min_{X \in \mathcal{S}} \mathcal{E}_{X,Y}.
-\end{equation*}
-The optimal pure-strategy security levels are then given by the minimax and maximin values:
-\begin{equation*}
-    v_{\mathrm{prey}} = \min_{X \in \mathcal{S}} W_X, \qquad v_{\mathrm{pred}} = \max_{Y \in \mathcal{S}} G_Y.
-\end{equation*}
-If $v_{\mathrm{prey}} = v_{\mathrm{pred}}$, any pair $(X^*, Y^*)$ achieving these optima constitutes a pure-strategy saddle point, indicating a stable, deterministic equilibrium.
-
-\paragraph{2. Mixed Nash Equilibria.} 
-When no pure saddle point exists, populations may polymorphicly divide into distinct behavioral phenotypes or randomly alternate between schedules over evolutionary timescales. Building on the seminal framework of non-cooperative games \citep{nash1951non,osborne1994course}, let $p, q \in \Delta(\mathcal{S})$ denote probability distribution vectors over the strategy space $\mathcal{S}$ for the prey and predator, respectively. The expected payoff to the predator is given by the bilinear form $p^\top \mathbf{A} q$. A mixed Nash equilibrium is a pair of strategy distributions $(p^*, q^*)$ such that neither population can unilaterally improve its expected payoff:
-\begin{equation*}
-    (p^*)^\top \mathbf{A} q \leq (p^*)^\top \mathbf{A} q^* \leq p^\top \mathbf{A} q^*, \qquad \text{for all } p, q \in \Delta(\mathcal{S}).
-\end{equation*}
-
-\paragraph{3. Replicator Dynamics.} 
-Finally, to visualize how natural selection drives temporal segregation across generations, we interpret $\mathbf{A}$ as a dynamic fitness landscape and model the evolution of strategy frequencies using continuous-time asymmetric replicator dynamics \citep{taylor1978evolutionary, cressman2014replicator}:
-\begin{equation*}
-    \dot{p}_i = p_i \left( (-\mathbf{A}q)_i - p^\top (-\mathbf{A}) q \right), \qquad \dot{q}_j = q_j \left( (\mathbf{A}^\top p)_j - q^\top \mathbf{A}^\top p \right),
-\end{equation*}
-initialized from a uniform distribution across all strategies ($p_i(0) = q_j(0) = 1/|\mathcal{S}|$). The resulting phase-space trajectories indicate whether specific temporal patterns asymptotically dominate, face competitive extinction, or oscillate in stable coexistence. By performing parameter sweeps across sensory reliance weights ($w_1, w_2$) and daylight durations ($t_{\mathrm{sunset}}$), this pipeline allows us to systematically map how abiotic changes in light availability shift the evolutionary equilibrium of interspecific predation.
+To evaluate the ecological viability of the diverse sleep-wake patterns defined in Table~\ref{tab:circadian_patterns} and Figure~\ref{fig-circadian-activity}, we evaluate which circadian alignments allow the prey to optimally minimize predation risk and the predator to maximize foraging efficiency. 
 
 
 \subsection{Results}
-
-\subsubsection{Sensory asymmetry and temporal arms races}
-
-To investigate the evolutionary consequences of sensory asymmetry, we simulate a scenario where a highly visual predator ($w_2 = 0.7$ and $R_{\text{sight}_2} \gg R_{\text{smell}_2}$) interacts with a primarily olfaction-reliant prey ($w_1 = 0.3$ and $R_{\text{smell}_1} \gg R_{\text{sight}_1}$) under balanced daylight conditions ($t_{\mathrm{sunset}} = 0.5$). The replicator dynamics, initialized from a uniform strategy distribution, reveal a distinct, multi-phase evolutionary trajectory characterizing a temporal arms race between the two populations.
 
 
 

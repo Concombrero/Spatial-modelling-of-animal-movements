@@ -1,0 +1,25 @@
+{
+  "payoff_mode": "population-integral",
+  "prey_payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/Story_1/payoff_matrix_prey.csv",
+  "predator_payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/Story_1/payoff_matrix_predator.csv",
+  "row_player": "Prey",
+  "column_player": "Predator",
+  "row_player_objective": "maximize payoff",
+  "column_player_objective": "maximize payoff",
+  "equilibrium_count": 1,
+  "equilibria": [
+    {
+      "prey_mixed_strategy": {
+        "D": 0.8643552894119355,
+        "M2": 0.13564471058806454
+      },
+      "predator_mixed_strategy": {
+        "D": 0.4630332848603035,
+        "M2": 0.5369667151396965
+      },
+      "prey_expected_payoff": 0.7907151804829808,
+      "predator_expected_payoff": 1.0873505848929907
+    }
+  ],
+  "warnings": []
+}

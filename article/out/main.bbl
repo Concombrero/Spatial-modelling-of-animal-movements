@@ -1,4 +1,4 @@
-\begin{thebibliography}{8}
+\begin{thebibliography}{3}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -10,35 +10,10 @@ Scott~S Campbell and Irene Tobler.
 \newblock Animal sleep: a review of sleep duration across phylogeny.
 \newblock \emph{Neuroscience \& Biobehavioral Reviews}, 8\penalty0 (3):\penalty0 269--300, 1984.
 
-\bibitem[Cressman and Tao(2014)]{cressman2014replicator}
-Ross Cressman and Yi~Tao.
-\newblock The replicator equation and other game dynamics.
-\newblock \emph{Proceedings of the National Academy of Sciences}, 111\penalty0 (Supplement\_3):\penalty0 10810--10817, 2014.
-
 \bibitem[Hut et~al.(2012)Hut, Kronfeld-Schor, van~der Vinne, and De~la Iglesia]{hut2012search}
 Roelof~A Hut, Noga Kronfeld-Schor, Vincent van~der Vinne, and Horacio De~la Iglesia.
 \newblock In search of a temporal niche: environmental factors.
 \newblock \emph{Progress in brain research}, 199:\penalty0 281--304, 2012.
-
-\bibitem[Nash(1951)]{nash1951non}
-John Nash.
-\newblock Non-cooperative games.
-\newblock \emph{Annals of mathematics}, pages 286--295, 1951.
-
-\bibitem[Osborne and Rubinstein(1994)]{osborne1994course}
-Martin~J Osborne and Ariel Rubinstein.
-\newblock \emph{A course in game theory}.
-\newblock MIT press, 1994.
-
-\bibitem[Taylor and Jonker(1978)]{taylor1978evolutionary}
-Peter~D Taylor and Leo~B Jonker.
-\newblock Evolutionary stable strategies and game dynamics.
-\newblock \emph{Mathematical biosciences}, 40\penalty0 (1-2):\penalty0 145--156, 1978.
-
-\bibitem[Von~Neumann(1928)]{von1928zur}
-John Von~Neumann.
-\newblock Zur theorie der gesellschaftsspiele.
-\newblock \emph{Mathematische Annalen}, 100\penalty0 (1):\penalty0 295--320, 1928.
 
 \bibitem[Wang and Salmaniw(2023)]{wang2023open}
 Hao Wang and Yurij Salmaniw.
