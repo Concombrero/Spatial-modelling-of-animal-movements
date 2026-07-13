@@ -85,6 +85,40 @@ bash script/reproduce_day_night/GameTheory/run_payoff_pipeline.sh \
   --python .venv/bin/python
 ```
 
+## Recreate from `run_config.json`
+
+Every saved payoff run now contains a replayable `run_config.json` snapshot.
+You can feed that file back into the matrix script or the full pipeline to
+recreate the same simulation parameters in a fresh output folder.
+
+Recreate only the payoff matrix outputs:
+
+```bash
+.venv/bin/python -m script.reproduce_day_night.GameTheory.payoff_matrix \
+  --run-config script/reproduce_day_night/GameTheory/output/net_growth/Test1/run_config.json \
+  --output-dir script/reproduce_day_night/GameTheory/output/net_growth/Test1_recreated
+```
+
+Recreate the full payoff pipeline:
+
+```bash
+bash script/reproduce_day_night/GameTheory/run_payoff_pipeline.sh \
+  --output-dir script/reproduce_day_night/GameTheory/output/net_growth/Test1_pipeline_recreated \
+  --run-config script/reproduce_day_night/GameTheory/output/net_growth/Test1/run_config.json
+```
+
+The weight-sweep script also accepts its own top-level `run_config.json`:
+
+```bash
+.venv/bin/python -m script.reproduce_day_night.GameTheory.payoff_weight_nash_heatmap \
+  --run-config script/reproduce_day_night/GameTheory/output/weight_nash/run_config.json \
+  --output-dir script/reproduce_day_night/GameTheory/output/weight_nash_recreated
+```
+
+When `--run-config` is provided, the simulation parameters come from the JSON
+file. Output and analysis options such as `--output-dir`, `--max-workers`, and
+the pipeline-only plotting flags can still be changed.
+
 ## Weight-sweep Nash maps
 
 For article-facing figures, prefer the mixed-Nash sweep over the final-time

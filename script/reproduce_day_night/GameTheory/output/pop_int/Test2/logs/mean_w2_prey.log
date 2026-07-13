@@ -1,7 +1,0 @@
-Loaded 1 payoff run(s).
-Grouped by: w2
-Payoff column: prey
-Variance subplot: off
-Saved figure: /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/Test2/mean_analysis/mean_vs_w2_prey.png
-value,count,mean,variance
-0.8,36,0.8337941886,0.0008714636

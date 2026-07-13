@@ -92,6 +92,22 @@ ACTIVITY_REGIMES = (
     {"code": "M2", "label": "Matutinal 2", "periods": [(0.25, 0.75)]},
 )
 ACTIVITY_REGIME_CODES = tuple(regime["code"] for regime in ACTIVITY_REGIMES)
+RUN_CONFIG_REQUIRED_KEYS = (
+    "t_sunset",
+    "weights",
+    "sight_radius",
+    "smell_radius",
+    "number_of_points",
+    "dt",
+    "number_of_cycles",
+    "observation_window",
+    "payoff_mode",
+    "initial_centers",
+    "initial_width",
+    "diffusion",
+    "attraction",
+    "reaction_rates",
+)
 
 
 def _coerce_population_parameter(values, *, parameter_name):
@@ -115,6 +131,16 @@ def parse_args():
             "using the legacy overlap energy, population-specific "
             "final-window integrals, or final-window net growth."
         )
+    )
+    parser.add_argument(
+        "--run-config",
+        type=Path,
+        help=(
+            "Load the saved simulation configuration from an existing "
+            "run_config.json file. When provided, payoff-matrix parameter flags "
+            "are read from that file while --output-dir, --heatmap-prey, "
+            "--heatmap-predator, and --max-workers still apply."
+        ),
     )
     parser.add_argument(
         "--t-sunset",
@@ -1222,6 +1248,92 @@ def build_config_from_args(args):
     return config
 
 
+def resolve_activity_regimes_from_config(config, *, source_path=None):
+    strategy_codes = config.get("strategy_codes")
+    if strategy_codes is None:
+        return ACTIVITY_REGIMES
+
+    if isinstance(strategy_codes, str):
+        strategy_codes_text = strategy_codes
+    elif isinstance(strategy_codes, (list, tuple)):
+        strategy_codes_text = ",".join(str(code) for code in strategy_codes)
+    else:
+        source_label = source_path or "run_config"
+        raise ValueError(
+            f"Expected 'strategy_codes' in {source_label} to be a string or list."
+        )
+
+    return resolve_activity_regimes(strategy_codes_text)
+
+
+def build_config_from_run_config_payload(config_data, *, source_path):
+    source_path = Path(source_path)
+    if not isinstance(config_data, dict):
+        raise ValueError(f"Expected a JSON object in {source_path}.")
+
+    if "payoff_config" in config_data:
+        raise ValueError(
+            f"{source_path} looks like a payoff_weight_nash_heatmap run_config.json. "
+            "Replay it with script.reproduce_day_night.GameTheory.payoff_weight_nash_heatmap instead."
+        )
+
+    missing_keys = [key for key in RUN_CONFIG_REQUIRED_KEYS if key not in config_data]
+    if missing_keys:
+        missing_text = ", ".join(missing_keys)
+        raise ValueError(
+            f"{source_path} is missing required run_config keys: {missing_text}."
+        )
+
+    config = build_config(
+        t_sunset=config_data["t_sunset"],
+        weights=config_data["weights"],
+        sight_radius=config_data["sight_radius"],
+        smell_radius=config_data["smell_radius"],
+        number_of_points=config_data["number_of_points"],
+        dt=config_data["dt"],
+        number_of_cycles=config_data["number_of_cycles"],
+        observation_window=config_data["observation_window"],
+        payoff_mode=config_data["payoff_mode"],
+        initial_centers=config_data["initial_centers"],
+        initial_width=config_data["initial_width"],
+        diffusion=config_data["diffusion"],
+        attraction=config_data["attraction"],
+        reaction_rates=config_data["reaction_rates"],
+    )
+
+    activity_regimes = resolve_activity_regimes_from_config(
+        config_data,
+        source_path=source_path,
+    )
+    config["strategy_codes"] = tuple(regime["code"] for regime in activity_regimes)
+    return config
+
+
+def load_saved_run_config(config_path):
+    config_path = Path(config_path).expanduser().resolve()
+    if not config_path.is_file():
+        raise FileNotFoundError(f"run_config.json not found: {config_path}")
+
+    with config_path.open("r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+
+    return build_config_from_run_config_payload(payload, source_path=config_path)
+
+
+def resolve_run_configuration(args):
+    if args.run_config is None:
+        config = build_config_from_args(args)
+        activity_regimes = resolve_activity_regimes(args.strategy_codes)
+        return config, activity_regimes
+
+    config = load_saved_run_config(args.run_config)
+    activity_regimes = resolve_activity_regimes_from_config(
+        config,
+        source_path=args.run_config,
+    )
+    return config, activity_regimes
+
+
 def build_output_paths(output_dir):
     output_dir = Path(output_dir)
     return {
@@ -1425,8 +1537,7 @@ def run_payoff_experiment(
 
 def main():
     args = parse_args()
-    config = build_config_from_args(args)
-    activity_regimes = resolve_activity_regimes(args.strategy_codes)
+    config, activity_regimes = resolve_run_configuration(args)
     run_payoff_experiment(
         output_dir=args.output_dir,
         config=config,

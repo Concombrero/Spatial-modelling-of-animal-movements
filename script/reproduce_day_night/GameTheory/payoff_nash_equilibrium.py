@@ -12,7 +12,9 @@ from script.reproduce_day_night.GameTheory.payoff_csv_utils import (
     load_payoff_game_data,
 )
 from script.reproduce_day_night.GameTheory.payoff_replicator_analysis import (
+    MissingDependencyError,
     compute_nash_equilibria as compute_nash_equilibria_from_matrices,
+    require_nashpy,
 )
 from script.reproduce_day_night.paths import game_theory_payoff_output_path
 
@@ -134,22 +136,26 @@ def compute_nash_equilibria(payoff_game_data):
 
 
 def main():
-    args = parse_args()
-    payoff_game_data = load_payoff_game_data(args.payoff_matrix)
-    equilibria = compute_nash_equilibria(payoff_game_data)
+    try:
+        args = parse_args()
+        require_nashpy()
+        payoff_game_data = load_payoff_game_data(args.payoff_matrix)
+        equilibria = compute_nash_equilibria(payoff_game_data)
 
-    output_path = resolve_output_path(args.payoff_matrix, args.output)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    with output_path.open("w", encoding="utf-8") as handle:
-        json.dump(equilibria, handle, indent=2)
-        handle.write("\n")
+        output_path = resolve_output_path(args.payoff_matrix, args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        with output_path.open("w", encoding="utf-8") as handle:
+            json.dump(equilibria, handle, indent=2)
+            handle.write("\n")
 
-    first_equilibrium = equilibria["equilibria"][0]
-    print(
-        f"Saved Nash equilibrium analysis to {output_path}\n"
-        f"Computed {equilibria['equilibrium_count']} equilibrium result(s).\n"
-        f"First predator expected payoff: {first_equilibrium['predator_expected_payoff']:.10f}"
-    )
+        first_equilibrium = equilibria["equilibria"][0]
+        print(
+            f"Saved Nash equilibrium analysis to {output_path}\n"
+            f"Computed {equilibria['equilibrium_count']} equilibrium result(s).\n"
+            f"First predator expected payoff: {first_equilibrium['predator_expected_payoff']:.10f}"
+        )
+    except MissingDependencyError as error:
+        raise SystemExit(str(error)) from error
 
 
 if __name__ == "__main__":

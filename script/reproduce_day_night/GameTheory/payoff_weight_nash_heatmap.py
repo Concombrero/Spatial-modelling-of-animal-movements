@@ -29,6 +29,7 @@ from script.reproduce_day_night.GameTheory.payoff_matrix import (
     NET_GROWTH_PAYOFF_MODE,
     OVERLAP_PAYOFF_MODE,
     PAYOFF_MODE_CHOICES,
+    build_config_from_run_config_payload,
     build_output_paths,
     build_config,
     prepare_output_directory_for_run,
@@ -39,7 +40,9 @@ from script.reproduce_day_night.GameTheory.payoff_matrix import (
     save_payoff_heatmap,
 )
 from script.reproduce_day_night.GameTheory.payoff_replicator_analysis import (
+    MissingDependencyError,
     compute_nash_equilibria,
+    require_nashpy,
 )
 from script.reproduce_day_night.paths import ensure_directory, game_theory_output_path
 
@@ -73,6 +76,15 @@ def parse_args():
             "each pair, compute the mixed Nash equilibrium set, and save article-"
             "oriented summary figures for the resulting equilibrium structure."
         )
+    )
+    parser.add_argument(
+        "--run-config",
+        type=Path,
+        help=(
+            "Load the saved sweep definition from an existing run_config.json "
+            "file. When provided, the sweep grid and simulation parameters are "
+            "read from that file while --output-dir and --max-workers still apply."
+        ),
     )
     parser.add_argument(
         "--w1-values",
@@ -321,6 +333,73 @@ def build_base_config(args):
             "conversion_rate": args.conversion_rate,
         },
     )
+
+
+def load_saved_weight_nash_run_config(config_path):
+    config_path = Path(config_path).expanduser().resolve()
+    if not config_path.is_file():
+        raise FileNotFoundError(f"run_config.json not found: {config_path}")
+
+    with config_path.open("r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+
+    if not isinstance(payload, dict):
+        raise ValueError(f"Expected a JSON object in {config_path}.")
+
+    if "payoff_config" not in payload:
+        raise ValueError(
+            f"{config_path} looks like a payoff_matrix run_config.json. Replay it "
+            "with script.reproduce_day_night.GameTheory.payoff_matrix or "
+            "run_payoff_pipeline.sh instead."
+        )
+
+    missing_keys = [
+        key for key in ("w1_values", "w2_values", "activity_codes", "payoff_config")
+        if key not in payload
+    ]
+    if missing_keys:
+        missing_text = ", ".join(missing_keys)
+        raise ValueError(
+            f"{config_path} is missing required run_config keys: {missing_text}."
+        )
+
+    activity_codes = payload["activity_codes"]
+    if isinstance(activity_codes, str):
+        activity_codes_text = activity_codes
+    elif isinstance(activity_codes, (list, tuple)):
+        activity_codes_text = ",".join(str(code) for code in activity_codes)
+    else:
+        raise ValueError(
+            f"Expected 'activity_codes' in {config_path} to be a string or list."
+        )
+
+    return {
+        "w1_values": resolve_weight_values(
+            payload["w1_values"],
+            option_name=f"{config_path.name}:w1_values",
+        ),
+        "w2_values": resolve_weight_values(
+            payload["w2_values"],
+            option_name=f"{config_path.name}:w2_values",
+        ),
+        "activity_regimes": resolve_activity_regimes(activity_codes_text),
+        "base_config": build_config_from_run_config_payload(
+            payload["payoff_config"],
+            source_path=config_path,
+        ),
+    }
+
+
+def resolve_weight_sweep_configuration(args):
+    if args.run_config is None:
+        return {
+            "w1_values": resolve_weight_values(args.w1_values, option_name="--w1-values"),
+            "w2_values": resolve_weight_values(args.w2_values, option_name="--w2-values"),
+            "activity_regimes": resolve_activity_regimes(args.strategy_codes),
+            "base_config": build_base_config(args),
+        }
+
+    return load_saved_weight_nash_run_config(args.run_config)
 
 
 def format_weight_slug(value):
@@ -1114,73 +1193,80 @@ def save_diagnostic_heatmap(
 
 
 def main():
-    args = parse_args()
-    validate_args(args)
+    try:
+        args = parse_args()
+        validate_args(args)
+        require_nashpy()
 
-    w1_values = resolve_weight_values(args.w1_values, option_name="--w1-values")
-    w2_values = resolve_weight_values(args.w2_values, option_name="--w2-values")
-    activity_regimes = resolve_activity_regimes(args.strategy_codes)
-    base_config = build_base_config(args)
-    output_dir = ensure_directory(args.output_dir.expanduser().resolve())
+        resolved_config = resolve_weight_sweep_configuration(args)
+        w1_values = resolved_config["w1_values"]
+        w2_values = resolved_config["w2_values"]
+        activity_regimes = resolved_config["activity_regimes"]
+        base_config = resolved_config["base_config"]
+        output_dir = ensure_directory(args.output_dir.expanduser().resolve())
+        payoff_mode = base_config["payoff_mode"]
+        t_sunset = base_config["t_sunset"]
 
-    result = compute_nash_weight_summary(
-        activity_regimes,
-        base_config,
-        w1_values,
-        w2_values,
-        output_dir=output_dir,
-        max_workers=args.max_workers,
-    )
+        result = compute_nash_weight_summary(
+            activity_regimes,
+            base_config,
+            w1_values,
+            w2_values,
+            output_dir=output_dir,
+            max_workers=args.max_workers,
+        )
 
-    summary_output_path = output_dir / DEFAULT_SUMMARY_FILENAME
-    details_output_path = output_dir / DEFAULT_DETAILS_FILENAME
-    components_output_path = output_dir / DEFAULT_COMPONENTS_FIGURE_FILENAME
-    diagnostics_output_path = output_dir / DEFAULT_DIAGNOSTICS_FIGURE_FILENAME
-    config_output_path = output_dir / DEFAULT_CONFIG_FILENAME
+        summary_output_path = output_dir / DEFAULT_SUMMARY_FILENAME
+        details_output_path = output_dir / DEFAULT_DETAILS_FILENAME
+        components_output_path = output_dir / DEFAULT_COMPONENTS_FIGURE_FILENAME
+        diagnostics_output_path = output_dir / DEFAULT_DIAGNOSTICS_FIGURE_FILENAME
+        config_output_path = output_dir / DEFAULT_CONFIG_FILENAME
 
-    save_summary_csv(result["summary_rows"], summary_output_path)
-    save_detail_json(
-        details_output_path,
-        w1_values=w1_values,
-        w2_values=w2_values,
-        activity_regimes=activity_regimes,
-        detail_rows=result["detail_rows"],
-    )
-    save_run_config(
-        config_output_path,
-        base_config=base_config,
-        w1_values=w1_values,
-        w2_values=w2_values,
-        activity_regimes=activity_regimes,
-    )
-    save_consensus_component_heatmap(
-        result["prey_component_grid"],
-        result["predator_component_grid"],
-        result["component_labels"],
-        w1_values,
-        w2_values,
-        components_output_path,
-        payoff_mode=args.payoff_mode,
-        t_sunset=args.t_sunset,
-    )
-    save_diagnostic_heatmap(
-        result["prey_probability_grid"],
-        result["predator_probability_grid"],
-        result["equilibrium_count_grid"],
-        w1_values,
-        w2_values,
-        diagnostics_output_path,
-        payoff_mode=args.payoff_mode,
-        t_sunset=args.t_sunset,
-    )
+        save_summary_csv(result["summary_rows"], summary_output_path)
+        save_detail_json(
+            details_output_path,
+            w1_values=w1_values,
+            w2_values=w2_values,
+            activity_regimes=activity_regimes,
+            detail_rows=result["detail_rows"],
+        )
+        save_run_config(
+            config_output_path,
+            base_config=base_config,
+            w1_values=w1_values,
+            w2_values=w2_values,
+            activity_regimes=activity_regimes,
+        )
+        save_consensus_component_heatmap(
+            result["prey_component_grid"],
+            result["predator_component_grid"],
+            result["component_labels"],
+            w1_values,
+            w2_values,
+            components_output_path,
+            payoff_mode=payoff_mode,
+            t_sunset=t_sunset,
+        )
+        save_diagnostic_heatmap(
+            result["prey_probability_grid"],
+            result["predator_probability_grid"],
+            result["equilibrium_count_grid"],
+            w1_values,
+            w2_values,
+            diagnostics_output_path,
+            payoff_mode=payoff_mode,
+            t_sunset=t_sunset,
+        )
 
-    print(
-        f"Saved Nash summary CSV to {summary_output_path}\n"
-        f"Saved Nash detail JSON to {details_output_path}\n"
-        f"Saved consensus component figure to {components_output_path}\n"
-        f"Saved diagnostic figure to {diagnostics_output_path}\n"
-        f"Saved run config to {config_output_path}"
-    )
+        print(
+            f"Saved Nash summary CSV to {summary_output_path}\n"
+            f"Saved Nash detail JSON to {details_output_path}\n"
+            f"Saved consensus component figure to {components_output_path}\n"
+            f"Saved diagnostic figure to {diagnostics_output_path}\n"
+            f"Saved run config to {config_output_path}"
+        )
+    except MissingDependencyError as error:
+        raise SystemExit(str(error)) from error
 
 
 if __name__ == "__main__":

@@ -26,6 +26,24 @@ DEFAULT_TIME_SPAN = 40.0
 DEFAULT_TIME_STEPS = 800
 
 
+class MissingDependencyError(RuntimeError):
+    pass
+
+
+def require_nashpy():
+    try:
+        import nashpy as nash
+    except ModuleNotFoundError as error:
+        raise MissingDependencyError(
+            "nashpy is required for Nash-equilibrium and replicator analyses. "
+            f"Install it in the active interpreter ({sys.executable}) with "
+            "`python -m pip install nashpy`, or run the script with the "
+            "project environment."
+        ) from error
+
+    return nash
+
+
 def parse_args():
     parser = argparse.ArgumentParser(
         description=(
@@ -132,7 +150,7 @@ def _append_equilibria(
 
 def compute_nash_equilibria(prey_payoff_matrix, predator_payoff_matrix=None):
     """Find Nash equilibria with Nashpy for either a zero-sum or general-sum game."""
-    import nashpy as nash
+    nash = require_nashpy()
 
     prey_matrix, predator_matrix = resolve_payoff_matrices(
         prey_payoff_matrix,
@@ -348,59 +366,64 @@ def plot_strategy_frequencies(
 
 
 def main():
-    args = parse_args()
-    if args.time_steps < 2:
-        raise ValueError("--time-steps must be at least 2.")
-    if args.time_span <= 0.0:
-        raise ValueError("--time-span must be positive.")
+    try:
+        args = parse_args()
+        if args.time_steps < 2:
+            raise ValueError("--time-steps must be at least 2.")
+        if args.time_span <= 0.0:
+            raise ValueError("--time-span must be positive.")
 
-    payoff_game_data = load_payoff_game_data(args.payoff_matrix)
-    equilibria = compute_nash_equilibria(
-        payoff_game_data.prey_values,
-        payoff_game_data.predator_values,
-    )
-    print_analysis(payoff_game_data, equilibria)
+        require_nashpy()
 
-    time_grid, prey_history, predator_history = simulate_replicator_dynamics(
-        payoff_game_data.prey_values,
-        args.time_span,
-        args.time_steps,
-        payoff_game_data.predator_values,
-    )
+        payoff_game_data = load_payoff_game_data(args.payoff_matrix)
+        equilibria = compute_nash_equilibria(
+            payoff_game_data.prey_values,
+            payoff_game_data.predator_values,
+        )
+        print_analysis(payoff_game_data, equilibria)
 
-    output_directory = Path(args.output_dir).expanduser().resolve()
-    output_directory.mkdir(parents=True, exist_ok=True)
-    prey_plot_path = output_directory / "prey_strategy_frequencies.png"
-    predator_plot_path = output_directory / "predator_strategy_frequencies.png"
-    prey_colors = plt.get_cmap("tab10")(
-        np.linspace(0.0, 0.9, len(payoff_game_data.row_strategies))
-    )
-    predator_colors = plt.get_cmap("tab10")(
-        np.linspace(0.0, 0.9, len(payoff_game_data.column_strategies))
-    )
+        time_grid, prey_history, predator_history = simulate_replicator_dynamics(
+            payoff_game_data.prey_values,
+            args.time_span,
+            args.time_steps,
+            payoff_game_data.predator_values,
+        )
 
-    plot_strategy_frequencies(
-        time_grid,
-        prey_history,
-        strategy_labels=payoff_game_data.row_strategies,
-        title=f"{payoff_game_data.row_player_label} Replicator Dynamics",
-        output_path=prey_plot_path,
-        colors=prey_colors,
-        plot_style=args.plot_style,
-    )
-    plot_strategy_frequencies(
-        time_grid,
-        predator_history,
-        strategy_labels=payoff_game_data.column_strategies,
-        title=f"{payoff_game_data.column_player_label} Replicator Dynamics",
-        output_path=predator_plot_path,
-        colors=predator_colors,
-        plot_style=args.plot_style,
-    )
+        output_directory = Path(args.output_dir).expanduser().resolve()
+        output_directory.mkdir(parents=True, exist_ok=True)
+        prey_plot_path = output_directory / "prey_strategy_frequencies.png"
+        predator_plot_path = output_directory / "predator_strategy_frequencies.png"
+        prey_colors = plt.get_cmap("tab10")(
+            np.linspace(0.0, 0.9, len(payoff_game_data.row_strategies))
+        )
+        predator_colors = plt.get_cmap("tab10")(
+            np.linspace(0.0, 0.9, len(payoff_game_data.column_strategies))
+        )
 
-    print()
-    print(f"Saved prey strategy plot to {prey_plot_path}")
-    print(f"Saved predator strategy plot to {predator_plot_path}")
+        plot_strategy_frequencies(
+            time_grid,
+            prey_history,
+            strategy_labels=payoff_game_data.row_strategies,
+            title=f"{payoff_game_data.row_player_label} Replicator Dynamics",
+            output_path=prey_plot_path,
+            colors=prey_colors,
+            plot_style=args.plot_style,
+        )
+        plot_strategy_frequencies(
+            time_grid,
+            predator_history,
+            strategy_labels=payoff_game_data.column_strategies,
+            title=f"{payoff_game_data.column_player_label} Replicator Dynamics",
+            output_path=predator_plot_path,
+            colors=predator_colors,
+            plot_style=args.plot_style,
+        )
+
+        print()
+        print(f"Saved prey strategy plot to {prey_plot_path}")
+        print(f"Saved predator strategy plot to {predator_plot_path}")
+    except MissingDependencyError as error:
+        raise SystemExit(str(error)) from error
 
 
 if __name__ == "__main__":

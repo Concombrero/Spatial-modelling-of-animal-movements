@@ -1,0 +1,7 @@
+Loaded 1 payoff run(s).
+Grouped by: w1
+Payoff column: predator
+Variance subplot: off
+Saved figure: /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1/mean_analysis/mean_vs_w1_predator.png
+value,count,mean,variance
+0.5,36,0.8421777001,0.0001972210

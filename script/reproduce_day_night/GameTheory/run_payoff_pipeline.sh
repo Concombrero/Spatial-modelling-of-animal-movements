@@ -11,12 +11,14 @@ ORIGINAL_ARGS=("$@")
 
 PYTHON_BIN=${PYTHON_BIN:-python}
 OUTPUT_DIR=""
+RUN_CONFIG=""
 MEAN_X_AXES="w1,w2,cycle1,cycle2"
 MEAN_SHOW_VARIANCE="false"
 REPLICATOR_TIME_SPAN="40"
 REPLICATOR_TIME_STEPS="800"
 REPLICATOR_PLOT_STYLE="line"
-PAYOFF_MODE="overlap"
+PAYOFF_MODE=""
+PAYOFF_MODE_SET="false"
 HEATMAP_PREY_SET="false"
 HEATMAP_PREDATOR_SET="false"
 PAYOFF_ARGS=()
@@ -34,6 +36,8 @@ Run the full payoff-analysis pipeline in one chosen output folder:
 
 General options:
   --output-dir DIR                Destination folder for all outputs. Required.
+    --run-config PATH               Load payoff-matrix parameters from a saved
+                                                                    run_config.json.
   --python BIN                    Python executable to use. Default: python.
   --mean-x-axes LIST              Comma-separated axes for mean analysis.
                                   Default: w1,w2,cycle1,cycle2.
@@ -109,6 +113,33 @@ if missing:
 PY
 }
 
+resolve_run_config_payoff_mode() {
+    "$PYTHON_BIN" - "$1" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+config_path = Path(sys.argv[1]).expanduser().resolve()
+with config_path.open("r", encoding="utf-8") as handle:
+    payload = json.load(handle)
+
+if not isinstance(payload, dict):
+    raise SystemExit(f"Expected a JSON object in {config_path}")
+
+if "payoff_config" in payload:
+    raise SystemExit(
+        f"{config_path} is a weight-sweep run_config.json; replay it with "
+        "script.reproduce_day_night.GameTheory.payoff_weight_nash_heatmap instead."
+    )
+
+payoff_mode = payload.get("payoff_mode")
+if not isinstance(payoff_mode, str) or not payoff_mode:
+    raise SystemExit(f"No payoff_mode found in {config_path}")
+
+print(payoff_mode)
+PY
+}
+
 normalize_output_dir() {
     mkdir -p -- "$1"
     cd -- "$1" && pwd
@@ -148,6 +179,11 @@ while (($# > 0)); do
             OUTPUT_DIR=$2
             shift 2
             ;;
+        --run-config)
+            require_value "$1" "$@"
+            RUN_CONFIG=$2
+            shift 2
+            ;;
         --python)
             require_value "$1" "$@"
             PYTHON_BIN=$2
@@ -181,6 +217,7 @@ while (($# > 0)); do
         --payoff-mode)
             require_value "$1" "$@"
             PAYOFF_MODE=$2
+            PAYOFF_MODE_SET="true"
             shift 2
             ;;
         --weights|--diffusion|--initial-centers)
@@ -225,6 +262,17 @@ fi
 
 if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
     fail "Python executable not found: $PYTHON_BIN"
+fi
+
+if [[ -n "$RUN_CONFIG" ]]; then
+    RESOLVED_RUN_CONFIG_MODE=$(resolve_run_config_payoff_mode "$RUN_CONFIG")
+    if [[ "$PAYOFF_MODE_SET" == "true" ]] && [[ "$PAYOFF_MODE" != "$RESOLVED_RUN_CONFIG_MODE" ]]; then
+        fail "--payoff-mode ($PAYOFF_MODE) does not match payoff_mode=$RESOLVED_RUN_CONFIG_MODE in $RUN_CONFIG"
+    fi
+    PAYOFF_MODE=$RESOLVED_RUN_CONFIG_MODE
+    PAYOFF_ARGS=(--run-config "$RUN_CONFIG" "${PAYOFF_ARGS[@]}")
+elif [[ -z "$PAYOFF_MODE" ]]; then
+    PAYOFF_MODE="overlap"
 fi
 
 IFS=',' read -r -a RAW_MEAN_AXES <<< "$MEAN_X_AXES"
