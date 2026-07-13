@@ -1,6 +1,5 @@
 import argparse
 import json
-import warnings
 from pathlib import Path
 import sys
 
@@ -11,6 +10,9 @@ if __package__ in {None, ""}:
 
 from script.reproduce_day_night.GameTheory.payoff_csv_utils import (
     load_payoff_game_data,
+)
+from script.reproduce_day_night.GameTheory.payoff_replicator_analysis import (
+    compute_nash_equilibria as compute_nash_equilibria_from_matrices,
 )
 from script.reproduce_day_night.paths import game_theory_payoff_output_path
 
@@ -75,46 +77,23 @@ def _strategy_as_mapping(strategy_names, probabilities, *, atol=1.0e-12):
     }
 
 
-def _equilibrium_key(prey_probabilities, predator_probabilities):
-    rounded_prey = tuple(np.round(prey_probabilities, decimals=12))
-    rounded_predator = tuple(np.round(predator_probabilities, decimals=12))
-    return rounded_prey, rounded_predator
-
-
 def compute_nash_equilibria(payoff_game_data):
-    import nashpy as nash
-
-    prey_payoff_matrix = payoff_game_data.prey_values
-    predator_payoff_matrix = payoff_game_data.predator_values
-    game = nash.Game(prey_payoff_matrix, predator_payoff_matrix)
+    raw_equilibria = compute_nash_equilibria_from_matrices(
+        payoff_game_data.prey_values,
+        payoff_game_data.predator_values,
+    )
+    if not raw_equilibria:
+        raise ValueError("Nashpy did not return any Nash equilibrium for this matrix.")
 
     unique_equilibria = []
-    seen_keys = set()
-    warning_messages = []
-
-    with warnings.catch_warnings(record=True) as caught_warnings:
-        warnings.simplefilter("always")
-        raw_equilibria = list(game.support_enumeration())
-
-    for warning in caught_warnings:
-        warning_messages.append(str(warning.message))
-
-    for prey_mixed_strategy, predator_mixed_strategy in raw_equilibria:
-        normalized_prey = _normalize_probability_vector(prey_mixed_strategy)
-        normalized_predator = _normalize_probability_vector(predator_mixed_strategy)
-        equilibrium_key = _equilibrium_key(normalized_prey, normalized_predator)
-        if equilibrium_key in seen_keys:
-            continue
-
-        seen_keys.add(equilibrium_key)
-        prey_expected_payoff = float(
-            normalized_prey @ prey_payoff_matrix @ normalized_predator
-        )
-        predator_expected_payoff = float(
-            normalized_prey @ predator_payoff_matrix @ normalized_predator
+    for equilibrium in raw_equilibria:
+        normalized_prey = _normalize_probability_vector(equilibrium["prey_strategy"])
+        normalized_predator = _normalize_probability_vector(
+            equilibrium["predator_strategy"]
         )
         unique_equilibria.append(
             {
+                "algorithm": equilibrium["algorithm"],
                 "prey_mixed_strategy": _strategy_as_mapping(
                     payoff_game_data.row_strategies,
                     normalized_prey,
@@ -123,13 +102,10 @@ def compute_nash_equilibria(payoff_game_data):
                     payoff_game_data.column_strategies,
                     normalized_predator,
                 ),
-                "prey_expected_payoff": prey_expected_payoff,
-                "predator_expected_payoff": predator_expected_payoff,
+                "prey_expected_payoff": float(equilibrium["prey_payoff"]),
+                "predator_expected_payoff": float(equilibrium["predator_payoff"]),
             }
         )
-
-    if not unique_equilibria:
-        raise ValueError("Nashpy did not return any Nash equilibrium for this matrix.")
 
     first_predator_path = str(payoff_game_data.predator_source_path)
     first_prey_path = str(payoff_game_data.prey_source_path)
@@ -148,7 +124,7 @@ def compute_nash_equilibria(payoff_game_data):
         "column_player_objective": "maximize payoff",
         "equilibrium_count": len(unique_equilibria),
         "equilibria": unique_equilibria,
-        "warnings": warning_messages,
+        "warnings": [],
     }
 
     if payoff_game_data.is_zero_sum:

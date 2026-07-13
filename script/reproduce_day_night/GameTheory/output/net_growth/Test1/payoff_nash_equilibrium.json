@@ -1,0 +1,30 @@
+{
+  "payoff_mode": "net-growth",
+  "prey_payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/net_growth/Test1/payoff_matrix_prey.csv",
+  "predator_payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/net_growth/Test1/payoff_matrix_predator.csv",
+  "row_player": "Prey",
+  "column_player": "Predator",
+  "row_player_objective": "maximize payoff",
+  "column_player_objective": "maximize payoff",
+  "equilibrium_count": 1,
+  "equilibria": [
+    {
+      "algorithm": "support_enumeration",
+      "prey_mixed_strategy": {
+        "N": 0.3114487667461753,
+        "P1": 0.1281089420316335,
+        "P2": 0.2512853784854226,
+        "M2": 0.30915691273676854
+      },
+      "predator_mixed_strategy": {
+        "D": 0.5612558924249488,
+        "N": 0.2037497748829552,
+        "M1": 0.16914896646986807,
+        "M2": 0.06584536622222795
+      },
+      "prey_expected_payoff": 0.03013068131765159,
+      "predator_expected_payoff": -0.040448947820518194
+    }
+  ],
+  "warnings": []
+}

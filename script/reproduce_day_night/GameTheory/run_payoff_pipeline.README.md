@@ -10,10 +10,11 @@
 
 The script also writes a `pipeline_command.sh` replay file and a `logs/` directory with one log per step.
 
-Two payoff definitions are supported:
+Three payoff definitions are supported:
 
 1. `overlap` for the historical payoff based on $\int \sqrt{u_1 u_2}$.
 2. `population-integral` for a prey payoff based on $\int u_1$ and a predator payoff based on $\int u_2$ over the same final observation window.
+3. `net-growth` for prey and predator payoffs based on the net growth measure over the final observation window, computed as the change in total population mass across that window.
 
 ## Location
 
@@ -34,6 +35,14 @@ Population-specific payoff version:
 bash script/reproduce_day_night/GameTheory/run_payoff_pipeline.sh \
   --output-dir script/reproduce_day_night/GameTheory/output/full_pipeline_population_integral \
   --payoff-mode population-integral
+```
+
+Net-growth payoff version:
+
+```bash
+bash script/reproduce_day_night/GameTheory/run_payoff_pipeline.sh \
+  --output-dir script/reproduce_day_night/GameTheory/output/full_pipeline_net_growth \
+  --payoff-mode net-growth
 ```
 
 ## Examples
@@ -76,6 +85,51 @@ bash script/reproduce_day_night/GameTheory/run_payoff_pipeline.sh \
   --python .venv/bin/python
 ```
 
+## Weight-sweep Nash maps
+
+For article-facing figures, prefer the mixed-Nash sweep over the final-time
+replicator map. The script below sweeps the weight plane on the default grid
+`0, 0.1, ..., 1.0`, computes the mixed Nash equilibrium set for each pair
+`(w_1, w_2)`, and writes figures that separate three questions:
+
+1. which activity code is the leading component of the equilibrium set,
+2. how large that leading component is,
+3. how many equilibria were found for the cell.
+
+```bash
+.venv/bin/python -m script.reproduce_day_night.GameTheory.payoff_weight_nash_heatmap \
+  --output-dir script/reproduce_day_night/GameTheory/output/weight_nash \
+  --payoff-mode net-growth
+```
+
+Useful overrides:
+
+- `--w1-values 0 0.2 0.4 0.6 0.8 1`
+- `--w2-values 0 0.2 0.4 0.6 0.8 1`
+- `--strategy-codes D,N,P1,M1`
+
+This writes:
+
+- `nash_weight_summary.csv`
+- `nash_weight_details.json`
+- `nash_consensus_components.png`
+- `nash_equilibrium_diagnostics.png`
+- `run_config.json`
+- `weight_runs/w1_*__w2_*/` with one saved payoff folder per weight pair
+
+Each folder under `weight_runs/` contains only the saved payoff outputs for that
+pair together with a replay script:
+
+- `run_config.json`
+- `case_payoffs.csv`
+- `payoff_matrix_prey.csv` and `payoff_matrix_predator.csv` in general-sum modes
+- `payoff_matrix_prey.png` and `payoff_matrix_predator.png` in general-sum modes
+- `run_remaining_pipeline.sh`
+
+Run that script later if you want the rest of the pipeline (`nash`,
+`replicator`, `mean_analysis`, `minmax`) for one specific weight pair without
+having to manually rebuild the command.
+
 ## Output structure
 
 The directory passed through `--output-dir` normally contains:
@@ -96,7 +150,7 @@ In `overlap` mode you also get:
 - `payoff_matrix.png`
 - `mean_analysis/mean_vs_*.png`
 
-In `population-integral` mode you get instead:
+In `population-integral` and `net-growth` modes you get instead:
 
 - `payoff_matrix_prey.csv`
 - `payoff_matrix_predator.csv`
@@ -116,7 +170,7 @@ In `population-integral` mode you get instead:
 - `--replicator-time-span FLOAT`: final time for the replicator dynamics.
 - `--replicator-time-steps INT`: number of output samples for the replicator dynamics.
 - `--replicator-plot-style STYLE`: `line` or `stacked`.
-- `--payoff-mode MODE`: `overlap` or `population-integral`.
+- `--payoff-mode MODE`: `overlap`, `population-integral`, or `net-growth`.
 
 ### Day-night and perception parameters
 
@@ -174,4 +228,5 @@ Practical interpretation:
 
 - The selected Python environment must contain at least `numpy`, `matplotlib`, `scipy`, and `nashpy`.
 - The `nash` and `replicator` stages depend on `nashpy`.
+- In `net-growth` mode, prey and predator payoffs are the change in total mass across the selected final observation window, reported on the same per-cycle normalisation used by the other payoff modes.
 - When the pipeline is run on a single payoff directory, `cycle1` and `cycle2` are often more informative than `w1` and `w2` for mean-analysis plots.

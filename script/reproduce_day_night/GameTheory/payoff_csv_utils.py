@@ -12,6 +12,7 @@ PREY_PAYOFF_MATRIX_FILENAME = "payoff_matrix_prey.csv"
 PREDATOR_PAYOFF_MATRIX_FILENAME = "payoff_matrix_predator.csv"
 OVERLAP_PAYOFF_MODE = "overlap"
 POPULATION_INTEGRAL_PAYOFF_MODE = "population-integral"
+NET_GROWTH_PAYOFF_MODE = "net-growth"
 
 
 @dataclass(frozen=True)
@@ -182,7 +183,10 @@ def load_payoff_game_data(payoff_source):
     if payoff_mode == OVERLAP_PAYOFF_MODE and legacy_matrix_path.is_file():
         return _build_zero_sum_game_data(load_payoff_matrix_csv(legacy_matrix_path))
 
-    if payoff_mode == POPULATION_INTEGRAL_PAYOFF_MODE:
+    if payoff_mode in {
+        POPULATION_INTEGRAL_PAYOFF_MODE,
+        NET_GROWTH_PAYOFF_MODE,
+    }:
         if not prey_matrix_path.is_file() or not predator_matrix_path.is_file():
             raise FileNotFoundError(
                 "Expected payoff_matrix_prey.csv and payoff_matrix_predator.csv "

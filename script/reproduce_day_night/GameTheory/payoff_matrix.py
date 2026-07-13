@@ -2,6 +2,7 @@ import argparse
 import csv
 import json
 import os
+import shutil
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
@@ -47,7 +48,7 @@ DAY_START = 0.0
 DEFAULT_T_SUNSET = 0.5
 DEFAULT_WEIGHTS = (0.5, 0.5)
 DEFAULT_SIGHT_RADIUS = 0.1
-DEFAULT_SMELL_RADIUS = 0.2
+DEFAULT_SMELL_RADIUS = 0.1
 DEFAULT_INITIAL_CENTERS = (0.25, 0.70)
 DEFAULT_INITIAL_WIDTH = 0.1
 DEFAULT_ATTRACTION = (
@@ -56,17 +57,19 @@ DEFAULT_ATTRACTION = (
 )
 DEFAULT_DIFFUSION = (0.04, 0.04)
 DEFAULT_REACTION_RATES = {
-    "prey_growth": 0.2,
-    "predator_decay": 0.1,
-    "predation_rate": 0.15,
-    "conversion_rate": 0.08,
+    "prey_growth": 0.1,
+    "predator_decay": 0.04,
+    "predation_rate": 0.25,
+    "conversion_rate": 0.15,
 }
 MAX_WORKERS = min(16, os.cpu_count() or 1)
 OVERLAP_PAYOFF_MODE = "overlap"
 POPULATION_INTEGRAL_PAYOFF_MODE = "population-integral"
+NET_GROWTH_PAYOFF_MODE = "net-growth"
 PAYOFF_MODE_CHOICES = (
     OVERLAP_PAYOFF_MODE,
     POPULATION_INTEGRAL_PAYOFF_MODE,
+    NET_GROWTH_PAYOFF_MODE,
 )
 ACTIVITY_REGIMES = (
     {"code": "D", "label": "Diurnal", "periods": [(0.0, 0.5)]},
@@ -105,61 +108,12 @@ def _coerce_population_parameter(values, *, parameter_name):
     return flattened
 
 
-def build_config(
-    *,
-    t_sunset=DEFAULT_T_SUNSET,
-    weights=DEFAULT_WEIGHTS,
-    sight_radius=DEFAULT_SIGHT_RADIUS,
-    smell_radius=DEFAULT_SMELL_RADIUS,
-    number_of_points=NUMBER_OF_POINTS,
-    dt=DT,
-    number_of_cycles=NUMBER_OF_CYCLES,
-    observation_window=OBSERVATION_WINDOW,
-    initial_centers=DEFAULT_INITIAL_CENTERS,
-    initial_width=DEFAULT_INITIAL_WIDTH,
-    diffusion=DEFAULT_DIFFUSION,
-    attraction=DEFAULT_ATTRACTION,
-    reaction_rates=None,
-):
-    if reaction_rates is None:
-        reaction_rates = DEFAULT_REACTION_RATES
-
-    return {
-        "t_sunset": float(t_sunset),
-        "weights": tuple(float(weight) for weight in weights),
-        "sight_radius": _coerce_population_parameter(
-            sight_radius,
-            parameter_name="sight_radius",
-        ),
-        "smell_radius": _coerce_population_parameter(
-            smell_radius,
-            parameter_name="smell_radius",
-        ),
-        "number_of_points": int(number_of_points),
-        "dt": float(dt),
-        "number_of_cycles": int(number_of_cycles),
-        "observation_window": float(observation_window),
-        "initial_centers": tuple(float(center) for center in initial_centers),
-        "initial_width": float(initial_width),
-        "diffusion": tuple(float(value) for value in diffusion),
-        "attraction": tuple(
-            tuple(float(value) for value in row) for row in attraction
-        ),
-        "reaction_rates": {
-            "prey_growth": float(reaction_rates["prey_growth"]),
-            "predator_decay": float(reaction_rates["predator_decay"]),
-            "predation_rate": float(reaction_rates["predation_rate"]),
-            "conversion_rate": float(reaction_rates["conversion_rate"]),
-        },
-    }
-
-
 def parse_args():
     parser = argparse.ArgumentParser(
         description=(
             "Compute the 6x6 prey-predator payoff matrix defined in the paper "
-            "using either the legacy overlap energy or population-specific "
-            "final-window integrals."
+            "using the legacy overlap energy, population-specific "
+            "final-window integrals, or final-window net growth."
         )
     )
     parser.add_argument(
@@ -238,7 +192,10 @@ def parse_args():
         "--number-of-points",
         type=int,
         default=NUMBER_OF_POINTS,
-        help="Number of spatial grid points. Default: 64.",
+        help=(
+            "Number of spatial grid points. Default: "
+            f"{NUMBER_OF_POINTS}."
+        ),
     )
     parser.add_argument(
         "--dt",
@@ -256,7 +213,10 @@ def parse_args():
         "--observation-window",
         type=float,
         default=OBSERVATION_WINDOW,
-        help="Final-time window used in the overlap integral. Default: 1.0.",
+        help=(
+            "Final-time window used to evaluate the selected payoff functional. "
+            f"Default: {OBSERVATION_WINDOW:g}."
+        ),
     )
     parser.add_argument(
         "--payoff-mode",
@@ -266,7 +226,9 @@ def parse_args():
             "Payoff functional used over the final observation window. "
             "'overlap' keeps the legacy sqrt(u1*u2) overlap payoff. "
             "'population-integral' uses the raw u1 integral for the prey payoff "
-            "and the raw u2 integral for the predator payoff. Default: overlap."
+            "and the raw u2 integral for the predator payoff. "
+            "'net-growth' uses the net change in total prey or predator mass over "
+            "that window. Default: overlap."
         ),
     )
     parser.add_argument(
@@ -492,21 +454,24 @@ def build_reaction_term(reaction_rates):
 
 def build_config(
     *,
-    t_sunset,
-    weights,
-    sight_radius,
-    smell_radius,
-    number_of_points,
-    dt,
-    number_of_cycles,
-    observation_window,
+    t_sunset=DEFAULT_T_SUNSET,
+    weights=DEFAULT_WEIGHTS,
+    sight_radius=DEFAULT_SIGHT_RADIUS,
+    smell_radius=DEFAULT_SMELL_RADIUS,
+    number_of_points=NUMBER_OF_POINTS,
+    dt=DT,
+    number_of_cycles=NUMBER_OF_CYCLES,
+    observation_window=OBSERVATION_WINDOW,
     payoff_mode=OVERLAP_PAYOFF_MODE,
-    initial_centers,
-    initial_width,
-    diffusion,
-    attraction,
-    reaction_rates,
+    initial_centers=DEFAULT_INITIAL_CENTERS,
+    initial_width=DEFAULT_INITIAL_WIDTH,
+    diffusion=DEFAULT_DIFFUSION,
+    attraction=DEFAULT_ATTRACTION,
+    reaction_rates=None,
 ):
+    if reaction_rates is None:
+        reaction_rates = DEFAULT_REACTION_RATES
+
     return {
         "t_sunset": float(t_sunset),
         "weights": tuple(float(weight) for weight in weights),
@@ -533,45 +498,6 @@ def build_config(
             key: float(value) for key, value in reaction_rates.items()
         },
     }
-
-
-def build_config_from_args(args):
-    sight_radius = resolve_population_parameter_pair(
-        args.sight_radius,
-        args.prey_sight_radius,
-        args.predator_sight_radius,
-        default_value=DEFAULT_SIGHT_RADIUS,
-    )
-    smell_radius = resolve_population_parameter_pair(
-        args.smell_radius,
-        args.prey_smell_radius,
-        args.predator_smell_radius,
-        default_value=DEFAULT_SMELL_RADIUS,
-    )
-
-    return build_config(
-        t_sunset=args.t_sunset,
-        weights=args.weights,
-        sight_radius=sight_radius,
-        smell_radius=smell_radius,
-        number_of_points=args.number_of_points,
-        dt=args.dt,
-        number_of_cycles=args.number_of_cycles,
-        observation_window=args.observation_window,
-        initial_centers=args.initial_centers,
-        initial_width=args.initial_width,
-        diffusion=args.diffusion,
-        attraction=(
-            (args.chi11, args.chi12),
-            (args.chi21, args.chi22),
-        ),
-        reaction_rates={
-            "prey_growth": args.prey_growth,
-            "predator_decay": args.predator_decay,
-            "predation_rate": args.predation_rate,
-            "conversion_rate": args.conversion_rate,
-        },
-    )
 
 
 def build_solver(prey_regime, predator_regime, config):
@@ -633,6 +559,23 @@ def solve_case(prey_regime, predator_regime, config):
         )
         predator_payoff = float(
             model.get_population_window_integral(
+                1,
+                observation_window=config["observation_window"],
+            )
+            / normalisation
+        )
+        return model, prey_payoff, predator_payoff
+
+    if payoff_mode == NET_GROWTH_PAYOFF_MODE:
+        prey_payoff = float(
+            model.get_population_window_net_growth(
+                0,
+                observation_window=config["observation_window"],
+            )
+            / normalisation
+        )
+        predator_payoff = float(
+            model.get_population_window_net_growth(
                 1,
                 observation_window=config["observation_window"],
             )
@@ -1320,6 +1263,25 @@ def prepare_output_directory_for_run(output_paths, config, *, echo):
 
     if case_payoff_output_path.exists():
         case_payoff_output_path.unlink()
+
+    generated_file_keys = (
+        "csv_output_path",
+        "prey_csv_output_path",
+        "predator_csv_output_path",
+        "heatmap_output_path",
+        "prey_heatmap_output_path",
+        "predator_heatmap_output_path",
+    )
+    for output_key in generated_file_keys:
+        output_path = output_paths[output_key]
+        if output_path.exists():
+            output_path.unlink()
+
+    population_heatmap_output_directory = output_paths[
+        "population_heatmap_output_directory"
+    ]
+    if population_heatmap_output_directory.exists():
+        shutil.rmtree(population_heatmap_output_directory)
 
     save_run_config_snapshot(run_config_output_path, config)
 

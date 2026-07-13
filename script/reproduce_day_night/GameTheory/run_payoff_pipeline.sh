@@ -41,10 +41,11 @@ General options:
   --replicator-time-span FLOAT    Replicator final time. Default: 40.
   --replicator-time-steps INT     Replicator sample count. Default: 800.
   --replicator-plot-style STYLE   line or stacked. Default: line.
-    --payoff-mode MODE              overlap or population-integral. Default: overlap.
+    --payoff-mode MODE              overlap, population-integral, or net-growth.
+                                                                    Default: overlap.
 
 Payoff-matrix options:
-    --strategy-codes LIST          Comma-separated subset of activity codes.
+    --strategy-codes LIST           Comma-separated subset of activity codes.
   --t-sunset FLOAT
   --weights W1 W2
   --sight-radius FLOAT
