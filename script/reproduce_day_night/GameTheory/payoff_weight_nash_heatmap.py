@@ -700,7 +700,7 @@ def compute_nash_weight_summary(
                 config,
                 max_workers=max_workers,
                 case_payoff_output_path=output_paths["case_payoff_output_path"],
-                echo=False,
+                echo=True,
             )
             save_pair_payoff_outputs(
                 output_paths,

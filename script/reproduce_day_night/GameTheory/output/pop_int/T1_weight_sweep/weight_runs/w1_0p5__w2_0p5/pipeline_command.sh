@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+/home/tim/Documents/Spacial\ Modeling\ of\ Animal\ Displacment/script/reproduce_day_night/GameTheory/run_payoff_pipeline.sh --output-dir /home/tim/Documents/Spacial\ Modeling\ of\ Animal\ Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p5 --python .venv/bin/python --payoff-mode population-integral --t-sunset 0.5 --weights 0.5 0.5 --prey-sight-radius 0.1 --predator-sight-radius 0.1 --prey-smell-radius 0.2 --predator-smell-radius 0.2 --number-of-points 128 --dt 0.1 --number-of-cycles 4 --observation-window 2 --prey-growth 0.2 --predator-decay 0.1 --predation-rate 0.15 --conversion-rate 0.08 --chi11 0.1 --chi12 -0.2 --chi21 0.2 --chi22 0.1 --diffusion 0.04 0.04 --initial-centers 0.25 0.7 --initial-width 0.1 --strategy-codes D\,N\,P1\,P2\,M1\,M2 --max-workers 16 --replicator-time-span 5000 --replicator-time-steps 50000

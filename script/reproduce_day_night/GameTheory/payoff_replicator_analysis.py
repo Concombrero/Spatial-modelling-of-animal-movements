@@ -356,7 +356,7 @@ def plot_strategy_frequencies(
     axis.set_xlim(time_grid[0], time_grid[-1])
     axis.set_ylim(0.0, 1.0)
     axis.set_xlabel("Time")
-    axis.set_ylabel("Strategy frequency")
+    axis.set_ylabel("Strategy share")
     axis.set_title(title)
     axis.grid(True, alpha=0.25)
     axis.legend(loc="center left", bbox_to_anchor=(1.02, 0.5), frameon=False)
