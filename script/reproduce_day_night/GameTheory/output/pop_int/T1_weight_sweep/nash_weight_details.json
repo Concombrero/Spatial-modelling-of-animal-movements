@@ -12,15 +12,15 @@
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8477352764623346,
+          "predator_expected_payoff": 0.8477352764832687,
           "predator_mixed_strategy": {
-            "D": 0.2191420992332369,
-            "P1": 0.7808579007667631
+            "D": 0.21914210051083682,
+            "P1": 0.7808578994891632
           },
-          "prey_expected_payoff": 1.1081915821342634,
+          "prey_expected_payoff": 1.1081915821124222,
           "prey_mixed_strategy": {
-            "D": 0.6215585220324831,
-            "P1": 0.3784414779675169
+            "D": 0.6215585215800613,
+            "P1": 0.3784414784199387
           }
         }
       ],
@@ -36,11 +36,33 @@
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8482937904650755,
+          "predator_expected_payoff": 0.8490595119,
+          "predator_mixed_strategy": {
+            "P1": 1.0
+          },
+          "prey_expected_payoff": 1.1118865944,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p1",
+      "w1": 0.0,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8481308212,
           "predator_mixed_strategy": {
             "D": 1.0
           },
-          "prey_expected_payoff": 1.1119149570847684,
+          "prey_expected_payoff": 1.1123642757,
           "prey_mixed_strategy": {
             "D": 1.0
           }
@@ -49,20 +71,64 @@
       "equilibrium_count": 1,
       "predator_consensus_leader": "D",
       "prey_consensus_leader": "D",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p25/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p25",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p2",
       "w1": 0.0,
-      "w2": 0.25
+      "w2": 0.2
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8492619441551478,
+          "predator_expected_payoff": 0.848457419,
           "predator_mixed_strategy": {
             "D": 1.0
           },
-          "prey_expected_payoff": 1.1098830875214798,
+          "prey_expected_payoff": 1.1114917835,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p3",
+      "w1": 0.0,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.848812327,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1106917821,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p4",
+      "w1": 0.0,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8492619442,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1098830875,
           "prey_mixed_strategy": {
             "D": 1.0
           }
@@ -80,11 +146,11 @@
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8514537885237445,
+          "predator_expected_payoff": 0.8498981896,
           "predator_mixed_strategy": {
             "D": 1.0
           },
-          "prey_expected_payoff": 1.1074507679884362,
+          "prey_expected_payoff": 1.1089503627,
           "prey_mixed_strategy": {
             "D": 1.0
           }
@@ -93,20 +159,86 @@
       "equilibrium_count": 1,
       "predator_consensus_leader": "D",
       "prey_consensus_leader": "D",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p75/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p75",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p6",
       "w1": 0.0,
-      "w2": 0.75
+      "w2": 0.6
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8459926393551792,
+          "predator_expected_payoff": 0.8509293542,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1076561083,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p7",
+      "w1": 0.0,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8518915335,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1081575553,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p8",
+      "w1": 0.0,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8520263445,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1151437368,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0__w2_0p9",
+      "w1": 0.0,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8459926394,
           "predator_mixed_strategy": {
             "M2": 1.0
           },
-          "prey_expected_payoff": 1.14126670582239,
+          "prey_expected_payoff": 1.1412667058,
           "prey_mixed_strategy": {
             "D": 1.0
           }
@@ -124,57 +256,59 @@
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8491527965024713,
+          "predator_expected_payoff": 0.8481097626321654,
           "predator_mixed_strategy": {
-            "D": 0.3857905156581677,
-            "P1": 0.6142094843418323
+            "D": 0.2836170369365103,
+            "P1": 0.7163829630634897
           },
-          "prey_expected_payoff": 1.103434592081671,
+          "prey_expected_payoff": 1.107093003622135,
           "prey_mixed_strategy": {
-            "D": 0.635503714830374,
-            "P1": 0.36449628516962596
+            "D": 0.6501737790158173,
+            "P1": 0.34982622098418265
           }
         }
       ],
       "equilibrium_count": 1,
       "predator_consensus_leader": "P1",
       "prey_consensus_leader": "D",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p25__w2_0/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p25__w2_0",
-      "w1": 0.25,
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0",
+      "w1": 0.1,
       "w2": 0.0
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8505674650592822,
+          "predator_expected_payoff": 0.848076293283981,
           "predator_mixed_strategy": {
-            "M2": 1.0
+            "D": 0.08778576067782806,
+            "P1": 0.9122142393221719
           },
-          "prey_expected_payoff": 1.1170154397963956,
+          "prey_expected_payoff": 1.1115569639833653,
           "prey_mixed_strategy": {
-            "D": 1.0
+            "D": 0.8735403375757799,
+            "P1": 0.12645966242422013
           }
         }
       ],
       "equilibrium_count": 1,
-      "predator_consensus_leader": "M2",
+      "predator_consensus_leader": "P1",
       "prey_consensus_leader": "D",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p25__w2_0p25/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p25__w2_0p25",
-      "w1": 0.25,
-      "w2": 0.25
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p1",
+      "w1": 0.1,
+      "w2": 0.1
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8488739755405957,
+          "predator_expected_payoff": 0.8479600467,
           "predator_mixed_strategy": {
             "M2": 1.0
           },
-          "prey_expected_payoff": 1.1238962977300946,
+          "prey_expected_payoff": 1.1228155711,
           "prey_mixed_strategy": {
             "D": 1.0
           }
@@ -183,20 +317,86 @@
       "equilibrium_count": 1,
       "predator_consensus_leader": "M2",
       "prey_consensus_leader": "D",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p25__w2_0p5/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p25__w2_0p5",
-      "w1": 0.25,
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p2",
+      "w1": 0.1,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8477560097,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1134284228,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p3",
+      "w1": 0.1,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8475463977,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1140157639,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p4",
+      "w1": 0.1,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8479031513,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1263125822,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p5",
+      "w1": 0.1,
       "w2": 0.5
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8471695783571435,
+          "predator_expected_payoff": 0.8480868422,
           "predator_mixed_strategy": {
             "M2": 1.0
           },
-          "prey_expected_payoff": 1.1320030798275187,
+          "prey_expected_payoff": 1.1273253613,
           "prey_mixed_strategy": {
             "D": 1.0
           }
@@ -205,20 +405,20 @@
       "equilibrium_count": 1,
       "predator_consensus_leader": "M2",
       "prey_consensus_leader": "D",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p25__w2_0p75/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p25__w2_0p75",
-      "w1": 0.25,
-      "w2": 0.75
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p6",
+      "w1": 0.1,
+      "w2": 0.6
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8425752184851761,
+          "predator_expected_payoff": 0.8480208848,
           "predator_mixed_strategy": {
             "M2": 1.0
           },
-          "prey_expected_payoff": 1.1482700805182504,
+          "prey_expected_payoff": 1.1292468727,
           "prey_mixed_strategy": {
             "D": 1.0
           }
@@ -227,24 +427,844 @@
       "equilibrium_count": 1,
       "predator_consensus_leader": "M2",
       "prey_consensus_leader": "D",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p25__w2_1/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p25__w2_1",
-      "w1": 0.25,
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p7",
+      "w1": 0.1,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8488309322,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1162356337,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p8",
+      "w1": 0.1,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8468511571,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1262644478,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_0p9",
+      "w1": 0.1,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8436388777,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1463168695,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p1__w2_1",
+      "w1": 0.1,
       "w2": 1.0
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8502315697397194,
+          "predator_expected_payoff": 0.8487247146195974,
           "predator_mixed_strategy": {
-            "D": 0.5131227258113212,
-            "P1": 0.48687727418867877
+            "D": 0.34813587209387276,
+            "P1": 0.6518641279061272
           },
-          "prey_expected_payoff": 1.0958049819344537,
+          "prey_expected_payoff": 1.104986772290133,
           "prey_mixed_strategy": {
-            "D": 0.4318318661539148,
-            "P1": 0.5681681338460852
+            "D": 0.6504628106625759,
+            "P1": 0.34953718933742406
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0",
+      "w1": 0.2,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8486552370313114,
+          "predator_mixed_strategy": {
+            "D": 0.11517405429032379,
+            "M2": 0.8848259457096762
+          },
+          "prey_expected_payoff": 1.1163733241791338,
+          "prey_mixed_strategy": {
+            "D": 0.8693523437902165,
+            "P1": 0.13064765620978344
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p1",
+      "w1": 0.2,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.849769947167095,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.118462791853491,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p2",
+      "w1": 0.2,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8489724774784214,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1213040038010416,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p3",
+      "w1": 0.2,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8485247849065338,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1234767242276855,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p4",
+      "w1": 0.2,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.848337751882025,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1252141613240692,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p5",
+      "w1": 0.2,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8478588759956744,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.127717351859958,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p6",
+      "w1": 0.2,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8473895925413427,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1305594732535944,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p7",
+      "w1": 0.2,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8468737727026944,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1339051648417808,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p8",
+      "w1": 0.2,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.84509261252237,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1403328994019764,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_0p9",
+      "w1": 0.2,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8426058637464432,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1483712052811104,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p2__w2_1",
+      "w1": 0.2,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8496332236535,
+          "predator_mixed_strategy": {
+            "D": 0.425359547788273,
+            "P1": 0.574640452211727
+          },
+          "prey_expected_payoff": 1.1016090470358837,
+          "prey_mixed_strategy": {
+            "D": 0.611016098714986,
+            "P1": 0.38898390128501403
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0",
+      "w1": 0.3,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8496349168180211,
+          "predator_mixed_strategy": {
+            "D": 0.24869575371827346,
+            "P1": 0.7513042462817265
+          },
+          "prey_expected_payoff": 1.1066126479861602,
+          "prey_mixed_strategy": {
+            "D": 0.8875328512358613,
+            "P1": 0.11246714876413863
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p1",
+      "w1": 0.3,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8501406882485275,
+          "predator_mixed_strategy": {
+            "D": 0.11698212329273128,
+            "M2": 0.8830178767072687
+          },
+          "prey_expected_payoff": 1.112626462830524,
+          "prey_mixed_strategy": {
+            "D": 0.8223960537168489,
+            "P1": 0.17760394628315113
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p2",
+      "w1": 0.3,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8454484173207863,
+          "predator_mixed_strategy": {
+            "D": 0.07219671397468741,
+            "M2": 0.9278032860253126
+          },
+          "prey_expected_payoff": 1.115006091064236,
+          "prey_mixed_strategy": {
+            "D": 0.605418157834783,
+            "M2": 0.39458184216521697
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p3",
+      "w1": 0.3,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8460672211389292,
+          "predator_mixed_strategy": {
+            "D": 0.007767551388883742,
+            "M2": 0.9922324486111163
+          },
+          "prey_expected_payoff": 1.1188753977563255,
+          "prey_mixed_strategy": {
+            "D": 0.710089243426631,
+            "M2": 0.289910756573369
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p4",
+      "w1": 0.3,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8496308456103865,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.122037955445558,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p5",
+      "w1": 0.3,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8485372246069671,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1259163617930437,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p6",
+      "w1": 0.3,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.847202755140286,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1306261327289835,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p7",
+      "w1": 0.3,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8469780129642002,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1334099949020928,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p8",
+      "w1": 0.3,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8455435122721137,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.139059236037203,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_0p9",
+      "w1": 0.3,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8428485961258831,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.147445535032875,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p3__w2_1",
+      "w1": 0.3,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8504351634746713,
+          "predator_mixed_strategy": {
+            "D": 0.493516180636272,
+            "P1": 0.506483819363728
+          },
+          "prey_expected_payoff": 1.0978609843295468,
+          "prey_mixed_strategy": {
+            "D": 0.5388635470148815,
+            "P1": 0.46113645298511846
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0",
+      "w1": 0.4,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8512658234235934,
+          "predator_mixed_strategy": {
+            "D": 0.338884371376065,
+            "P1": 0.661115628623935
+          },
+          "prey_expected_payoff": 1.1012424166771277,
+          "prey_mixed_strategy": {
+            "D": 0.8331563836702078,
+            "P1": 0.1668436163297922
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p1",
+      "w1": 0.4,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.84506591343439,
+          "predator_mixed_strategy": {
+            "D": 0.4103488582059316,
+            "M2": 0.5896511417940684
+          },
+          "prey_expected_payoff": 1.106772651337519,
+          "prey_mixed_strategy": {
+            "D": 0.47313929586823167,
+            "M2": 0.5268607041317683
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p2",
+      "w1": 0.4,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8444059232308894,
+          "predator_mixed_strategy": {
+            "D": 0.4660241561060352,
+            "M2": 0.5339758438939648
+          },
+          "prey_expected_payoff": 1.1073166785075328,
+          "prey_mixed_strategy": {
+            "D": 0.4453240249229419,
+            "M2": 0.5546759750770581
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p3",
+      "w1": 0.4,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8451183057835006,
+          "predator_mixed_strategy": {
+            "D": 0.3996163201690365,
+            "M2": 0.6003836798309635
+          },
+          "prey_expected_payoff": 1.1107745664037185,
+          "prey_mixed_strategy": {
+            "D": 0.552868272268979,
+            "M2": 0.44713172773102094
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p4",
+      "w1": 0.4,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.843247288021579,
+          "predator_mixed_strategy": {
+            "D": 0.6222954577532978,
+            "N": 0.3777045422467022
+          },
+          "prey_expected_payoff": 1.1110071491595168,
+          "prey_mixed_strategy": {
+            "D": 0.3970239313538755,
+            "M2": 0.6029760686461245
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p5",
+      "w1": 0.4,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8466719617161756,
+          "predator_mixed_strategy": {
+            "D": 0.15139985690765478,
+            "M2": 0.8486001430923452
+          },
+          "prey_expected_payoff": 1.1203242431037534,
+          "prey_mixed_strategy": {
+            "D": 0.7822514584778034,
+            "M2": 0.21774854152219655
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p6",
+      "w1": 0.4,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8477515407249127,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1288030828031919,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p7",
+      "w1": 0.4,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8474349659747363,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1318533386611491,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p8",
+      "w1": 0.4,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8467693227267241,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1358086020229239,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_0p9",
+      "w1": 0.4,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.844224599651353,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1437704818061685,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p4__w2_1",
+      "w1": 0.4,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8502315697561745,
+          "predator_mixed_strategy": {
+            "D": 0.5131227250353796,
+            "P1": 0.48687727496462047
+          },
+          "prey_expected_payoff": 1.0958049819196982,
+          "prey_mixed_strategy": {
+            "D": 0.4318318651840195,
+            "P1": 0.5681681348159805
           }
         }
       ],
@@ -260,39 +1280,113 @@
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8437322644856843,
+          "predator_expected_payoff": 0.8530988084613091,
           "predator_mixed_strategy": {
-            "D": 0.7123561767622019,
-            "M2": 0.28764382323779814
+            "D": 0.40637845012052454,
+            "P1": 0.5936215498794755
           },
-          "prey_expected_payoff": 1.100981694852938,
+          "prey_expected_payoff": 1.0952449977586676,
           "prey_mixed_strategy": {
-            "D": 0.3155847228008739,
-            "M2": 0.6844152771991261
+            "D": 0.7912062010566561,
+            "P1": 0.20879379894334388
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p1",
+      "w1": 0.5,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8446761914220813,
+          "predator_mixed_strategy": {
+            "D": 0.2429722030603204,
+            "M2": 0.2756693954623383,
+            "P1": 0.4813584014773412
+          },
+          "prey_expected_payoff": 1.1024062284056095,
+          "prey_mixed_strategy": {
+            "D": 0.3736920813729422,
+            "M2": 0.6262520350827355,
+            "P1": 5.5883544322276624e-05
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p2",
+      "w1": 0.5,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8434524122570203,
+          "predator_mixed_strategy": {
+            "D": 0.7172743661559251,
+            "M2": 0.28272563384407495
+          },
+          "prey_expected_payoff": 1.1016873107770158,
+          "prey_mixed_strategy": {
+            "D": 0.31402812487894183,
+            "M2": 0.6859718751210582
           }
         }
       ],
       "equilibrium_count": 1,
       "predator_consensus_leader": "D",
       "prey_consensus_leader": "M2",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p25/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p25",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p3",
       "w1": 0.5,
-      "w2": 0.25
+      "w2": 0.3
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8417464873275441,
+          "predator_expected_payoff": 0.842504244614317,
           "predator_mixed_strategy": {
-            "D": 0.8336520863223525,
-            "N": 0.16634791367764742
+            "D": 0.7280308025286155,
+            "N": 0.27196919747138454
           },
-          "prey_expected_payoff": 1.1038051426989173,
+          "prey_expected_payoff": 1.1050204003434372,
           "prey_mixed_strategy": {
-            "D": 0.22394526126623848,
-            "M2": 0.7760547387337615
+            "D": 0.26654093698368864,
+            "M2": 0.7334590630163114
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p4",
+      "w1": 0.5,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8417464873547003,
+          "predator_mixed_strategy": {
+            "D": 0.8336520847597272,
+            "N": 0.16634791524027284
+          },
+          "prey_expected_payoff": 1.1038051427147226,
+          "prey_mixed_strategy": {
+            "D": 0.2239452606779041,
+            "M2": 0.7760547393220959
           }
         }
       ],
@@ -308,35 +1402,105 @@
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8475552462388733,
+          "predator_expected_payoff": 0.8465260664151376,
           "predator_mixed_strategy": {
-            "M2": 0.9011623833506209,
-            "N": 0.09883761664937907
+            "D": 0.46337548582496235,
+            "M2": 0.5366245141750376
           },
-          "prey_expected_payoff": 1.129957123528953,
+          "prey_expected_payoff": 1.1125813845330677,
           "prey_mixed_strategy": {
-            "D": 0.9744905373805053,
-            "M2": 0.02550946261949477
+            "D": 0.6818576287917648,
+            "M2": 0.31814237120823513
           }
         }
       ],
       "equilibrium_count": 1,
       "predator_consensus_leader": "M2",
       "prey_consensus_leader": "D",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p75/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p75",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p6",
       "w1": 0.5,
-      "w2": 0.75
+      "w2": 0.6
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8296373945223252,
+          "predator_expected_payoff": 0.8474221207257983,
+          "predator_mixed_strategy": {
+            "D": 0.08998886158837238,
+            "M2": 0.9100111384116276
+          },
+          "prey_expected_payoff": 1.1235825424077568,
+          "prey_mixed_strategy": {
+            "D": 0.8802937050017586,
+            "M2": 0.11970629499824133
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p7",
+      "w1": 0.5,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8481465365540799,
           "predator_mixed_strategy": {
             "M2": 1.0
           },
-          "prey_expected_payoff": 1.1399745612321408,
+          "prey_expected_payoff": 1.1294396805399798,
+          "prey_mixed_strategy": {
+            "D": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p8",
+      "w1": 0.5,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8349414737226314,
+          "predator_mixed_strategy": {
+            "D": 0.15006147914164503,
+            "M2": 0.849938520858355
+          },
+          "prey_expected_payoff": 1.1315131885208876,
+          "prey_mixed_strategy": {
+            "D": 0.1822598517390216,
+            "M2": 0.8177401482609784
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p5__w2_0p9",
+      "w1": 0.5,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8296373945,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1399745612,
           "prey_mixed_strategy": {
             "M2": 1.0
           }
@@ -354,105 +1518,251 @@
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8473233839598799,
+          "predator_expected_payoff": 0.8490501569082739,
           "predator_mixed_strategy": {
-            "D": 0.4366265244472759,
-            "M2": 0.39905244449665067,
-            "P1": 0.16432103105607346
+            "D": 0.4812111604270941,
+            "P1": 0.5187888395729059
           },
-          "prey_expected_payoff": 1.1001093380706548,
+          "prey_expected_payoff": 1.0963673386568615,
           "prey_mixed_strategy": {
-            "D": 0.24168092081356818,
-            "M2": 0.010240468004202552,
-            "P1": 0.7480786111822293
+            "D": 0.3205981342643919,
+            "P1": 0.6794018657356081
           }
         }
       ],
       "equilibrium_count": 1,
-      "predator_consensus_leader": "D",
+      "predator_consensus_leader": "P1",
       "prey_consensus_leader": "P1",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p75__w2_0/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p75__w2_0",
-      "w1": 0.75,
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0",
+      "w1": 0.6,
       "w2": 0.0
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8414081785772977,
+          "predator_expected_payoff": 0.8429348305305555,
           "predator_mixed_strategy": {
-            "D": 1.0
+            "D": 0.39227054129593075,
+            "P1": 0.6077294587040692
           },
-          "prey_expected_payoff": 1.0911680401879402,
+          "prey_expected_payoff": 1.0928003065598526,
           "prey_mixed_strategy": {
-            "M2": 1.0
+            "M2": 0.9043796314195867,
+            "P1": 0.09562036858041334
           }
         }
       ],
       "equilibrium_count": 1,
-      "predator_consensus_leader": "D",
+      "predator_consensus_leader": "P1",
       "prey_consensus_leader": "M2",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p75__w2_0p25/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p75__w2_0p25",
-      "w1": 0.75,
-      "w2": 0.25
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p1",
+      "w1": 0.6,
+      "w2": 0.1
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8399976091727972,
+          "predator_expected_payoff": 0.8439881384064755,
           "predator_mixed_strategy": {
-            "D": 1.0
+            "D": 0.8976006743347436,
+            "M2": 0.1023993256652565
           },
-          "prey_expected_payoff": 1.0962029023924975,
+          "prey_expected_payoff": 1.0953280595743125,
           "prey_mixed_strategy": {
-            "M2": 1.0
+            "D": 0.24819328853551892,
+            "M2": 0.7518067114644811
           }
         }
       ],
       "equilibrium_count": 1,
       "predator_consensus_leader": "D",
       "prey_consensus_leader": "M2",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p75__w2_0p5/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p75__w2_0p5",
-      "w1": 0.75,
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p2",
+      "w1": 0.6,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8427537387000592,
+          "predator_mixed_strategy": {
+            "D": 0.8864727663084745,
+            "M2": 0.11352723369152548
+          },
+          "prey_expected_payoff": 1.097165944907413,
+          "prey_mixed_strategy": {
+            "D": 0.20805677666074207,
+            "M2": 0.7919432233392579
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p3",
+      "w1": 0.6,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8411153826958491,
+          "predator_mixed_strategy": {
+            "D": 0.9243193818851885,
+            "N": 0.07568061811481154
+          },
+          "prey_expected_payoff": 1.0985836828915085,
+          "prey_mixed_strategy": {
+            "D": 0.11367250161848219,
+            "M2": 0.8863274983815178
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p4",
+      "w1": 0.6,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8415602825012278,
+          "predator_mixed_strategy": {
+            "D": 0.9317783220405947,
+            "N": 0.06822167795940524
+          },
+          "prey_expected_payoff": 1.100033626644745,
+          "prey_mixed_strategy": {
+            "D": 0.17309795535137162,
+            "M2": 0.8269020446486284
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p5",
+      "w1": 0.6,
       "w2": 0.5
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8449688753890479,
+          "predator_expected_payoff": 0.8459054725726171,
           "predator_mixed_strategy": {
-            "D": 0.9418435894662488,
-            "N": 0.05815641053375118
+            "D": 0.8357312090640682,
+            "N": 0.16426879093593186
           },
-          "prey_expected_payoff": 1.10660367710023,
+          "prey_expected_payoff": 1.1053928729231355,
           "prey_mixed_strategy": {
-            "D": 0.5371502126172888,
-            "M2": 0.4628497873827112
+            "D": 0.5457254184372293,
+            "M2": 0.4542745815627706
           }
         }
       ],
       "equilibrium_count": 1,
       "predator_consensus_leader": "D",
       "prey_consensus_leader": "D",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p75__w2_0p75/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p75__w2_0p75",
-      "w1": 0.75,
-      "w2": 0.75
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p6",
+      "w1": 0.6,
+      "w2": 0.6
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8292778269563502,
+          "predator_expected_payoff": 0.8466127124193459,
+          "predator_mixed_strategy": {
+            "D": 0.7341891995632419,
+            "N": 0.26581080043675803
+          },
+          "prey_expected_payoff": 1.1131218024812903,
+          "prey_mixed_strategy": {
+            "D": 0.6879148209507382,
+            "M2": 0.3120851790492618
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p7",
+      "w1": 0.6,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8426950865812032,
+          "predator_mixed_strategy": {
+            "D": 0.15229858699862553,
+            "M2": 0.8477014130013745
+          },
+          "prey_expected_payoff": 1.1254695001618447,
+          "prey_mixed_strategy": {
+            "D": 0.6030046149675607,
+            "M2": 0.3969953850324392
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p8",
+      "w1": 0.6,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8339522202587278,
+          "predator_mixed_strategy": {
+            "D": 0.5078578930355693,
+            "M2": 0.49214210696443067
+          },
+          "prey_expected_payoff": 1.128187305517346,
+          "prey_mixed_strategy": {
+            "D": 0.12134194008681054,
+            "M2": 0.8786580599131895
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_0p9",
+      "w1": 0.6,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.829351587353765,
           "predator_mixed_strategy": {
             "M2": 1.0
           },
-          "prey_expected_payoff": 1.1396298770519955,
+          "prey_expected_payoff": 1.140294705868257,
           "prey_mixed_strategy": {
             "M2": 1.0
           }
@@ -461,26 +1771,784 @@
       "equilibrium_count": 1,
       "predator_consensus_leader": "M2",
       "prey_consensus_leader": "M2",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p75__w2_1/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p75__w2_1",
-      "w1": 0.75,
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p6__w2_1",
+      "w1": 0.6,
       "w2": 1.0
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8448312946608774,
+          "predator_expected_payoff": 0.8478922858816079,
           "predator_mixed_strategy": {
-            "D": 0.450831530473943,
-            "M2": 0.3468995877425715,
-            "P1": 0.20226888178348543
+            "D": 0.4392910776841549,
+            "P1": 0.5607089223158451
           },
-          "prey_expected_payoff": 1.0998457487374265,
+          "prey_expected_payoff": 1.0981252776274113,
           "prey_mixed_strategy": {
-            "D": 0.136068516816503,
-            "M2": 0.3072054467835612,
-            "P1": 0.5567260363999358
+            "D": 0.2590760792132316,
+            "P1": 0.7409239207867684
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0",
+      "w1": 0.7,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8431992971665713,
+          "predator_mixed_strategy": {
+            "D": 0.35578441100123703,
+            "P1": 0.644215588998763
+          },
+          "prey_expected_payoff": 1.092003456220607,
+          "prey_mixed_strategy": {
+            "M2": 0.9270649001179752,
+            "P1": 0.07293509988202485
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p1",
+      "w1": 0.7,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8413799739343952,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0913807165647251,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p2",
+      "w1": 0.7,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8425545859010157,
+          "predator_mixed_strategy": {
+            "D": 0.9899838163516594,
+            "M2": 0.010016183648340584
+          },
+          "prey_expected_payoff": 1.093455408446624,
+          "prey_mixed_strategy": {
+            "D": 0.13681936720682897,
+            "M2": 0.863180632793171
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p3",
+      "w1": 0.7,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8414251796152273,
+          "predator_mixed_strategy": {
+            "D": 0.9942660071116227,
+            "N": 0.005733992888377304
+          },
+          "prey_expected_payoff": 1.0954006863693118,
+          "prey_mixed_strategy": {
+            "D": 0.09830824659497728,
+            "M2": 0.9016917534050227
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p4",
+      "w1": 0.7,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8421695940487189,
+          "predator_mixed_strategy": {
+            "D": 0.9961995385637454,
+            "N": 0.003800461436254545
+          },
+          "prey_expected_payoff": 1.0969044971943198,
+          "prey_mixed_strategy": {
+            "D": 0.17737004761777952,
+            "M2": 0.8226299523822205
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p5",
+      "w1": 0.7,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8462971098026275,
+          "predator_mixed_strategy": {
+            "D": 0.9642777640365408,
+            "N": 0.03572223596345924
+          },
+          "prey_expected_payoff": 1.0992709691846605,
+          "prey_mixed_strategy": {
+            "D": 0.4990417525841796,
+            "M2": 0.5009582474158204
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p6",
+      "w1": 0.7,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8452938174818125,
+          "predator_mixed_strategy": {
+            "D": 0.9121430151181974,
+            "N": 0.08785698488180259
+          },
+          "prey_expected_payoff": 1.1041484911845216,
+          "prey_mixed_strategy": {
+            "D": 0.4805311116001806,
+            "M2": 0.5194688883998194
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p7",
+      "w1": 0.7,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8438711522489034,
+          "predator_mixed_strategy": {
+            "D": 0.43436287636090265,
+            "M2": 0.5656371236390974
+          },
+          "prey_expected_payoff": 1.1196141645767028,
+          "prey_mixed_strategy": {
+            "D": 0.6409612924226138,
+            "M2": 0.35903870757738626
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p8",
+      "w1": 0.7,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8355068591282249,
+          "predator_mixed_strategy": {
+            "D": 0.7548575635360087,
+            "M2": 0.24514243646399125
+          },
+          "prey_expected_payoff": 1.123729218227078,
+          "prey_mixed_strategy": {
+            "D": 0.18155167929946514,
+            "M2": 0.8184483207005349
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_0p9",
+      "w1": 0.7,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8292520398942741,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 1.1400135388443735,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p7__w2_1",
+      "w1": 0.7,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8464348862211469,
+          "predator_mixed_strategy": {
+            "D": 0.4492773554111794,
+            "M2": 0.3706710753814401,
+            "P1": 0.1800515692073804
+          },
+          "prey_expected_payoff": 1.0994681211168018,
+          "prey_mixed_strategy": {
+            "D": 0.19332328178452052,
+            "M2": 0.13843851006489072,
+            "P1": 0.6682382081505888
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0",
+      "w1": 0.8,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8435444218300461,
+          "predator_mixed_strategy": {
+            "D": 0.3292776648809188,
+            "P1": 0.6707223351190812
+          },
+          "prey_expected_payoff": 1.091147224574308,
+          "prey_mixed_strategy": {
+            "M2": 0.944214207013352,
+            "P1": 0.055785792986647986
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p1",
+      "w1": 0.8,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8421668992533604,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0890262996926665,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p2",
+      "w1": 0.8,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8414101308988085,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0911141246773735,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p3",
+      "w1": 0.8,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8406535355172277,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0936050014557845,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p4",
+      "w1": 0.8,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8402335934359986,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0955627710090252,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p5",
+      "w1": 0.8,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8402251427136178,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.096836257102518,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p6",
+      "w1": 0.8,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8397790996258551,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0996065236555068,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p7",
+      "w1": 0.8,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8369081418349248,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1091393163057233,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p8",
+      "w1": 0.8,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8381401164191484,
+          "predator_mixed_strategy": {
+            "D": 0.9593274958972385,
+            "M2": 0.04067250410276148
+          },
+          "prey_expected_payoff": 1.1171954189128954,
+          "prey_mixed_strategy": {
+            "D": 0.2666410268650372,
+            "M2": 0.7333589731349628
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_0p9",
+      "w1": 0.8,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8299834644107789,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1324411241892092,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_1",
+      "w1": 0.8,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.845456889885568,
+          "predator_mixed_strategy": {
+            "D": 0.4564196485624749,
+            "M2": 0.35002309311927954,
+            "P1": 0.1935572583182455
+          },
+          "prey_expected_payoff": 1.0992967079176672,
+          "prey_mixed_strategy": {
+            "D": 0.15137745437455363,
+            "M2": 0.2569900037327062,
+            "P1": 0.5916325418927402
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0",
+      "w1": 0.9,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8437708411238964,
+          "predator_mixed_strategy": {
+            "D": 0.3067784932387805,
+            "P1": 0.6932215067612195
+          },
+          "prey_expected_payoff": 1.0906202020914604,
+          "prey_mixed_strategy": {
+            "M2": 0.9615845032229389,
+            "P1": 0.03841549677706113
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p1",
+      "w1": 0.9,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8431256343440365,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0861945651769533,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p2",
+      "w1": 0.9,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.842350540569366,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0882947346864544,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p3",
+      "w1": 0.9,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8413813504535381,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0914456871032823,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p4",
+      "w1": 0.9,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8407809769493455,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0940378012988412,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p5",
+      "w1": 0.9,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8406214829527499,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0958703575577755,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p6",
+      "w1": 0.9,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8398529567811134,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0995610783937606,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p7",
+      "w1": 0.9,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.836946950601617,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.109204810743158,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p8",
+      "w1": 0.9,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8364551036491441,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1135287441405395,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_0p9",
+      "w1": 0.9,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8323471106744207,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1252922206405709,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p9__w2_1",
+      "w1": 0.9,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8448312946531402,
+          "predator_mixed_strategy": {
+            "D": 0.45083153096557205,
+            "M2": 0.34689958823509065,
+            "P1": 0.20226888079933722
+          },
+          "prey_expected_payoff": 1.099845748741593,
+          "prey_mixed_strategy": {
+            "D": 0.1360685167775486,
+            "M2": 0.30720544483068596,
+            "P1": 0.5567260383917654
           }
         }
       ],
@@ -496,11 +2564,35 @@
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8440016155433062,
+          "predator_expected_payoff": 0.8436159526502022,
+          "predator_mixed_strategy": {
+            "D": 0.28173951062948355,
+            "P1": 0.7182604893705165
+          },
+          "prey_expected_payoff": 1.0909324014357806,
+          "prey_mixed_strategy": {
+            "M2": 0.9864286087180227,
+            "P1": 0.013571391281977263
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p1",
+      "w1": 1.0,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8441721091222306,
           "predator_mixed_strategy": {
             "D": 1.0
           },
-          "prey_expected_payoff": 1.0834301532988482,
+          "prey_expected_payoff": 1.083114864227981,
           "prey_mixed_strategy": {
             "M2": 1.0
           }
@@ -509,20 +2601,64 @@
       "equilibrium_count": 1,
       "predator_consensus_leader": "D",
       "prey_consensus_leader": "M2",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p25/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p25",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p2",
       "w1": 1.0,
-      "w2": 0.25
+      "w2": 0.2
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8414362675813641,
+          "predator_expected_payoff": 0.8435263622850026,
           "predator_mixed_strategy": {
             "D": 1.0
           },
-          "prey_expected_payoff": 1.0921551651349626,
+          "prey_expected_payoff": 1.0847680383006948,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p3",
+      "w1": 1.0,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8422993710054975,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.088693096074868,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p4",
+      "w1": 1.0,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8414362676,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.0921551651,
           "prey_mixed_strategy": {
             "M2": 1.0
           }
@@ -540,11 +2676,11 @@
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8384703825872137,
+          "predator_expected_payoff": 0.841064646484522,
           "predator_mixed_strategy": {
             "D": 1.0
           },
-          "prey_expected_payoff": 1.1041710243649256,
+          "prey_expected_payoff": 1.094723582849821,
           "prey_mixed_strategy": {
             "M2": 1.0
           }
@@ -553,20 +2689,86 @@
       "equilibrium_count": 1,
       "predator_consensus_leader": "D",
       "prey_consensus_leader": "M2",
-      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p75/run_remaining_pipeline.sh",
-      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p75",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p6",
       "w1": 1.0,
-      "w2": 0.75
+      "w2": 0.6
     },
     {
       "equilibria": [
         {
           "algorithm": "support_enumeration",
-          "predator_expected_payoff": 0.8327289156021637,
+          "predator_expected_payoff": 0.8399142372483712,
           "predator_mixed_strategy": {
             "D": 1.0
           },
-          "prey_expected_payoff": 1.1233526002134937,
+          "prey_expected_payoff": 1.0994867482456467,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p7",
+      "w1": 1.0,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8370772362879709,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1089855342315358,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p8",
+      "w1": 1.0,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8365185769040151,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1131521110176286,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_1__w2_0p9",
+      "w1": 1.0,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 0.8327289156,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 1.1233526002,
           "prey_mixed_strategy": {
             "M2": 1.0
           }
@@ -583,16 +2785,28 @@
   ],
   "w1_values": [
     0.0,
-    0.25,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
     0.5,
-    0.75,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
     1.0
   ],
   "w2_values": [
     0.0,
-    0.25,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
     0.5,
-    0.75,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
     1.0
   ]
 }

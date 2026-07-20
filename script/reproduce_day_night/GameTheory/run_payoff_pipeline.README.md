@@ -164,6 +164,24 @@ Run that script later if you want the rest of the pipeline (`nash`,
 `replicator`, `mean_analysis`, `minmax`) for one specific weight pair without
 having to manually rebuild the command.
 
+To summarize a completed weight sweep as a strategy-frequency table, run:
+
+```bash
+.venv/bin/python -m script.reproduce_day_night.GameTheory.payoff_weight_nash_strategy_table \
+  script/reproduce_day_night/GameTheory/output/weight_nash
+```
+
+This reads `nash_weight_details.json` from the sweep folder and writes:
+
+- `nash_strategy_frequency_summary.csv`
+- `nash_strategy_frequency_summary.md`
+
+For each activity code, the table reports how many equilibrium instances it
+leads and how many equilibrium supports it appears in, separately for prey and
+predator. If several strategies tie for the top probability in one equilibrium,
+they are all counted as leaders, and every leader also counts as appearing in
+the equilibrium support.
+
 ## Output structure
 
 The directory passed through `--output-dir` normally contains:
