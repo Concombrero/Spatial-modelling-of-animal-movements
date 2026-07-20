@@ -384,6 +384,44 @@ For each pair of sensory weights $(w_1,w_2)\in[0,1]^2$, we compute the mixed Nas
 
 \subsection{Results}
 
+We now turn to the predator-prey game associated with the population-integral payoff introduced above. For each pair of sensory weights $(w_1,w_2)\in[0,1]^2$, sampled on the grid $\{0,0.1,\ldots,1\}^2$, we computed the prey and predator payoff matrices over the six circadian strategies and then determined the mixed Nash equilibrium set. In all $121$ tested weight pairs, the game admits a unique mixed Nash equilibrium. Figure~\ref{fig:game-theory-nash-components} summarizes the leading component of that equilibrium for both species over the whole weight plane.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/nash_consensus_components.png}
+    \caption{Consensus leading component of the mixed Nash equilibrium as a function of the prey sight weight $w_1$ and predator sight weight $w_2$. Each cell corresponds to one weight pair and is labeled by the strategy with the largest probability in the unique mixed Nash equilibrium. The left panel shows the prey leader and the right panel shows the predator leader.}
+    \label{fig:game-theory-nash-components}
+\end{figure}
+
+The main pattern is not a transition from diurnality to nocturnality. Instead, the equilibrium leaders are overwhelmingly concentrated in the diurnal strategy $D$ and the shifted matutinal strategy $M_2$. For the prey, $D$ is the leading component in $60$ cells and $M_2$ in $55$ cells, while for the predator $D$ leads in $61$ cells and $M_2$ in $42$ cells. The nocturnal strategy $N$ and the configurations $P_2$ and $M_1$ never emerge as leading components on this grid. Moreover, the most frequent equilibrium pairings are $(M_2,D)$, which occurs in $43$ cells, and $(D,M_2)$, which occurs in $36$ cells. This shows that the game primarily selects complementary temporal niches rather than a common activity schedule for both populations.
+
+The prey response is strongly organized by its own visual reliance. When $w_1$ is small, the prey remains almost entirely diurnal across the whole parameter plane. As $w_1$ increases, the leading prey component progressively shifts toward $M_2$, indicating that a species with stronger daylight-dependent perception benefits from partially displacing its activity toward the day-night interface rather than remaining strictly aligned with daylight. This result may seem strange because, even though the prey focuses its perception on its vision, it tends to shift its activity to coincide with daylight this leads to reduced or even absent perception at night. One hypothesis is that by dispersing, the prey population makes it harder for predators to access the entire population, since predators that remain in groups cannot cover all of their prey. The predator exhibits a related but distinct transition. For low $w_2$, the polyphasic strategy $P_1$ still appears in a restricted portion of the plane, but increasing $w_2$ mainly selects $D$ and then $M_2$. In other words, stronger visual reliance does not favor a nocturnal inversion of the game. Instead, it promotes a reorganization between a purely diurnal schedule and a boundary-crossing schedule. In fact, there is a distinction between these two cycles that depends on perception and, therefore, on the cycles of the prey. 
+
+Two representative parameter regimes illustrate this mechanism. For balanced sensory weights $(w_1,w_2)=(0.5,0.5)$, the equilibrium prey strategy is approximately $0.224D+0.776M_2$, whereas the predator strategy is approximately $0.834D+0.166N$. The associated security-value analysis also selects $M_2$ for the prey and $D$ for the predator, showing that the prey gains robustness by shifting part of its activity away from the daylight window while the predator remains mainly diurnal.
+
+To make the evolutionary interpretation more concrete, Figure~\ref{fig:game-theory-replicator-t1} shows the corresponding asymmetric replicator dynamics initialized from the uniform strategy distribution. The trajectory does not converge monotonically to a fixed mixed state. Instead, the prey oscillates mainly between $D$ and $M_2$, while the predator remains predominantly diurnal but undergoes recurrent excursions toward $N$. This confirms that the mixed Nash equilibrium identifies the relevant strategic support, but that the long-time evolutionary dynamics may remain cyclic rather than settling to a static composition.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{%
+    \hspace*{0.125\textwidth}% adjust this offset if the pair still looks off-center
+    \begin{minipage}[t]{0.50\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/game_theory_replicator_t1_prey.png}
+    \end{minipage}
+    \begin{minipage}[t]{0.50\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/game_theory_replicator_t1_predator.png}
+    \end{minipage}%
+    }
+    \caption{Representative asymmetric replicator dynamics for the balanced case $(w_1,w_2)=(0.5,0.5)$, initialized from the uniform strategy distribution. Left: prey strategy frequencies. Right: predator strategy frequencies. The dominant strategies remain concentrated on the support highlighted by the mixed Nash equilibrium, but the trajectory exhibits persistent oscillations rather than monotone convergence to a fixed point.}
+    \label{fig:game-theory-replicator-t1}
+\end{figure}
+
+By contrast, in a predator-favored sensory regime with $(w_1,w_2)=(0.2,0.8)$, a larger predator sight radius, and stronger predator-prey interaction coefficients, the equilibrium becomes $0.864D+0.136M_2$ for the prey and $0.463D+0.537M_2$ for the predator. In this case the predator obtains the larger expected payoff, $1.087$ against $0.791$ for the prey, reflecting a clear predation advantage even though both species remain centered around daylight or the day-night transition.
+
+Taken together, these results suggest that the evolutionary effect of daylight-dependent perception is not to separate the two species into a simple day-versus-night opposition. Rather, the game favors temporal differentiation within a much narrower family of strategies: one species remains mostly diurnal while the other shifts toward $M_2$, and the roles may switch depending on the sensory weights. The dominant ecological story is therefore one of partial temporal avoidance and counter-adjustment, where prey persistence is improved by reducing direct overlap without becoming fully nocturnal, and predator success is maintained by tracking that shift through either a diurnal or a boundary-crossing activity schedule.
+
 \section{Discussion}
 
 \section*{Acknowledgements}

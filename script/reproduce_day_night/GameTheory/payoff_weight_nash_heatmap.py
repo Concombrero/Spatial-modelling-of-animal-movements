@@ -101,10 +101,11 @@ def parse_args():
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=DEFAULT_OUTPUT_DIRECTORY,
+        default=None,
         help=(
             "Directory where the CSV summary, JSON details, figures, and run "
-            f"config are saved. Default: {DEFAULT_OUTPUT_DIRECTORY}."
+            "config are saved. Default: the directory containing --run-config "
+            f"when provided, otherwise {DEFAULT_OUTPUT_DIRECTORY}."
         ),
     )
     parser.add_argument(
@@ -400,6 +401,16 @@ def resolve_weight_sweep_configuration(args):
         }
 
     return load_saved_weight_nash_run_config(args.run_config)
+
+
+def resolve_output_dir(args):
+    if args.output_dir is not None:
+        return args.output_dir.expanduser().resolve()
+
+    if args.run_config is not None:
+        return args.run_config.expanduser().resolve().parent
+
+    return DEFAULT_OUTPUT_DIRECTORY.expanduser().resolve()
 
 
 def format_weight_slug(value):
@@ -1059,12 +1070,11 @@ def save_consensus_component_heatmap(
         constrained_layout=True,
     )
 
-    image = None
     for axis, grid, title in (
         (axes[0], prey_component_grid, "Prey consensus leader"),
         (axes[1], predator_component_grid, "Predator consensus leader"),
     ):
-        image = axis.imshow(
+        axis.imshow(
             grid,
             cmap=colour_map,
             norm=colour_norm,
@@ -1079,23 +1089,6 @@ def save_consensus_component_heatmap(
     axes[0].set_ylabel("$w_1$")
     figure.suptitle(
         "Leading component of the mixed Nash equilibrium set\n"
-        f"payoff mode={payoff_mode}, $t_{{sunset}}={t_sunset:g}$"
-    )
-    colourbar = figure.colorbar(
-        image,
-        ax=axes,
-        ticks=np.arange(len(component_labels)),
-        shrink=0.9,
-        pad=0.02,
-    )
-    colourbar.set_label("Consensus leader")
-    colourbar.ax.set_yticklabels(component_labels)
-    figure.text(
-        0.5,
-        0.01,
-        "Grey cells indicate no unique leader across the computed equilibrium set.",
-        ha="center",
-        fontsize=9,
     )
     figure.savefig(output_path, bbox_inches="tight", dpi=200)
     plt.close(figure)
@@ -1203,7 +1196,7 @@ def main():
         w2_values = resolved_config["w2_values"]
         activity_regimes = resolved_config["activity_regimes"]
         base_config = resolved_config["base_config"]
-        output_dir = ensure_directory(args.output_dir.expanduser().resolve())
+        output_dir = ensure_directory(resolve_output_dir(args))
         payoff_mode = base_config["payoff_mode"]
         t_sunset = base_config["t_sunset"]
 
