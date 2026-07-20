@@ -75,13 +75,6 @@ We now introduce the day-night cycle we will use to study the impact of daylight
 \label{daynight}
 \end{definition}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/day_night_cycle_definition.png}
-    \caption{Visualization the day-night cycle defined in Definition~\ref{daynight} with $t_{\text{sunset}}=0.65$.}
-    \label{fig:day-night-cycle-definition}
-\end{figure}
-
 We see from this definition, as a result of the simplifying assumptions, namely 1-periodicity and $t_\text{sunrise}=0$, that $t_\text{sunset}$ can be interpreted as the proportion of daylight in a given day. For studying large timescale dynamics (for example over a year), these assumptions break down for habitats far from the equator. In the extreme example of populations living in the polar regions, a "day-night cycle" happens approximately annually rather than daily. However, for populations living close to the equator, we expect these assumptions to fit the actual daily cycle. On the equator, the times of both sunset and sunrise have very little deviation throughout the year (less than 30 minutes) and are approximately 12 hours apart. Therefore the day-night cycle given by Definition~\ref{daynight} with $t_{\mathrm{sunset}}=0.5$ would give an appropriate framework for studying species at the equator.
 
 \subsection{Weighting perception}
@@ -167,7 +160,7 @@ To illustrate how these distinct sensory mechanisms interact, thanks to the Lemm
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/kernel_combinaison.png}
+    \includegraphics[width=1\linewidth]{figures/kernel_combinaison.png}
     \caption{Examples of perception kernels during the day created by combining a sight kernel and a smell kernel with different weights. With $R_{sight}=0.1$ and $R_{smell}=0.2$.}
     \label{fig:kernel-combinaison}
 \end{figure}
@@ -296,13 +289,6 @@ On the other hand, for the nocturnal population, the active periods coincide wit
 \vspace{10px}
 We extend our analysis to fragmented activity patterns, namely polyphasic and matutinal behaviors, illustrated across four configurations: Polyphasic 1 \& 2, Matutinal 1 \& 2. The following Figure ~\ref{fig:polyphasic-matutinal-activity-cycles} visually represents these configurations, showing the temporal distribution of active and inactive periods within a day for each simulated population for different values of $t_{\mathrm{sunset}}$.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{figures/polyphasic_matutinal_activity_cycles.png}
-    \caption{Visualization of the circadian activity patterns for the polyphasic and matutinal configurations.}
-    \label{fig:polyphasic-matutinal-activity-cycles}
-\end{figure}
-
 We remark that some simulations has small active periods during the day or during the night, however each one fits the definition given for it. To understand the ecological consequences of these temporal alignments, we investigate how the interplay between fragmented schedules and varying daylight durations impacts the spatial aggregation of the population. By altering the proportion of daylight ($t_{\mathrm{sunset}} \in \{0.3,0.5,0.7\}$), we can evaluate the robustness of these strategies under shifting environmental conditions. To quantify this effect, we compute the spread indicator $\Psi$ across the full spectrum of sensory reliance $w$.
 
 
@@ -398,19 +384,6 @@ The main pattern is not a transition from diurnality to nocturnality. Instead, t
 The prey response is strongly organized by its own visual reliance. When $w_1$ is small, the prey remains almost entirely diurnal across the whole parameter plane. As $w_1$ increases, the leading prey component progressively shifts toward $M_2$, indicating that a species with stronger daylight-dependent perception benefits from partially displacing its activity toward the day-night interface rather than remaining strictly aligned with daylight. This result may seem strange because, even though the prey focuses its perception on its vision, it tends to shift its activity to coincide with daylight this leads to reduced or even absent perception at night. One hypothesis is that by dispersing, the prey population makes it harder for predators to access the entire population, since predators that remain in groups cannot cover all of their prey. The predator exhibits a related but distinct transition. For low $w_2$, the polyphasic strategy $P_1$ still appears in a restricted portion of the plane, but increasing $w_2$ mainly selects $D$ and then $M_2$. In other words, stronger visual reliance does not favor a nocturnal inversion of the game. Instead, it promotes a reorganization between a purely diurnal schedule and a boundary-crossing schedule. In fact, there is a distinction between these two cycles that depends on perception and, therefore, on the cycles of the prey. 
 
 Two representative parameter regimes illustrate this mechanism. For balanced sensory weights $(w_1,w_2)=(0.5,0.5)$, the equilibrium prey strategy is approximately $0.224D+0.776M_2$, whereas the predator strategy is approximately $0.834D+0.166N$. The associated security-value analysis also selects $M_2$ for the prey and $D$ for the predator, showing that the prey gains robustness by shifting part of its activity away from the daylight window while the predator remains mainly diurnal.
-
-To make the evolutionary interpretation more concrete, Figure~\ref{fig:game-theory-replicator-t1} shows the corresponding asymmetric replicator dynamics initialized from the uniform strategy distribution. The trajectory does not converge monotonically to a fixed mixed state. Instead, the prey oscillates mainly between $D$ and $M_2$, while the predator remains predominantly diurnal but undergoes recurrent excursions toward $N$. This confirms that the mixed Nash equilibrium identifies the relevant strategic support, but that the long-time evolutionary dynamics may remain cyclic rather than settling to a static composition.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.95\textwidth]{figures/strategy_frequencies.png}
-    \caption{Representative asymmetric replicator dynamics for the balanced case $(w_1,w_2)=(0.5,0.5)$, initialized from the uniform strategy distribution. The left panel shows prey strategy frequencies and the right panel shows predator strategy frequencies. The dominant strategies remain concentrated on the support highlighted by the mixed Nash equilibrium, but the trajectory exhibits persistent oscillations rather than monotone convergence to a fixed point.}
-    \label{fig:game-theory-replicator-t1}
-\end{figure}
-
-By contrast, in a predator-favored sensory regime with $(w_1,w_2)=(0.2,0.8)$, a larger predator sight radius, and stronger predator-prey interaction coefficients, the equilibrium becomes $0.864D+0.136M_2$ for the prey and $0.463D+0.537M_2$ for the predator. In this case the predator obtains the larger expected payoff, $1.087$ against $0.791$ for the prey, reflecting a clear predation advantage even though both species remain centered around daylight or the day-night transition.
-
-Taken together, these results suggest that the evolutionary effect of daylight-dependent perception is not to separate the two species into a simple day-versus-night opposition. Rather, the game favors temporal differentiation within a much narrower family of strategies: one species remains mostly diurnal while the other shifts toward $M_2$, and the roles may switch depending on the sensory weights. The dominant ecological story is therefore one of partial temporal avoidance and counter-adjustment, where prey persistence is improved by reducing direct overlap without becoming fully nocturnal, and predator success is maintained by tracking that shift through either a diurnal or a boundary-crossing activity schedule.
 
 \section{Discussion}
 

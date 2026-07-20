@@ -23,8 +23,10 @@ EXPERIMENT_CONFIG = resolve_experiment_config(
     ONE_POPULATION_SIMULATION_CONFIG,
     "sleep_pattern_heatmaps",
 )
-INACTIVE_FACE_COLOR = PLOT_STYLE["inactive_face_color"]
-INACTIVE_EDGE_COLOR = PLOT_STYLE["inactive_edge_color"]
+ACTIVE_FACE_COLOR = "#B9DEB8"
+ACTIVE_EDGE_COLOR = "#7EAF7C"
+INACTIVE_FACE_COLOR = "#F2C1BD"
+INACTIVE_EDGE_COLOR = "#CF8F8A"
 AXIS_COLOR = PLOT_STYLE["axis_color"]
 GUIDE_COLOR = PLOT_STYLE["guide_color"]
 DEFAULT_T_SUNSET = EXPERIMENT_CONFIG["t_sunset"]
@@ -121,25 +123,33 @@ def build_pattern_groups(_t_sunset):
             "tracks": [ACTIVITY_REGIME_BY_CODE["N"]],
         },
         {
-            "label": "Matutinal (M1, M2)",
-            "tracks": [ACTIVITY_REGIME_BY_CODE["M1"], ACTIVITY_REGIME_BY_CODE["M2"]],
+            "label": "Matutinal 1 (M1)",
+            "tracks": [ACTIVITY_REGIME_BY_CODE["M1"]],
         },
         {
-            "label": "Polyphasic (P1, P2)",
-            "tracks": [ACTIVITY_REGIME_BY_CODE["P1"], ACTIVITY_REGIME_BY_CODE["P2"]],
+            "label": "Matutinal 2 (M2)",
+            "tracks": [ACTIVITY_REGIME_BY_CODE["M2"]],
+        },
+        {
+            "label": "Polyphasic 1 (P1)",
+            "tracks": [ACTIVITY_REGIME_BY_CODE["P1"]],
+        },
+        {
+            "label": "Polyphasic 2 (P2)",
+            "tracks": [ACTIVITY_REGIME_BY_CODE["P2"]],
         },
     ]
 
 
-def segment_style(state, regime):
+def segment_style(state):
     if state == "active":
-        return regime["color"], regime["color"]
+        return ACTIVE_FACE_COLOR, ACTIVE_EDGE_COLOR
     return INACTIVE_FACE_COLOR, INACTIVE_EDGE_COLOR
 
 
 def draw_segment_row(axis, y_center, segments, bar_height, regime):
     for start, end, state in segments:
-        face_color, edge_color = segment_style(state, regime)
+        face_color, edge_color = segment_style(state)
         axis.add_patch(
             Rectangle(
                 (start, y_center - 0.5 * bar_height),
@@ -225,31 +235,19 @@ def draw_time_axis(axis, t_sunset, y_value):
     )
 
 
-def draw_group_bracket(axis, x_value, y_top, y_bottom):
-    bracket_width = 0.025
-    axis.plot(
-        [x_value + bracket_width, x_value, x_value, x_value + bracket_width],
-        [y_top, y_top, y_bottom, y_bottom],
-        color=AXIS_COLOR,
-        linewidth=1.3,
-        clip_on=False,
-        zorder=4,
-    )
-
-
 def create_figure(t_sunset):
     figure, axis = plt.subplots(figsize=(11.6, 6.3), constrained_layout=True)
     figure.patch.set_facecolor("white")
     axis.set_facecolor("white")
     axis.axis("off")
-    axis.set_xlim(-0.34, 1.05)
-    axis.set_ylim(0.2, 6.95)
+    axis.set_xlim(-0.38, 1.05)
 
     timeline_y = 6.35
     first_row_y = 5.35
     row_gap = 0.78
     group_gap = 0.24
     bar_height = 0.46
+    pattern_groups = build_pattern_groups(t_sunset)
 
     axis.plot(
         [t_sunset, t_sunset],
@@ -262,10 +260,12 @@ def create_figure(t_sunset):
     draw_time_axis(axis, t_sunset, timeline_y)
 
     current_y = first_row_y
-    for group in build_pattern_groups(t_sunset):
+    lowest_row_center = first_row_y
+    for group in pattern_groups:
         row_centres = []
         for row_index, regime in enumerate(group["tracks"]):
             row_centres.append(current_y)
+            lowest_row_center = min(lowest_row_center, current_y)
             draw_segment_row(
                 axis,
                 current_y,
@@ -274,11 +274,11 @@ def create_figure(t_sunset):
                 regime,
             )
             if group["label"] == "Diurnal (D)" and row_index == 0:
-                draw_state_labels(axis, t_sunset, current_y, regime["color"])
+                draw_state_labels(axis, t_sunset, current_y, ACTIVE_EDGE_COLOR)
             current_y -= row_gap
 
         axis.text(
-            -0.16,
+            -0.18,
             sum(row_centres) / len(row_centres),
             group["label"],
             ha="right",
@@ -286,15 +286,9 @@ def create_figure(t_sunset):
             fontsize=13,
         )
 
-        if len(row_centres) > 1:
-            draw_group_bracket(
-                axis,
-                -0.055,
-                row_centres[0] + 0.5 * bar_height,
-                row_centres[-1] - 0.5 * bar_height,
-            )
-
         current_y -= group_gap
+
+    axis.set_ylim(lowest_row_center - 0.65 * bar_height, timeline_y + 0.6)
 
     return figure
 

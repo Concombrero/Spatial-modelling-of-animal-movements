@@ -143,6 +143,18 @@ ONE_POPULATION_SIMULATION_CONFIG = {
             "activity_codes": POLYPHASIC_CODES + MATUTINAL_CODES,
             "max_workers": min(16, os.cpu_count() or 1),
         },
+        "spread_sleep_pattern_diffusion": {
+            "number_of_cycles": 2,
+            "weights": tuple(round(0.1 * index, 1) for index in range(11)),
+            "t_sunset": 0.5,
+            "activity_codes": ACTIVITY_CODES,
+            "diffusion_scales": (0.1, 1.0, 10.0),
+            "max_workers": min(6, os.cpu_count() or 1),
+            "case_timeout_seconds": 45.0,
+            "retry_point_scales": (1.0, 0.5, 0.25),
+            "retry_dt_scales": (1.0, 1.0, 2.0),
+            "min_retry_number_of_points": 64,
+        },
     },
 }
 
