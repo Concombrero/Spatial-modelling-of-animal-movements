@@ -37,5 +37,4 @@ Found 1 Nash equilibrium result(s):
     Predator mixed strategy: D=0.833652, N=0.166348
     Expected payoffs: prey=1.103805, predator=0.841746
 
-Saved prey strategy plot to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1/replicator_analysis/prey_strategy_frequencies.png
-Saved predator strategy plot to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1/replicator_analysis/predator_strategy_frequencies.png
+Saved combined strategy plot to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1/replicator_analysis/strategy_frequencies.png

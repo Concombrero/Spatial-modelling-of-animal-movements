@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+import sys
 
 import matplotlib
 
@@ -8,14 +9,25 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-ACTIVE_FACE_COLOR = "#F8EDE6"
-ACTIVE_EDGE_COLOR = "#C77657"
-INACTIVE_FACE_COLOR = "#EEF4FB"
-INACTIVE_EDGE_COLOR = "#7C97B6"
-AXIS_COLOR = "#111111"
-GUIDE_COLOR = "#C5CCD5"
-DEFAULT_T_SUNSET = 0.5
+from script.reproduce_day_night.shared_config import (
+    ACTIVITY_REGIME_BY_CODE,
+    ONE_POPULATION_SIMULATION_CONFIG,
+    PLOT_STYLE,
+    resolve_experiment_config,
+)
+
+EXPERIMENT_CONFIG = resolve_experiment_config(
+    ONE_POPULATION_SIMULATION_CONFIG,
+    "sleep_pattern_heatmaps",
+)
+INACTIVE_FACE_COLOR = PLOT_STYLE["inactive_face_color"]
+INACTIVE_EDGE_COLOR = PLOT_STYLE["inactive_edge_color"]
+AXIS_COLOR = PLOT_STYLE["axis_color"]
+GUIDE_COLOR = PLOT_STYLE["guide_color"]
+DEFAULT_T_SUNSET = EXPERIMENT_CONFIG["t_sunset"]
 OUTPUT_PATH = (
     Path(__file__).resolve().parents[2]
     / "article"
@@ -98,66 +110,36 @@ def build_segments(active_intervals):
     return segments
 
 
-def build_pattern_groups(t_sunset):
-    quarter_points = [0.0, 0.25, 0.5, 0.75, 1.0]
-
+def build_pattern_groups(_t_sunset):
     return [
         {
-            "label": "Diurnal",
-            "tracks": [build_segments([(quarter_points[0], quarter_points[2])])],
+            "label": "Diurnal (D)",
+            "tracks": [ACTIVITY_REGIME_BY_CODE["D"]],
         },
         {
-            "label": "Nocturnal",
-            "tracks": [build_segments([(quarter_points[2], quarter_points[4])])],
+            "label": "Nocturnal (N)",
+            "tracks": [ACTIVITY_REGIME_BY_CODE["N"]],
         },
         {
-            "label": "Matutinal",
-            "tracks": [
-                build_segments(
-                    [
-                        (
-                            quarter_points[1],
-                            quarter_points[3],
-                        )
-                    ]
-                ),
-                build_segments(
-                    [
-                        (quarter_points[0], quarter_points[1]),
-                        (quarter_points[3], quarter_points[4]),
-                    ]
-                ),
-            ],
+            "label": "Matutinal (M1, M2)",
+            "tracks": [ACTIVITY_REGIME_BY_CODE["M1"], ACTIVITY_REGIME_BY_CODE["M2"]],
         },
         {
-            "label": "Polyphasic",
-            "tracks": [
-                build_segments(
-                    [
-                        (quarter_points[0], quarter_points[1]),
-                        (quarter_points[2], quarter_points[3]),
-                    ]
-                ),
-                build_segments(
-                    [
-                        (quarter_points[1], quarter_points[2]),
-                        (quarter_points[3], quarter_points[4]),
-                    ]
-                ),
-            ],
+            "label": "Polyphasic (P1, P2)",
+            "tracks": [ACTIVITY_REGIME_BY_CODE["P1"], ACTIVITY_REGIME_BY_CODE["P2"]],
         },
     ]
 
 
-def segment_style(state):
+def segment_style(state, regime):
     if state == "active":
-        return ACTIVE_FACE_COLOR, ACTIVE_EDGE_COLOR
+        return regime["color"], regime["color"]
     return INACTIVE_FACE_COLOR, INACTIVE_EDGE_COLOR
 
 
-def draw_segment_row(axis, y_center, segments, bar_height):
+def draw_segment_row(axis, y_center, segments, bar_height, regime):
     for start, end, state in segments:
-        face_color, edge_color = segment_style(state)
+        face_color, edge_color = segment_style(state, regime)
         axis.add_patch(
             Rectangle(
                 (start, y_center - 0.5 * bar_height),
@@ -171,7 +153,7 @@ def draw_segment_row(axis, y_center, segments, bar_height):
         )
 
 
-def draw_state_labels(axis, t_sunset, y_center):
+def draw_state_labels(axis, t_sunset, y_center, active_color):
     if t_sunset >= 0.16:
         axis.text(
             0.5 * t_sunset,
@@ -180,7 +162,7 @@ def draw_state_labels(axis, t_sunset, y_center):
             ha="center",
             va="center",
             fontsize=11,
-            color=ACTIVE_EDGE_COLOR,
+            color=active_color,
             zorder=5,
         )
 
@@ -282,11 +264,17 @@ def create_figure(t_sunset):
     current_y = first_row_y
     for group in build_pattern_groups(t_sunset):
         row_centres = []
-        for row_index, segments in enumerate(group["tracks"]):
+        for row_index, regime in enumerate(group["tracks"]):
             row_centres.append(current_y)
-            draw_segment_row(axis, current_y, segments, bar_height)
-            if group["label"] == "Diurnal" and row_index == 0:
-                draw_state_labels(axis, t_sunset, current_y)
+            draw_segment_row(
+                axis,
+                current_y,
+                build_segments(regime["periods"]),
+                bar_height,
+                regime,
+            )
+            if group["label"] == "Diurnal (D)" and row_index == 0:
+                draw_state_labels(axis, t_sunset, current_y, regime["color"])
             current_y -= row_gap
 
         axis.text(

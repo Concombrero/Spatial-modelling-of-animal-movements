@@ -8,6 +8,8 @@ import matplotlib
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
 import numpy as np
 from scipy.integrate import solve_ivp
 
@@ -18,12 +20,24 @@ from script.reproduce_day_night.GameTheory.payoff_csv_utils import (
     load_payoff_game_data,
 )
 from script.reproduce_day_night.paths import game_theory_payoff_output_path
+from script.reproduce_day_night.shared_config import (
+    ACTIVITY_COLORS,
+    TWO_POPULATION_SIMULATION_CONFIG,
+    apply_plot_typography,
+)
+
+
+apply_plot_typography()
 
 
 DEFAULT_PAYOFF_MATRIX_PATH = game_theory_payoff_output_path("payoff_matrix.csv")
 DEFAULT_OUTPUT_DIRECTORY = game_theory_payoff_output_path("replicator_analysis")
-DEFAULT_TIME_SPAN = 40.0
-DEFAULT_TIME_STEPS = 800
+TWO_POPULATION_ANALYSIS_CONFIG = TWO_POPULATION_SIMULATION_CONFIG["analysis"]
+DEFAULT_TIME_SPAN = TWO_POPULATION_ANALYSIS_CONFIG["replicator_time_span"]
+DEFAULT_TIME_STEPS = TWO_POPULATION_ANALYSIS_CONFIG["replicator_time_steps"]
+DEFAULT_COMBINED_FIGURE_FILENAME = "strategy_frequencies.png"
+LEGACY_PREY_FIGURE_FILENAME = "prey_strategy_frequencies.png"
+LEGACY_PREDATOR_FIGURE_FILENAME = "predator_strategy_frequencies.png"
 
 
 class MissingDependencyError(RuntimeError):
@@ -195,6 +209,16 @@ def normalize_distribution(values, *, atol=1.0e-12):
     return distribution / total
 
 
+def resolve_strategy_colors(strategy_labels):
+    fallback_colors = plt.get_cmap("tab10")(
+        np.linspace(0.0, 0.9, len(strategy_labels))
+    )
+    return [
+        ACTIVITY_COLORS.get(str(label), fallback_colors[index])
+        for index, label in enumerate(strategy_labels)
+    ]
+
+
 def asymmetric_replicator_rhs(
     _time,
     state,
@@ -325,16 +349,16 @@ def print_analysis(payoff_game_data, equilibria):
 
 
 def plot_strategy_frequencies(
+    axis,
     time_grid,
     history,
     strategy_labels,
     title,
-    output_path,
     colors,
     plot_style,
+    equilibrium=None,
 ):
-    """Plot one population's evolving strategy frequencies with consistent colors."""
-    figure, axis = plt.subplots(figsize=(11, 6))
+    """Plot one population's evolving strategy frequencies on a given axis."""
     if plot_style == "stacked":
         axis.stackplot(
             time_grid,
@@ -353,15 +377,115 @@ def plot_strategy_frequencies(
                 linewidth=2.2,
             )
 
+    if equilibrium is not None:
+        for index, equilibrium_share in enumerate(equilibrium):
+            if equilibrium_share <= 1.0e-10:
+                continue
+            axis.axhline(
+                equilibrium_share,
+                color=colors[index],
+                linestyle="--",
+                linewidth=1.8,
+                alpha=0.55,
+                zorder=4,
+            )
+
     axis.set_xlim(time_grid[0], time_grid[-1])
     axis.set_ylim(0.0, 1.0)
     axis.set_xlabel("Time")
     axis.set_ylabel("Strategy share")
     axis.set_title(title)
     axis.grid(True, alpha=0.25)
-    axis.legend(loc="center left", bbox_to_anchor=(1.02, 0.5), frameon=False)
-    figure.tight_layout(rect=(0.0, 0.0, 0.82, 1.0))
-    figure.savefig(output_path, dpi=200)
+
+
+def build_shared_legend_handles(prey_labels, prey_colors, predator_labels, predator_colors, plot_style):
+    handles_by_label = {}
+
+    def add_handles(labels, colors):
+        for label, color in zip(labels, colors):
+            if label in handles_by_label:
+                continue
+            if plot_style == "stacked":
+                handles_by_label[label] = Patch(
+                    facecolor=color,
+                    edgecolor="none",
+                    alpha=0.9,
+                    label=label,
+                )
+            else:
+                handles_by_label[label] = Line2D(
+                    [0],
+                    [0],
+                    color=color,
+                    linewidth=2.2,
+                    label=label,
+                )
+
+    add_handles(prey_labels, prey_colors)
+    add_handles(predator_labels, predator_colors)
+    return list(handles_by_label.values())
+
+
+def save_combined_strategy_frequency_figure(
+    time_grid,
+    prey_history,
+    prey_labels,
+    prey_colors,
+    prey_equilibrium,
+    predator_history,
+    predator_labels,
+    predator_colors,
+    predator_equilibrium,
+    output_path,
+    plot_style,
+    row_player_label,
+    column_player_label,
+):
+    figure, axes = plt.subplots(
+        1,
+        2,
+        figsize=(14, 6),
+        sharey=True,
+        constrained_layout=True,
+    )
+
+    plot_strategy_frequencies(
+        axes[0],
+        time_grid,
+        prey_history,
+        prey_labels,
+        f"{row_player_label} Replicator Dynamics",
+        prey_colors,
+        plot_style,
+        prey_equilibrium,
+    )
+    plot_strategy_frequencies(
+        axes[1],
+        time_grid,
+        predator_history,
+        predator_labels,
+        f"{column_player_label} Replicator Dynamics",
+        predator_colors,
+        plot_style,
+        predator_equilibrium,
+    )
+
+    axes[1].set_ylabel("")
+    legend_handles = build_shared_legend_handles(
+        prey_labels,
+        prey_colors,
+        predator_labels,
+        predator_colors,
+        plot_style,
+    )
+    figure.legend(
+        handles=legend_handles,
+        loc="center left",
+        bbox_to_anchor=(1.01, 0.5),
+        frameon=False,
+        title="Strategies\n(dashed = Nash equilibrium)",
+    )
+    figure.savefig(output_path, dpi=200, bbox_inches="tight")
     plt.close(figure)
 
 
@@ -391,37 +515,37 @@ def main():
 
         output_directory = Path(args.output_dir).expanduser().resolve()
         output_directory.mkdir(parents=True, exist_ok=True)
-        prey_plot_path = output_directory / "prey_strategy_frequencies.png"
-        predator_plot_path = output_directory / "predator_strategy_frequencies.png"
-        prey_colors = plt.get_cmap("tab10")(
-            np.linspace(0.0, 0.9, len(payoff_game_data.row_strategies))
-        )
-        predator_colors = plt.get_cmap("tab10")(
-            np.linspace(0.0, 0.9, len(payoff_game_data.column_strategies))
-        )
+        combined_plot_path = output_directory / DEFAULT_COMBINED_FIGURE_FILENAME
+        prey_colors = resolve_strategy_colors(payoff_game_data.row_strategies)
+        predator_colors = resolve_strategy_colors(payoff_game_data.column_strategies)
+        prey_equilibrium = equilibria[0]["prey_strategy"] if equilibria else None
+        predator_equilibrium = equilibria[0]["predator_strategy"] if equilibria else None
 
-        plot_strategy_frequencies(
+        for legacy_path in (
+            output_directory / LEGACY_PREY_FIGURE_FILENAME,
+            output_directory / LEGACY_PREDATOR_FIGURE_FILENAME,
+        ):
+            if legacy_path.is_file():
+                legacy_path.unlink()
+
+        save_combined_strategy_frequency_figure(
             time_grid,
             prey_history,
-            strategy_labels=payoff_game_data.row_strategies,
-            title=f"{payoff_game_data.row_player_label} Replicator Dynamics",
-            output_path=prey_plot_path,
-            colors=prey_colors,
-            plot_style=args.plot_style,
-        )
-        plot_strategy_frequencies(
-            time_grid,
+            payoff_game_data.row_strategies,
+            prey_colors,
+            prey_equilibrium,
             predator_history,
-            strategy_labels=payoff_game_data.column_strategies,
-            title=f"{payoff_game_data.column_player_label} Replicator Dynamics",
-            output_path=predator_plot_path,
-            colors=predator_colors,
-            plot_style=args.plot_style,
+            payoff_game_data.column_strategies,
+            predator_colors,
+            predator_equilibrium,
+            combined_plot_path,
+            args.plot_style,
+            payoff_game_data.row_player_label,
+            payoff_game_data.column_player_label,
         )
 
         print()
-        print(f"Saved prey strategy plot to {prey_plot_path}")
-        print(f"Saved predator strategy plot to {predator_plot_path}")
+        print(f"Saved combined strategy plot to {combined_plot_path}")
     except MissingDependencyError as error:
         raise SystemExit(str(error)) from error
 

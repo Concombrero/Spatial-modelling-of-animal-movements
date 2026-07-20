@@ -190,8 +190,7 @@ The directory passed through `--output-dir` normally contains:
 - `run_config.json`
 - `payoff_minmax_maxmin.json`
 - `payoff_nash_equilibrium.json`
-- `replicator_analysis/prey_strategy_frequencies.png`
-- `replicator_analysis/predator_strategy_frequencies.png`
+- `replicator_analysis/strategy_frequencies.png`
 - `population_heatmaps/` when population heatmaps are requested or when a full payoff run is saved
 - `logs/*.log`
 - `pipeline_command.sh`

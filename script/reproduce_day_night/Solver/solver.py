@@ -8,6 +8,10 @@ if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from script.reproduce_day_night.paths import solver_output_path
+from script.reproduce_day_night.shared_config import apply_plot_typography
+
+
+apply_plot_typography()
 
 
 class DayNightModel1D:

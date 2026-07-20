@@ -14,72 +14,65 @@ if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from script.reproduce_day_night.paths import basic_simulation_output_path
+from script.reproduce_day_night.shared_config import (
+    ONE_POPULATION_SIMULATION_CONFIG,
+    PLOT_STYLE,
+    apply_plot_typography,
+    build_constant_activity_lighting_regime,
+    build_constant_activity_lighting_regimes,
+    resolve_experiment_config,
+)
 from script.reproduce_day_night.Solver import (
-    DEFAULT_SMELL_RADIUS,
-    DEFAULT_SIGHT_RADIUS,
     DayNightModel1D,
     compute_spread_indicator,
     gaussian_initial_condition,
 )
 
 
+apply_plot_typography()
+
+
 OUTPUT_DIRECTORY = basic_simulation_output_path()
 OUTPUT_PATH = basic_simulation_output_path("sight_weight_sunset_spread.png")
-NUMBER_OF_POINTS = 256
-NUMBER_OF_POPULATIONS = 1
-NUMBER_OF_CYCLES = 3
-CYCLE_PERIOD = 1.0
+EXPERIMENT_CONFIG = resolve_experiment_config(
+    ONE_POPULATION_SIMULATION_CONFIG,
+    "activity_const_spread",
+)
+NUMBER_OF_POINTS = EXPERIMENT_CONFIG["number_of_points"]
+NUMBER_OF_POPULATIONS = EXPERIMENT_CONFIG["number_of_populations"]
+NUMBER_OF_CYCLES = EXPERIMENT_CONFIG["number_of_cycles"]
+CYCLE_PERIOD = EXPERIMENT_CONFIG["cycle_period"]
 TOTAL_TIME = NUMBER_OF_CYCLES * CYCLE_PERIOD
-OBSERVATION_WINDOW = 1.0
-DT = 0.01
-COEFFICIENT_ATTRACTION = np.array([[0.2]])
-COEFFICIENT_DIFFUSION = np.array([0.05])
-SIGHT_WEIGHTS = tuple(np.round(np.linspace(0.0, 1.0, 11), 1))
-DEFAULT_SUNSET_VALUES = (1.0, 0.5, 0.0)
+OBSERVATION_WINDOW = EXPERIMENT_CONFIG["observation_window"]
+DT = EXPERIMENT_CONFIG["dt"]
+COEFFICIENT_ATTRACTION = np.array(
+    EXPERIMENT_CONFIG["coefficient_attraction"],
+    dtype=float,
+)
+COEFFICIENT_DIFFUSION = np.array(
+    EXPERIMENT_CONFIG["coefficient_diffusion"],
+    dtype=float,
+)
+SIGHT_RADIUS = EXPERIMENT_CONFIG["sight_radius"]
+SMELL_RADIUS = EXPERIMENT_CONFIG["smell_radius"]
+SIGHT_WEIGHTS = EXPERIMENT_CONFIG["weights"]
+DEFAULT_SUNSET_VALUES = EXPERIMENT_CONFIG["sunset_values"]
+MAX_WORKERS = EXPERIMENT_CONFIG["max_workers"]
 
 
 def build_lighting_regime(t_sunset, total_time=TOTAL_TIME):
-    t_sunset = float(t_sunset)
-    if t_sunset < 0.0 or t_sunset > 1.0:
-        raise ValueError("Each t_sunset value must lie in the interval [0, 1].")
-
-    long_cycle_period = total_time + CYCLE_PERIOD
-    if np.isclose(t_sunset, 1.0):
-        return {
-            "label": "full day",
-            "display_sunset": 1.0,
-            "cycle_period": long_cycle_period,
-            "day_start": 0.0,
-            "day_end": total_time + 0.5 * CYCLE_PERIOD,
-        }
-
-    if np.isclose(t_sunset, 0.0):
-        return {
-            "label": "full night",
-            "display_sunset": 0.0,
-            "cycle_period": long_cycle_period,
-            "day_start": total_time + 0.25 * CYCLE_PERIOD,
-            "day_end": total_time + 0.75 * CYCLE_PERIOD,
-        }
-
-    if np.isclose(t_sunset, 0.5):
-        label = "half day / half night"
-    else:
-        label = "partial day"
-
-    return {
-        "label": label,
-        "display_sunset": t_sunset,
-        "cycle_period": CYCLE_PERIOD,
-        "day_start": 0.0,
-        "day_end": t_sunset * CYCLE_PERIOD,
-    }
+    return build_constant_activity_lighting_regime(
+        t_sunset,
+        total_time=total_time,
+        cycle_period=CYCLE_PERIOD,
+    )
 
 
 def build_lighting_regimes(sunset_values=DEFAULT_SUNSET_VALUES, total_time=TOTAL_TIME):
-    return tuple(
-        build_lighting_regime(t_sunset, total_time=total_time)
-        for t_sunset in sunset_values
+    return build_constant_activity_lighting_regimes(
+        sunset_values,
+        total_time=total_time,
+        cycle_period=CYCLE_PERIOD,
     )
 
 
@@ -119,7 +112,7 @@ def parse_args():
     parser.add_argument(
         "--max-workers",
         type=int,
-        default=3,
+        default=MAX_WORKERS,
         help="Maximum number of worker processes across the three lighting regimes.",
     )
     parser.add_argument(
@@ -148,8 +141,8 @@ def build_solver(sight_weight, lighting_regime, number_of_points, dt):
         time_input_mode="phase",
         activity_mode="always",
         sight_weight=sight_weight,
-        sight_radius=DEFAULT_SIGHT_RADIUS,
-        smell_radius=DEFAULT_SMELL_RADIUS,
+        sight_radius=SIGHT_RADIUS,
+        smell_radius=SMELL_RADIUS,
     )
 
 
@@ -194,7 +187,7 @@ def save_spread_plot(omega_by_regime, sight_weights, lighting_regimes, output_pa
             omega_by_regime[display_sunset],
             marker="o",
             linewidth=2.0,
-            color="#1f77b4",
+            color=PLOT_STYLE["day_color"],
         )
         axis.set_title(
             f"{lighting_regime['label']}\n$t_{{sunset}}={display_sunset:g}$"

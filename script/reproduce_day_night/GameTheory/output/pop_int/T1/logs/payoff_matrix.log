@@ -1,41 +1,4 @@
-Existing case data in /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1 was generated with a different configuration; restarting this folder from scratch.
-  Solving 36 payoff case(s) with 16 worker(s).
-  Finished case 1/36: prey=N, predator=N: prey=1.120187, predator=0.825373
-  Finished case 2/36: prey=D, predator=D: prey=1.106727, predator=0.850345
-  Finished case 3/36: prey=P1, predator=P1: prey=1.126608, predator=0.838009
-  Finished case 4/36: prey=N, predator=M2: prey=1.085880, predator=0.834282
-  Finished case 5/36: prey=D, predator=M2: prey=1.109471, predator=0.854669
-  Finished case 6/36: prey=D, predator=P2: prey=1.123339, predator=0.849075
-  Finished case 7/36: prey=D, predator=P1: prey=1.140668, predator=0.838596
-  Finished case 8/36: prey=N, predator=P1: prey=1.077011, predator=0.837761
-  Finished case 9/36: prey=N, predator=M1: prey=1.095985, predator=0.832401
-  Finished case 10/36: prey=D, predator=M1: prey=1.150815, predator=0.834288
-  Finished case 11/36: prey=P1, predator=D: prey=1.057368, predator=0.859859
-  Finished case 12/36: prey=N, predator=P2: prey=1.105573, predator=0.828688
-  Finished case 13/36: prey=P1, predator=N: prey=1.146302, predator=0.834682
-  Finished case 14/36: prey=D, predator=N: prey=1.089164, predator=0.865665
-  Finished case 15/36: prey=N, predator=D: prey=1.068894, predator=0.837418
-  Finished case 16/36: prey=P1, predator=P2: prey=1.059593, predator=0.866452
-  Finished case 17/36: prey=P1, predator=M2: prey=1.034146, predator=0.875070
-  Finished case 18/36: prey=P1, predator=M1: prey=1.140779, predator=0.833518
-  Finished case 19/36: prey=P2, predator=P2: prey=1.119570, predator=0.829989
-  Finished case 20/36: prey=P2, predator=D: prey=1.084748, predator=0.839282
-  Finished case 21/36: prey=M1, predator=M1: prey=1.123605, predator=0.833773
-  Finished case 22/36: prey=P2, predator=N: prey=1.112500, predator=0.835114
-  Finished case 23/36: prey=P2, predator=M2: prey=1.103065, predator=0.835153
-  Finished case 24/36: prey=P2, predator=M1: prey=1.115465, predator=0.830148
-  Finished case 25/36: prey=M1, predator=P1: prey=1.107593, predator=0.838733
-  Finished case 26/36: prey=M1, predator=N: prey=1.126399, predator=0.834937
-  Finished case 27/36: prey=M1, predator=D: prey=1.044810, predator=0.859832
-  Finished case 28/36: prey=M1, predator=P2: prey=1.034374, predator=0.870352
-  Finished case 29/36: prey=M2, predator=N: prey=1.132389, predator=0.834844
-  Finished case 30/36: prey=M2, predator=D: prey=1.098101, predator=0.839265
-  Finished case 31/36: prey=P2, predator=P1: prey=1.107351, predator=0.832766
-  Finished case 32/36: prey=M1, predator=M2: prey=1.011581, predator=0.877374
-  Finished case 33/36: prey=M2, predator=M2: prey=1.122517, predator=0.834258
-  Finished case 34/36: prey=M2, predator=P1: prey=1.119976, predator=0.834006
-  Finished case 35/36: prey=M2, predator=P2: prey=1.137066, predator=0.829612
-  Finished case 36/36: prey=M2, predator=M1: prey=1.123496, predator=0.832808
+Resuming from 36 completed case(s) in /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1/case_payoffs.csv
 
 Computed prey payoff matrix:
 Prey/Pred       D       N      P1      P2      M1      M2

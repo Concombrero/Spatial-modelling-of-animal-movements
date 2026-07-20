@@ -18,7 +18,17 @@ if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from script.reproduce_day_night.paths import game_theory_payoff_output_path
+from script.reproduce_day_night.shared_config import (
+    ACTIVITY_CODES as ACTIVITY_REGIME_CODES,
+    ACTIVITY_REGIMES,
+    TWO_POPULATION_SIMULATION_CONFIG,
+    apply_plot_typography,
+    build_periodic_lighting_regime,
+)
 from script.reproduce_day_night.Solver import DayNightModel1D
+
+
+apply_plot_typography()
 
 
 OUTPUT_DIRECTORY = game_theory_payoff_output_path()
@@ -37,32 +47,27 @@ PREDATOR_HEATMAP_OUTPUT_PATH = game_theory_payoff_output_path(
 POPULATION_HEATMAP_OUTPUT_DIRECTORY = game_theory_payoff_output_path(
     "population_heatmaps"
 )
-NUMBER_OF_POINTS = 128
-NUMBER_OF_POPULATIONS = 2
-NUMBER_OF_CYCLES = 4
-CYCLE_PERIOD = 1.0
+TWO_POPULATION_BASE_CONFIG = TWO_POPULATION_SIMULATION_CONFIG["base"]
+TWO_POPULATION_ANALYSIS_CONFIG = TWO_POPULATION_SIMULATION_CONFIG["analysis"]
+
+NUMBER_OF_POINTS = TWO_POPULATION_BASE_CONFIG["number_of_points"]
+NUMBER_OF_POPULATIONS = TWO_POPULATION_BASE_CONFIG["number_of_populations"]
+NUMBER_OF_CYCLES = TWO_POPULATION_BASE_CONFIG["number_of_cycles"]
+CYCLE_PERIOD = TWO_POPULATION_BASE_CONFIG["cycle_period"]
 TOTAL_TIME = NUMBER_OF_CYCLES * CYCLE_PERIOD
-OBSERVATION_WINDOW = 2 * CYCLE_PERIOD
-DT = 0.1
-DAY_START = 0.0
-DEFAULT_T_SUNSET = 0.5
-DEFAULT_WEIGHTS = (0.5, 0.5)
-DEFAULT_SIGHT_RADIUS = 0.1
-DEFAULT_SMELL_RADIUS = 0.1
-DEFAULT_INITIAL_CENTERS = (0.25, 0.70)
-DEFAULT_INITIAL_WIDTH = 0.1
-DEFAULT_ATTRACTION = (
-    (0.1, -0.2),
-    (0.2, 0.1),
-)
-DEFAULT_DIFFUSION = (0.04, 0.04)
-DEFAULT_REACTION_RATES = {
-    "prey_growth": 0.1,
-    "predator_decay": 0.04,
-    "predation_rate": 0.25,
-    "conversion_rate": 0.15,
-}
-MAX_WORKERS = min(16, os.cpu_count() or 1)
+OBSERVATION_WINDOW = TWO_POPULATION_BASE_CONFIG["observation_window"]
+DT = TWO_POPULATION_BASE_CONFIG["dt"]
+DAY_START = TWO_POPULATION_BASE_CONFIG["day_start"]
+DEFAULT_T_SUNSET = TWO_POPULATION_BASE_CONFIG["t_sunset"]
+DEFAULT_WEIGHTS = TWO_POPULATION_BASE_CONFIG["weights"]
+DEFAULT_SIGHT_RADIUS = TWO_POPULATION_BASE_CONFIG["sight_radius"]
+DEFAULT_SMELL_RADIUS = TWO_POPULATION_BASE_CONFIG["smell_radius"]
+DEFAULT_INITIAL_CENTERS = TWO_POPULATION_BASE_CONFIG["initial_centers"]
+DEFAULT_INITIAL_WIDTH = TWO_POPULATION_BASE_CONFIG["initial_width"]
+DEFAULT_ATTRACTION = TWO_POPULATION_BASE_CONFIG["attraction"]
+DEFAULT_DIFFUSION = TWO_POPULATION_BASE_CONFIG["diffusion"]
+DEFAULT_REACTION_RATES = dict(TWO_POPULATION_BASE_CONFIG["reaction_rates"])
+MAX_WORKERS = TWO_POPULATION_ANALYSIS_CONFIG["max_workers"]
 OVERLAP_PAYOFF_MODE = "overlap"
 POPULATION_INTEGRAL_PAYOFF_MODE = "population-integral"
 NET_GROWTH_PAYOFF_MODE = "net-growth"
@@ -71,27 +76,6 @@ PAYOFF_MODE_CHOICES = (
     POPULATION_INTEGRAL_PAYOFF_MODE,
     NET_GROWTH_PAYOFF_MODE,
 )
-ACTIVITY_REGIMES = (
-    {"code": "D", "label": "Diurnal", "periods": [(0.0, 0.5)]},
-    {"code": "N", "label": "Nocturnal", "periods": [(0.5, 1.0)]},
-    {
-        "code": "P1",
-        "label": "Polyphasic 1",
-        "periods": [(0.0, 0.25), (0.5, 0.75)],
-    },
-    {
-        "code": "P2",
-        "label": "Polyphasic 2",
-        "periods": [(0.25, 0.5), (0.75, 1.0)],
-    },
-    {
-        "code": "M1",
-        "label": "Matutinal 1",
-        "periods": [(0.0, 0.25), (0.75, 1.0)],
-    },
-    {"code": "M2", "label": "Matutinal 2", "periods": [(0.25, 0.75)]},
-)
-ACTIVITY_REGIME_CODES = tuple(regime["code"] for regime in ACTIVITY_REGIMES)
 RUN_CONFIG_REQUIRED_KEYS = (
     "t_sunset",
     "weights",
@@ -423,17 +407,12 @@ def resolve_activity_regimes(strategy_codes_text):
 
 
 def build_lighting_regime(t_sunset, dt):
-    t_sunset = float(t_sunset)
-    if t_sunset < 0.0 or t_sunset > 1.0:
-        raise ValueError("t_sunset must lie in the interval [0, 1].")
-
-    epsilon = min(max(0.5 * float(dt), 1.0e-6), 0.25 * CYCLE_PERIOD)
-    effective_sunset = min(max(t_sunset, epsilon), 1.0 - epsilon)
-    return {
-        "display_sunset": t_sunset,
-        "day_start": DAY_START,
-        "day_end": effective_sunset * CYCLE_PERIOD,
-    }
+    return build_periodic_lighting_regime(
+        t_sunset,
+        dt=dt,
+        cycle_period=CYCLE_PERIOD,
+        day_start=DAY_START,
+    )
 
 
 def build_initial_condition(centers, width):

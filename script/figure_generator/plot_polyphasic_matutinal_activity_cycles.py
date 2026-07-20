@@ -1,28 +1,42 @@
 import argparse
 from pathlib import Path
+import sys
 
 import matplotlib
 
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
-from matplotlib.patches import Patch, Rectangle
+from matplotlib.patches import Rectangle
 import numpy as np
 
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-ACTIVE_FACE_COLOR = "#F8EDE6"
-ACTIVE_EDGE_COLOR = "#C77657"
-INACTIVE_FACE_COLOR = "#EEF4FB"
-INACTIVE_EDGE_COLOR = "#7C97B6"
-AXIS_COLOR = "#111111"
-GUIDE_COLOR = "#C5CCD5"
-DEFAULT_SUNSET_VALUES = (0.3, 0.5, 0.7)
-ACTIVITY_REGIMES = (
-    {"label": "Polyphasic 1", "periods": [(0.0, 0.25), (0.5, 0.75)]},
-    {"label": "Polyphasic 2", "periods": [(0.25, 0.5), (0.75, 1.0)]},
-    {"label": "Matutinal 1", "periods": [(0.0, 0.25), (0.75, 1.0)]},
-    {"label": "Matutinal 2", "periods": [(0.25, 0.75)]},
+from script.reproduce_day_night.shared_config import (
+    MATUTINAL_CODES,
+    ONE_POPULATION_SIMULATION_CONFIG,
+    POLYPHASIC_CODES,
+    PLOT_STYLE,
+    activity_regimes_for_codes,
+    apply_plot_typography,
+    describe_lighting_regime,
+    resolve_experiment_config,
 )
+
+
+apply_plot_typography()
+
+EXPERIMENT_CONFIG = resolve_experiment_config(
+    ONE_POPULATION_SIMULATION_CONFIG,
+    "spread_polyphasic_matutinal",
+)
+INACTIVE_FACE_COLOR = PLOT_STYLE["inactive_face_color"]
+INACTIVE_EDGE_COLOR = PLOT_STYLE["inactive_edge_color"]
+AXIS_COLOR = PLOT_STYLE["axis_color"]
+GUIDE_COLOR = PLOT_STYLE["guide_color"]
+DEFAULT_SUNSET_VALUES = EXPERIMENT_CONFIG["sunset_values"]
+ACTIVITY_REGIMES = activity_regimes_for_codes(POLYPHASIC_CODES + MATUTINAL_CODES)
 OUTPUT_PATH = (
     Path(__file__).resolve().parents[2]
     / "article"
@@ -75,11 +89,8 @@ def interpolate(start, end, fraction):
 
 
 def lighting_label(t_sunset):
-    if np.isclose(t_sunset, 0.5):
-        return "Half day / half night"
-    if t_sunset < 0.5:
-        return "Short day"
-    return "Long day"
+    label = describe_lighting_regime(float(t_sunset))
+    return label[0].upper() + label[1:]
 
 
 def normalise_intervals(intervals):
@@ -122,15 +133,15 @@ def build_segments(active_intervals):
     return segments
 
 
-def segment_style(state):
+def segment_style(state, regime):
     if state == "active":
-        return ACTIVE_FACE_COLOR, ACTIVE_EDGE_COLOR
+        return regime["color"], regime["color"]
     return INACTIVE_FACE_COLOR, INACTIVE_EDGE_COLOR
 
 
-def draw_segment_row(axis, y_center, segments, bar_height):
+def draw_segment_row(axis, y_center, segments, bar_height, regime):
     for start, end, state in segments:
-        face_color, edge_color = segment_style(state)
+        face_color, edge_color = segment_style(state, regime)
         axis.add_patch(
             Rectangle(
                 (start, y_center - 0.5 * bar_height),
@@ -213,19 +224,26 @@ def configure_panel(axis, t_sunset, show_row_labels):
 
     current_y = first_row_y
     for regime in ACTIVITY_REGIMES:
-        draw_segment_row(axis, current_y, build_segments(regime["periods"]), bar_height)
+        draw_segment_row(
+            axis,
+            current_y,
+            build_segments(regime["periods"]),
+            bar_height,
+            regime,
+        )
         if show_row_labels:
             axis.text(
                 -0.10,
                 current_y,
-                regime["label"],
+                f"{regime['code']}  {regime['label']}",
                 ha="right",
                 va="center",
                 fontsize=12,
+                color=regime["color"],
             )
         current_y -= row_gap
 
-    axis.set_title(lighting_label(t_sunset), fontsize=13, pad=8)
+    axis.set_title(lighting_label(t_sunset), pad=8)
 
 
 def create_figure(sunset_values):
@@ -240,23 +258,7 @@ def create_figure(sunset_values):
 
     for index, (axis, t_sunset) in enumerate(zip(axes, sunset_values)):
         configure_panel(axis, t_sunset, show_row_labels=index == 0)
-
-    legend_handles = [
-        Patch(facecolor=ACTIVE_FACE_COLOR, edgecolor=ACTIVE_EDGE_COLOR, label="Active"),
-        Patch(
-            facecolor=INACTIVE_FACE_COLOR,
-            edgecolor=INACTIVE_EDGE_COLOR,
-            label="Inactive",
-        ),
-    ]
-    figure.legend(
-        handles=legend_handles,
-        loc="upper center",
-        ncol=2,
-        frameon=False,
-        bbox_to_anchor=(0.5, 0.99),
-    )
-    figure.tight_layout(rect=(0.0, 0.0, 1.0, 0.90))
+    figure.tight_layout()
     return figure
 
 

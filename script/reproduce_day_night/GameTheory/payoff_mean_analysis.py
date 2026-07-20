@@ -15,7 +15,14 @@ import numpy as np
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
-from script.reproduce_day_night.GameTheory.payoff_matrix import ACTIVITY_REGIMES
+from script.reproduce_day_night.shared_config import (
+    ACTIVITY_COLORS,
+    ACTIVITY_REGIMES,
+    apply_plot_typography,
+)
+
+
+apply_plot_typography()
 
 
 CASE_PAYOFF_FILENAME = "case_payoffs.csv"
@@ -296,9 +303,9 @@ def plot_numeric_series(axis, x_values, y_values, y_label, color):
     axis.grid(True, axis="both", alpha=0.25)
 
 
-def plot_categorical_series(axis, x_labels, y_values, y_label, color):
+def plot_categorical_series(axis, x_labels, y_values, y_label, colors):
     positions = np.arange(len(x_labels), dtype=float)
-    axis.bar(positions, y_values, color=color, edgecolor="black", alpha=0.85)
+    axis.bar(positions, y_values, color=colors, edgecolor="black", alpha=0.85)
     axis.set_xticks(positions)
     axis.set_xticklabels(x_labels, rotation=15)
     axis.set_ylabel(y_label)
@@ -333,6 +340,8 @@ def save_plot(summary, parameter, output_path, show_variance, payoff_player):
     means = [item["mean"] for item in summary]
     variances = [item["variance"] for item in summary]
     mean_label = payoff_axis_label(payoff_player)
+    mean_color = ACTIVITY_COLORS["D"]
+    variance_color = ACTIVITY_COLORS["M1"]
 
     if show_variance:
         figure, axes = plt.subplots(
@@ -349,7 +358,13 @@ def save_plot(summary, parameter, output_path, show_variance, payoff_player):
 
     if is_numeric:
         numeric_x_values = [float(value) for value in x_values]
-        plot_numeric_series(mean_axis, numeric_x_values, means, mean_label, "tab:blue")
+        plot_numeric_series(
+            mean_axis,
+            numeric_x_values,
+            means,
+            mean_label,
+            mean_color,
+        )
         mean_axis.set_xlabel(PARAMETER_LABELS[parameter])
         if variance_axis is not None:
             plot_numeric_series(
@@ -357,12 +372,19 @@ def save_plot(summary, parameter, output_path, show_variance, payoff_player):
                 numeric_x_values,
                 variances,
                 "Variance",
-                "tab:orange",
+                variance_color,
             )
             variance_axis.set_xlabel(PARAMETER_LABELS[parameter])
     else:
         category_labels = [format_cycle_tick_label(value) for value in x_values]
-        plot_categorical_series(mean_axis, category_labels, means, mean_label, "tab:blue")
+        category_colors = [ACTIVITY_COLORS.get(value, mean_color) for value in x_values]
+        plot_categorical_series(
+            mean_axis,
+            category_labels,
+            means,
+            mean_label,
+            category_colors,
+        )
         mean_axis.set_xlabel(PARAMETER_LABELS[parameter])
         if variance_axis is not None:
             plot_categorical_series(
@@ -370,7 +392,7 @@ def save_plot(summary, parameter, output_path, show_variance, payoff_player):
                 category_labels,
                 variances,
                 "Variance",
-                "tab:orange",
+                category_colors,
             )
             variance_axis.set_xlabel(PARAMETER_LABELS[parameter])
 

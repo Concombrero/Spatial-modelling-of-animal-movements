@@ -1,0 +1,12 @@
+Loaded 1 payoff run(s).
+Grouped by: Circadian cycle 2
+Payoff column: prey
+Variance subplot: off
+Saved figure: /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/GameTheory/output/pop_int/T1_weight_sweep/weight_runs/w1_0p8__w2_1/mean_analysis/mean_vs_cycle2_prey.png
+value,count,mean,variance
+D,6,1.1199038658,0.0000824001
+N,6,1.2297404087,0.0009115935
+P1,6,1.1444173893,0.0004290581
+P2,6,1.0825843936,0.0061300078
+M1,6,1.1538259694,0.0002727754
+M2,6,1.0630598491,0.0072700000

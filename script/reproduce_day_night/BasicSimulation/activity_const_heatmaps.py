@@ -13,54 +13,52 @@ if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from script.reproduce_day_night.paths import basic_simulation_output_path
+from script.reproduce_day_night.shared_config import (
+    ONE_POPULATION_SIMULATION_CONFIG,
+    apply_plot_typography,
+    build_constant_activity_lighting_regimes,
+    resolve_experiment_config,
+)
 from script.reproduce_day_night.Solver import (
-    DEFAULT_SMELL_RADIUS,
-    DEFAULT_SIGHT_RADIUS,
     DayNightModel1D,
     gaussian_initial_condition,
 )
 
 
+apply_plot_typography()
+
+
 OUTPUT_DIRECTORY = basic_simulation_output_path()
 OUTPUT_PATH = basic_simulation_output_path("sight_weight_sunset_heatmaps.png")
-NUMBER_OF_POINTS = 256
-NUMBER_OF_POPULATIONS = 1
-NUMBER_OF_CYCLES = 3
-CYCLE_PERIOD = 1.0
+EXPERIMENT_CONFIG = resolve_experiment_config(
+    ONE_POPULATION_SIMULATION_CONFIG,
+    "activity_const_heatmaps",
+)
+NUMBER_OF_POINTS = EXPERIMENT_CONFIG["number_of_points"]
+NUMBER_OF_POPULATIONS = EXPERIMENT_CONFIG["number_of_populations"]
+NUMBER_OF_CYCLES = EXPERIMENT_CONFIG["number_of_cycles"]
+CYCLE_PERIOD = EXPERIMENT_CONFIG["cycle_period"]
 TOTAL_TIME = NUMBER_OF_CYCLES * CYCLE_PERIOD
-DT = 0.01
-COEFFICIENT_ATTRACTION = np.array([[0.2]])
-COEFFICIENT_DIFFUSION = np.array([0.05])
-SIGHT_WEIGHTS = (0.0, 0.5, 1.0)
+DT = EXPERIMENT_CONFIG["dt"]
+COEFFICIENT_ATTRACTION = np.array(
+    EXPERIMENT_CONFIG["coefficient_attraction"],
+    dtype=float,
+)
+COEFFICIENT_DIFFUSION = np.array(
+    EXPERIMENT_CONFIG["coefficient_diffusion"],
+    dtype=float,
+)
+SIGHT_RADIUS = EXPERIMENT_CONFIG["sight_radius"]
+SMELL_RADIUS = EXPERIMENT_CONFIG["smell_radius"]
+SIGHT_WEIGHTS = EXPERIMENT_CONFIG["weights"]
+DEFAULT_SUNSET_VALUES = EXPERIMENT_CONFIG["sunset_values"]
 
 
-def build_lighting_regimes():
-    long_cycle_period = TOTAL_TIME + CYCLE_PERIOD
-    return (
-        {
-            "label": "full day",
-            "display_sunset": 1.0,
-            "cycle_period": long_cycle_period,
-            "day_start": 0.0,
-            "day_end": TOTAL_TIME + 0.5 * CYCLE_PERIOD,
-            "show_transition_markers": False,
-        },
-        {
-            "label": "half day / half night",
-            "display_sunset": 0.5,
-            "cycle_period": CYCLE_PERIOD,
-            "day_start": 0.0,
-            "day_end": 0.5 * CYCLE_PERIOD,
-            "show_transition_markers": True,
-        },
-        {
-            "label": "full night",
-            "display_sunset": 0.0,
-            "cycle_period": long_cycle_period,
-            "day_start": TOTAL_TIME + 0.25 * CYCLE_PERIOD,
-            "day_end": TOTAL_TIME + 0.75 * CYCLE_PERIOD,
-            "show_transition_markers": False,
-        },
+def build_lighting_regimes(sunset_values=DEFAULT_SUNSET_VALUES):
+    return build_constant_activity_lighting_regimes(
+        sunset_values,
+        total_time=TOTAL_TIME,
+        cycle_period=CYCLE_PERIOD,
     )
 
 
@@ -116,8 +114,8 @@ def build_solver(sight_weight, lighting_regime, number_of_points, dt):
         time_input_mode="phase",
         activity_mode="always",
         sight_weight=sight_weight,
-        sight_radius=DEFAULT_SIGHT_RADIUS,
-        smell_radius=DEFAULT_SMELL_RADIUS,
+        sight_radius=SIGHT_RADIUS,
+        smell_radius=SMELL_RADIUS,
     )
 
 

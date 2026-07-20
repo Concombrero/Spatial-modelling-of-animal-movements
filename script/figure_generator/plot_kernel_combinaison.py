@@ -4,6 +4,14 @@ import matplotlib
 from pathlib import Path
 import sys
 
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from script.reproduce_day_night.shared_config import apply_plot_typography
+
+
+apply_plot_typography()
+
 
 
 

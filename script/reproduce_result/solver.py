@@ -1,10 +1,19 @@
 import numpy as np
 from pathlib import Path
+import sys
 from scipy.integrate import quad
 from scipy.optimize import brentq
 from scipy.special import i0e
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation, PillowWriter
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from script.reproduce_day_night.shared_config import apply_plot_typography
+
+
+apply_plot_typography()
 
 
 class Model1D:

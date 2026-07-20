@@ -1,6 +1,7 @@
 import argparse
 import math
 from pathlib import Path
+import sys
 
 import matplotlib
 
@@ -9,10 +10,14 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, Wedge
 
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-DAY_COLOR = "#F4C542"
-NIGHT_COLOR = "#416788"
-EDGE_COLOR = "#111111"
+from script.reproduce_day_night.shared_config import PLOT_STYLE
+
+DAY_COLOR = PLOT_STYLE["day_color"]
+NIGHT_COLOR = PLOT_STYLE["night_color"]
+EDGE_COLOR = PLOT_STYLE["axis_color"]
 DEFAULT_T_SUNSET = 0.65
 DEFAULT_NUMBER_OF_DAYS = 4
 OUTPUT_PATH = (
@@ -270,7 +275,7 @@ def draw_repeated_timeline(axis, t_sunset, number_of_days):
     axis.spines["left"].set_visible(False)
     axis.spines["right"].set_visible(False)
     axis.spines["top"].set_visible(False)
-    axis.grid(axis="x", color="#BBBBBB", alpha=0.3, linestyle=":")
+    axis.grid(axis="x", color=PLOT_STYLE["guide_color"], alpha=0.3, linestyle=":")
     axis.set_xlabel(r"Time $t$ (days)")
     axis.set_xticks([float(index) for index in range(number_of_days + 1)])
     axis.set_xticklabels([str(index) for index in range(number_of_days + 1)])

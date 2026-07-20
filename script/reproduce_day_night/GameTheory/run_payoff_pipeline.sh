@@ -10,12 +10,31 @@ MODULE_PREFIX=script.reproduce_day_night.GameTheory
 ORIGINAL_ARGS=("$@")
 
 PYTHON_BIN=${PYTHON_BIN:-python}
+
+read_analysis_default() {
+    local key=$1
+    PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}" "$PYTHON_BIN" - "$key" <<'PY'
+import sys
+
+from script.reproduce_day_night.shared_config import TWO_POPULATION_SIMULATION_CONFIG
+
+key = sys.argv[1]
+value = TWO_POPULATION_SIMULATION_CONFIG["analysis"][key]
+if isinstance(value, (list, tuple)):
+    print(",".join(str(item) for item in value))
+elif isinstance(value, bool):
+    print("true" if value else "false")
+else:
+    print(value)
+PY
+}
+
 OUTPUT_DIR=""
 RUN_CONFIG=""
-MEAN_X_AXES="w1,w2,cycle1,cycle2"
-MEAN_SHOW_VARIANCE="false"
-REPLICATOR_TIME_SPAN="40"
-REPLICATOR_TIME_STEPS="800"
+MEAN_X_AXES=${MEAN_X_AXES:-$(read_analysis_default mean_x_axes)}
+MEAN_SHOW_VARIANCE=${MEAN_SHOW_VARIANCE:-$(read_analysis_default mean_show_variance)}
+REPLICATOR_TIME_SPAN=${REPLICATOR_TIME_SPAN:-$(read_analysis_default replicator_time_span)}
+REPLICATOR_TIME_STEPS=${REPLICATOR_TIME_STEPS:-$(read_analysis_default replicator_time_steps)}
 REPLICATOR_PLOT_STYLE="line"
 PAYOFF_MODE=""
 PAYOFF_MODE_SET="false"
@@ -113,6 +132,22 @@ if missing:
 PY
 }
 
+normalize_existing_path() {
+    "$PYTHON_BIN" - "$1" "$2" <<'PY'
+import sys
+from pathlib import Path
+
+option_name = sys.argv[1]
+raw_path = sys.argv[2]
+resolved_path = Path(raw_path).expanduser().resolve()
+
+if not resolved_path.exists():
+    raise SystemExit(f"{option_name} path not found: {resolved_path}")
+
+print(resolved_path)
+PY
+}
+
 resolve_run_config_payoff_mode() {
     "$PYTHON_BIN" - "$1" <<'PY'
 import json
@@ -120,6 +155,9 @@ import sys
 from pathlib import Path
 
 config_path = Path(sys.argv[1]).expanduser().resolve()
+if not config_path.is_file():
+    raise SystemExit(f"--run-config file not found: {config_path}")
+
 with config_path.open("r", encoding="utf-8") as handle:
     payload = json.load(handle)
 
@@ -265,6 +303,7 @@ if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
 fi
 
 if [[ -n "$RUN_CONFIG" ]]; then
+    RUN_CONFIG=$(normalize_existing_path --run-config "$RUN_CONFIG")
     RESOLVED_RUN_CONFIG_MODE=$(resolve_run_config_payoff_mode "$RUN_CONFIG")
     if [[ "$PAYOFF_MODE_SET" == "true" ]] && [[ "$PAYOFF_MODE" != "$RESOLVED_RUN_CONFIG_MODE" ]]; then
         fail "--payoff-mode ($PAYOFF_MODE) does not match payoff_mode=$RESOLVED_RUN_CONFIG_MODE in $RUN_CONFIG"

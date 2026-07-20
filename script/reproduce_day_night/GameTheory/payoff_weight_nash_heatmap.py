@@ -10,7 +10,8 @@ import matplotlib
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
-from matplotlib.colors import BoundaryNorm, ListedColormap, to_rgb
+from matplotlib.colors import BoundaryNorm, ListedColormap
+from matplotlib.patches import Patch
 import numpy as np
 
 if __package__ in {None, ""}:
@@ -45,6 +46,16 @@ from script.reproduce_day_night.GameTheory.payoff_replicator_analysis import (
     require_nashpy,
 )
 from script.reproduce_day_night.paths import ensure_directory, game_theory_output_path
+from script.reproduce_day_night.shared_config import (
+    ACTIVITY_COLORS,
+    ACTIVITY_LABELS,
+    PLOT_STYLE,
+    TWO_POPULATION_SIMULATION_CONFIG,
+    apply_plot_typography,
+)
+
+
+apply_plot_typography()
 
 
 DEFAULT_OUTPUT_DIRECTORY = game_theory_output_path("weight_nash_heatmap")
@@ -53,20 +64,13 @@ DEFAULT_DETAILS_FILENAME = "nash_weight_details.json"
 DEFAULT_COMPONENTS_FIGURE_FILENAME = "nash_consensus_components.png"
 DEFAULT_DIAGNOSTICS_FIGURE_FILENAME = "nash_equilibrium_diagnostics.png"
 DEFAULT_CONFIG_FILENAME = "run_config.json"
-DEFAULT_WEIGHT_VALUES = tuple(round(0.1 * index, 10) for index in range(11))
+TWO_POPULATION_ANALYSIS_CONFIG = TWO_POPULATION_SIMULATION_CONFIG["analysis"]
+DEFAULT_WEIGHT_VALUES = TWO_POPULATION_ANALYSIS_CONFIG["weight_sweep_values"]
 WEIGHT_RUNS_DIRECTORY_NAME = "weight_runs"
 REMAINING_PIPELINE_SCRIPT_FILENAME = "run_remaining_pipeline.sh"
 CONSENSUS_LABEL = "Multi"
-CONSENSUS_COLOUR = "#bdbdbd"
+CONSENSUS_COLOUR = PLOT_STYLE["consensus_color"]
 PROBABILITY_ATOL = 1.0e-10
-ACTIVITY_COLOURS = {
-    "D": "#f2c14e",
-    "N": "#3a86ff",
-    "P1": "#2a9d8f",
-    "P2": "#8ac926",
-    "M1": "#ff7f51",
-    "M2": "#d1495b",
-}
 
 
 def parse_args():
@@ -119,7 +123,7 @@ def parse_args():
     parser.add_argument(
         "--payoff-mode",
         choices=PAYOFF_MODE_CHOICES,
-        default=NET_GROWTH_PAYOFF_MODE,
+        default=TWO_POPULATION_ANALYSIS_CONFIG["weight_sweep_payoff_mode"],
         help="Payoff functional used to build each matrix. Default: net-growth.",
     )
     parser.add_argument(
@@ -1005,30 +1009,6 @@ def save_run_config(
         handle.write("\n")
 
 
-def code_text_colour(code):
-    if code == CONSENSUS_LABEL:
-        return "black"
-    red, green, blue = to_rgb(ACTIVITY_COLOURS[code])
-    luminance = 0.299 * red + 0.587 * green + 0.114 * blue
-    return "black" if luminance >= 0.6 else "white"
-
-
-def annotate_component_cells(axis, grid, labels):
-    for row_index in range(grid.shape[0]):
-        for column_index in range(grid.shape[1]):
-            code = labels[int(grid[row_index, column_index])]
-            axis.text(
-                column_index,
-                row_index,
-                "Mul" if code == CONSENSUS_LABEL else code,
-                ha="center",
-                va="center",
-                fontsize=7,
-                fontweight="bold",
-                color=code_text_colour(code),
-            )
-
-
 def style_weight_axes(axis, w1_values, w2_values):
     axis.set_xlabel("$w_2$")
     axis.set_xticks(np.arange(len(w2_values)))
@@ -1054,25 +1034,53 @@ def save_consensus_component_heatmap(
 ):
     output_path.parent.mkdir(parents=True, exist_ok=True)
     colours = [
-        ACTIVITY_COLOURS[label] if label != CONSENSUS_LABEL else CONSENSUS_COLOUR
+        ACTIVITY_COLORS[label] if label != CONSENSUS_LABEL else CONSENSUS_COLOUR
         for label in component_labels
     ]
     colour_map = ListedColormap(colours)
     colour_bounds = np.arange(len(component_labels) + 1) - 0.5
     colour_norm = BoundaryNorm(colour_bounds, colour_map.N)
+    displayed_labels = list(component_labels)
+    consensus_index = component_labels.index(CONSENSUS_LABEL)
+    if not np.any(prey_component_grid == consensus_index) and not np.any(
+        predator_component_grid == consensus_index
+    ):
+        displayed_labels = [
+            label for label in displayed_labels if label != CONSENSUS_LABEL
+        ]
+
+    legend_handles = []
+    for label in displayed_labels:
+        if label == CONSENSUS_LABEL:
+            legend_text = CONSENSUS_LABEL
+        else:
+            legend_text = f"{label} ({ACTIVITY_LABELS[label]})"
+        legend_handles.append(
+            Patch(
+                facecolor=(
+                    ACTIVITY_COLORS[label]
+                    if label != CONSENSUS_LABEL
+                    else CONSENSUS_COLOUR
+                ),
+                edgecolor="black",
+                label=legend_text,
+            )
+        )
 
     figure_height = max(4.8, 0.55 * len(w1_values))
     figure, axes = plt.subplots(
         1,
-        2,
-        figsize=(11.5, figure_height),
+        3,
+        figsize=(14.5, figure_height),
+        gridspec_kw={"width_ratios": [1.0, 1.0, 0.42]},
         sharey=True,
         constrained_layout=True,
     )
+    prey_axis, predator_axis, legend_axis = axes
 
     for axis, grid, title in (
-        (axes[0], prey_component_grid, "Prey consensus leader"),
-        (axes[1], predator_component_grid, "Predator consensus leader"),
+        (prey_axis, prey_component_grid, "Prey consensus leader"),
+        (predator_axis, predator_component_grid, "Predator consensus leader"),
     ):
         axis.imshow(
             grid,
@@ -1084,11 +1092,14 @@ def save_consensus_component_heatmap(
         )
         axis.set_title(title)
         style_weight_axes(axis, w1_values, w2_values)
-        annotate_component_cells(axis, grid, component_labels)
 
-    axes[0].set_ylabel("$w_1$")
-    figure.suptitle(
-        "Leading component of the mixed Nash equilibrium set\n"
+    prey_axis.set_ylabel("$w_1$")
+    legend_axis.axis("off")
+    legend_axis.legend(
+        handles=legend_handles,
+        loc="center left",
+        frameon=False,
+        title="Consensus leader",
     )
     figure.savefig(output_path, bbox_inches="tight", dpi=200)
     plt.close(figure)
