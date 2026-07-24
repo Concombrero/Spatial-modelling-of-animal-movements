@@ -35,4 +35,6 @@ bash "$PIPELINE_SCRIPT" \
   --initial-centers 0.25 0.7 \
   --initial-width 0.1 \
   --strategy-codes D,N,P1,P2,M1,M2 \
-  --max-workers 16
+  --max-workers 16 \
+  --replicator-time-span 5000 \
+  --replicator-time-steps 50000

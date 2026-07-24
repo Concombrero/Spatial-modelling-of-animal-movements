@@ -76,6 +76,17 @@ PAYOFF_MODE_CHOICES = (
     POPULATION_INTEGRAL_PAYOFF_MODE,
     NET_GROWTH_PAYOFF_MODE,
 )
+DEFAULT_INITIAL_CONDITION_PROFILE = "gaussian"
+HOMOGENEOUS_INITIAL_CONDITION_PROFILE = "homogeneous"
+PERTURBED_HOMOGENEOUS_INITIAL_CONDITION_PROFILE = "perturbed-homogeneous"
+INITIAL_CONDITION_PROFILE_CHOICES = (
+    DEFAULT_INITIAL_CONDITION_PROFILE,
+    HOMOGENEOUS_INITIAL_CONDITION_PROFILE,
+    PERTURBED_HOMOGENEOUS_INITIAL_CONDITION_PROFILE,
+)
+DEFAULT_INITIAL_CONDITION_PERTURBATION_AMPLITUDE = 0.05
+DEFAULT_INITIAL_CONDITION_PERTURBATION_LENGTH = 0.08
+DEFAULT_INITIAL_CONDITION_PERTURBATION_SEED = 0
 RUN_CONFIG_REQUIRED_KEYS = (
     "t_sunset",
     "weights",
@@ -415,23 +426,89 @@ def build_lighting_regime(t_sunset, dt):
     )
 
 
-def build_initial_condition(centers, width):
+def _normalise_initial_condition_profiles(values, dx):
+    masses = dx * np.sum(values, axis=0, keepdims=True)
+    if np.any(masses <= 0.0):
+        raise ValueError("Each initial-condition profile must have positive mass.")
+    return values / masses
+
+
+def _build_smoothed_periodic_noise(number_of_points, length, smoothing_length, seed):
+    if number_of_points < 2:
+        raise ValueError("number_of_points must be at least 2.")
+    if smoothing_length <= 0.0:
+        raise ValueError("smoothing_length must be positive.")
+
+    rng = np.random.default_rng(int(seed))
+    raw_noise = rng.normal(size=int(number_of_points))
+    raw_noise -= np.mean(raw_noise)
+    dx = float(length) / float(number_of_points)
+    frequencies = np.fft.fftfreq(int(number_of_points), d=dx)
+    gaussian_filter = np.exp(
+        -0.5 * (2.0 * np.pi * float(smoothing_length) * frequencies) ** 2
+    )
+    smoothed_noise = np.fft.ifft(np.fft.fft(raw_noise) * gaussian_filter).real
+    smoothed_noise -= np.mean(smoothed_noise)
+    scale = float(np.max(np.abs(smoothed_noise)))
+    if np.isclose(scale, 0.0):
+        raise ValueError("Could not build a non-trivial smooth perturbation.")
+    return smoothed_noise / scale
+
+
+def build_initial_condition(
+    centers,
+    width,
+    *,
+    profile=DEFAULT_INITIAL_CONDITION_PROFILE,
+    perturbation_amplitude=DEFAULT_INITIAL_CONDITION_PERTURBATION_AMPLITUDE,
+    perturbation_length=DEFAULT_INITIAL_CONDITION_PERTURBATION_LENGTH,
+    perturbation_seed=DEFAULT_INITIAL_CONDITION_PERTURBATION_SEED,
+):
     centers = tuple(float(center) for center in centers)
     width = float(width)
+    profile = str(profile)
+    perturbation_amplitude = float(perturbation_amplitude)
+    perturbation_length = float(perturbation_length)
+    perturbation_seed = int(perturbation_seed)
 
     def initial_condition(x):
         x = np.asarray(x, dtype=float)
         dx = x[1] - x[0]
         length = (x[-1] - x[0]) + dx
-        profiles = []
 
-        for center in centers:
-            wrapped_distance = ((x - center + 0.5 * length) % length) - 0.5 * length
-            profiles.append(np.exp(-0.5 * (wrapped_distance / width) ** 2))
+        if profile == DEFAULT_INITIAL_CONDITION_PROFILE:
+            profiles = []
+            for center in centers:
+                wrapped_distance = (
+                    (x - center + 0.5 * length) % length
+                ) - 0.5 * length
+                profiles.append(np.exp(-0.5 * (wrapped_distance / width) ** 2))
+            values = np.column_stack(profiles)
+            return _normalise_initial_condition_profiles(values, dx)
 
-        values = np.column_stack(profiles)
-        masses = dx * np.sum(values, axis=0, keepdims=True)
-        return values / masses
+        if profile == HOMOGENEOUS_INITIAL_CONDITION_PROFILE:
+            values = np.ones((x.size, NUMBER_OF_POPULATIONS), dtype=float)
+            return _normalise_initial_condition_profiles(values, dx)
+
+        if profile == PERTURBED_HOMOGENEOUS_INITIAL_CONDITION_PROFILE:
+            perturbations = []
+            for population_index in range(NUMBER_OF_POPULATIONS):
+                perturbations.append(
+                    _build_smoothed_periodic_noise(
+                        x.size,
+                        length,
+                        perturbation_length,
+                        perturbation_seed + population_index,
+                    )
+                )
+            values = 1.0 + perturbation_amplitude * np.column_stack(perturbations)
+            if np.min(values) <= 0.0:
+                raise ValueError(
+                    "Perturbed homogeneous initial condition must remain positive."
+                )
+            return _normalise_initial_condition_profiles(values, dx)
+
+        raise ValueError(f"Unsupported initial-condition profile: {profile!r}")
 
     return initial_condition
 
@@ -470,6 +547,14 @@ def build_config(
     payoff_mode=OVERLAP_PAYOFF_MODE,
     initial_centers=DEFAULT_INITIAL_CENTERS,
     initial_width=DEFAULT_INITIAL_WIDTH,
+    initial_condition_profile=DEFAULT_INITIAL_CONDITION_PROFILE,
+    initial_condition_perturbation_amplitude=(
+        DEFAULT_INITIAL_CONDITION_PERTURBATION_AMPLITUDE
+    ),
+    initial_condition_perturbation_length=(
+        DEFAULT_INITIAL_CONDITION_PERTURBATION_LENGTH
+    ),
+    initial_condition_perturbation_seed=DEFAULT_INITIAL_CONDITION_PERTURBATION_SEED,
     diffusion=DEFAULT_DIFFUSION,
     attraction=DEFAULT_ATTRACTION,
     reaction_rates=None,
@@ -477,7 +562,7 @@ def build_config(
     if reaction_rates is None:
         reaction_rates = DEFAULT_REACTION_RATES
 
-    return {
+    config = {
         "t_sunset": float(t_sunset),
         "weights": tuple(float(weight) for weight in weights),
         "sight_radius": _coerce_population_parameter(
@@ -504,6 +589,42 @@ def build_config(
         },
     }
 
+    if initial_condition_profile != DEFAULT_INITIAL_CONDITION_PROFILE:
+        config["initial_condition_profile"] = str(initial_condition_profile)
+
+    if (
+        initial_condition_profile == PERTURBED_HOMOGENEOUS_INITIAL_CONDITION_PROFILE
+        or not np.isclose(
+            float(initial_condition_perturbation_amplitude),
+            DEFAULT_INITIAL_CONDITION_PERTURBATION_AMPLITUDE,
+        )
+    ):
+        config["initial_condition_perturbation_amplitude"] = float(
+            initial_condition_perturbation_amplitude
+        )
+
+    if (
+        initial_condition_profile == PERTURBED_HOMOGENEOUS_INITIAL_CONDITION_PROFILE
+        or not np.isclose(
+            float(initial_condition_perturbation_length),
+            DEFAULT_INITIAL_CONDITION_PERTURBATION_LENGTH,
+        )
+    ):
+        config["initial_condition_perturbation_length"] = float(
+            initial_condition_perturbation_length
+        )
+
+    if (
+        initial_condition_profile == PERTURBED_HOMOGENEOUS_INITIAL_CONDITION_PROFILE
+        or int(initial_condition_perturbation_seed)
+        != DEFAULT_INITIAL_CONDITION_PERTURBATION_SEED
+    ):
+        config["initial_condition_perturbation_seed"] = int(
+            initial_condition_perturbation_seed
+        )
+
+    return config
+
 
 def build_solver(prey_regime, predator_regime, config):
     attraction = np.asarray(config["attraction"], dtype=float)
@@ -521,6 +642,22 @@ def build_solver(prey_regime, predator_regime, config):
         initial_condition=build_initial_condition(
             config["initial_centers"],
             config["initial_width"],
+            profile=config.get(
+                "initial_condition_profile",
+                DEFAULT_INITIAL_CONDITION_PROFILE,
+            ),
+            perturbation_amplitude=config.get(
+                "initial_condition_perturbation_amplitude",
+                DEFAULT_INITIAL_CONDITION_PERTURBATION_AMPLITUDE,
+            ),
+            perturbation_length=config.get(
+                "initial_condition_perturbation_length",
+                DEFAULT_INITIAL_CONDITION_PERTURBATION_LENGTH,
+            ),
+            perturbation_seed=config.get(
+                "initial_condition_perturbation_seed",
+                DEFAULT_INITIAL_CONDITION_PERTURBATION_SEED,
+            ),
         ),
         coefficient_attraction=attraction,
         coefficient_diffusion=diffusion,
@@ -1181,6 +1318,35 @@ def validate_config(
     if config["initial_width"] <= 0.0:
         raise ValueError("initial_width must be positive.")
 
+    initial_condition_profile = config.get(
+        "initial_condition_profile",
+        DEFAULT_INITIAL_CONDITION_PROFILE,
+    )
+    if initial_condition_profile not in INITIAL_CONDITION_PROFILE_CHOICES:
+        raise ValueError(
+            "initial_condition_profile must be one of: "
+            + ", ".join(INITIAL_CONDITION_PROFILE_CHOICES)
+            + "."
+        )
+
+    perturbation_amplitude = float(
+        config.get(
+            "initial_condition_perturbation_amplitude",
+            DEFAULT_INITIAL_CONDITION_PERTURBATION_AMPLITUDE,
+        )
+    )
+    if perturbation_amplitude < 0.0:
+        raise ValueError("initial_condition_perturbation_amplitude must be non-negative.")
+
+    perturbation_length = float(
+        config.get(
+            "initial_condition_perturbation_length",
+            DEFAULT_INITIAL_CONDITION_PERTURBATION_LENGTH,
+        )
+    )
+    if perturbation_length <= 0.0:
+        raise ValueError("initial_condition_perturbation_length must be positive.")
+
     build_lighting_regime(config["t_sunset"], config["dt"])
 
 
@@ -1275,6 +1441,22 @@ def build_config_from_run_config_payload(config_data, *, source_path):
         payoff_mode=config_data["payoff_mode"],
         initial_centers=config_data["initial_centers"],
         initial_width=config_data["initial_width"],
+        initial_condition_profile=config_data.get(
+            "initial_condition_profile",
+            DEFAULT_INITIAL_CONDITION_PROFILE,
+        ),
+        initial_condition_perturbation_amplitude=config_data.get(
+            "initial_condition_perturbation_amplitude",
+            DEFAULT_INITIAL_CONDITION_PERTURBATION_AMPLITUDE,
+        ),
+        initial_condition_perturbation_length=config_data.get(
+            "initial_condition_perturbation_length",
+            DEFAULT_INITIAL_CONDITION_PERTURBATION_LENGTH,
+        ),
+        initial_condition_perturbation_seed=config_data.get(
+            "initial_condition_perturbation_seed",
+            DEFAULT_INITIAL_CONDITION_PERTURBATION_SEED,
+        ),
         diffusion=config_data["diffusion"],
         attraction=config_data["attraction"],
         reaction_rates=config_data["reaction_rates"],
@@ -1385,6 +1567,7 @@ def run_payoff_experiment(
     activity_regimes=ACTIVITY_REGIMES,
     heatmap_prey_code=None,
     heatmap_predator_code=None,
+    save_population_heatmaps=True,
     echo=True,
 ):
     validate_config(
@@ -1419,9 +1602,11 @@ def run_payoff_experiment(
         activity_regimes,
         config,
         max_workers,
-        population_heatmap_output_directory=output_paths[
-            "population_heatmap_output_directory"
-        ],
+        population_heatmap_output_directory=(
+            output_paths["population_heatmap_output_directory"]
+            if save_population_heatmaps
+            else None
+        ),
         heatmap_prey_code=heatmap_prey_code,
         heatmap_predator_code=heatmap_predator_code,
         case_payoff_output_path=output_paths["case_payoff_output_path"],
@@ -1472,9 +1657,12 @@ def run_payoff_experiment(
             colorbar_label="predator payoff",
         )
 
-    saved_heatmap_count = (
-        1 if heatmap_prey_code is not None else len(activity_regimes) ** 2
-    )
+    if save_population_heatmaps:
+        saved_heatmap_count = (
+            1 if heatmap_prey_code is not None else len(activity_regimes) ** 2
+        )
+    else:
+        saved_heatmap_count = 0
     if echo:
         if payoff_mode == OVERLAP_PAYOFF_MODE:
             print("\nComputed payoff matrix:")
@@ -1500,10 +1688,13 @@ def run_payoff_experiment(
             print(
                 f"Saved predator payoff heatmap to {output_paths['predator_heatmap_output_path']}"
             )
-        print(
-            f"Saved {saved_heatmap_count} population heatmap file(s) to "
-            f"{output_paths['population_heatmap_output_directory']}"
-        )
+        if save_population_heatmaps:
+            print(
+                f"Saved {saved_heatmap_count} population heatmap file(s) to "
+                f"{output_paths['population_heatmap_output_directory']}"
+            )
+        else:
+            print("Skipped population heatmap export.")
 
     return {
         "matrix": payoff_matrices["predator"],

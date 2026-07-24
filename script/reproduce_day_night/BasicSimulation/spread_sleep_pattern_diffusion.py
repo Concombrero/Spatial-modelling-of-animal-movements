@@ -1,5 +1,5 @@
 import argparse
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from multiprocessing import get_context
 from pathlib import Path
 from queue import Empty
@@ -33,6 +33,10 @@ from script.reproduce_day_night.Solver import (
 apply_plot_typography()
 
 
+
+DIFFUSION_ATTRACTION_DENOMINATORS = (100.0, 10.0, 1.0)
+
+
 EXPERIMENT_CONFIG = resolve_experiment_config(
     ONE_POPULATION_SIMULATION_CONFIG,
     "spread_sleep_pattern_diffusion",
@@ -48,9 +52,14 @@ COEFFICIENT_ATTRACTION = np.array(
     EXPERIMENT_CONFIG["coefficient_attraction"],
     dtype=float,
 )
-BASE_COEFFICIENT_DIFFUSION = np.array(
-    EXPERIMENT_CONFIG["coefficient_diffusion"],
-    dtype=float,
+ATTRACTION_REFERENCE_COEFFICIENT = float(np.max(np.abs(COEFFICIENT_ATTRACTION)))
+if ATTRACTION_REFERENCE_COEFFICIENT <= 0.0:
+    raise ValueError(
+        "coefficient_attraction must contain a positive value to build diffusion coefficients."
+    )
+DIFFUSION_SCALES = tuple(
+    ATTRACTION_REFERENCE_COEFFICIENT / float(denominator)
+    for denominator in DIFFUSION_ATTRACTION_DENOMINATORS
 )
 SIGHT_RADIUS = EXPERIMENT_CONFIG["sight_radius"]
 SMELL_RADIUS = EXPERIMENT_CONFIG["smell_radius"]
@@ -58,7 +67,6 @@ SIGHT_WEIGHTS = EXPERIMENT_CONFIG["weights"]
 MAX_WORKERS = EXPERIMENT_CONFIG["max_workers"]
 DAY_START = EXPERIMENT_CONFIG["day_start"]
 T_SUNSET = EXPERIMENT_CONFIG["t_sunset"]
-DIFFUSION_SCALES = EXPERIMENT_CONFIG["diffusion_scales"]
 CASE_TIMEOUT_SECONDS = EXPERIMENT_CONFIG["case_timeout_seconds"]
 RETRY_POINT_SCALES = EXPERIMENT_CONFIG["retry_point_scales"]
 RETRY_DT_SCALES = EXPERIMENT_CONFIG["retry_dt_scales"]
@@ -70,14 +78,26 @@ OUTPUT_PATH = (
     / "figures"
     / "sleep_pattern_diffusion_spread.png"
 )
+PROGRESS_REPORT_SECONDS = 10.0
+
+
+def format_diffusion_label(diffusion_value, math_mode=False):
+    for denominator in DIFFUSION_ATTRACTION_DENOMINATORS:
+        expected_value = ATTRACTION_REFERENCE_COEFFICIENT / float(denominator)
+        if np.isclose(diffusion_value, expected_value):
+            if math_mode:
+                return rf"$\chi$/{denominator:g}"
+            return f"Chi/{denominator:g}"
+    return f"D={diffusion_value:g}"
 
 
 def parse_args():
     parser = argparse.ArgumentParser(
         description=(
             "Compute the normalized spread indicator Psi for all circadian "
-            "activity patterns at fixed t_sunset=0.5 and compare three "
-            "diffusion levels D/10, D, and 10D in a single article figure."
+            "activity patterns at fixed t_sunset=0.5 and compare diffusion "
+            "coefficients derived from the attraction coefficient in a single "
+            "article figure."
         )
     )
     parser.add_argument(
@@ -88,11 +108,13 @@ def parse_args():
         help="Sight weights w to evaluate.",
     )
     parser.add_argument(
+        "--diffusion-values",
         "--diffusion-scales",
+        dest="diffusion_scales",
         nargs="+",
         type=float,
         default=list(DIFFUSION_SCALES),
-        help="Multipliers applied to the baseline diffusion coefficient.",
+        help="Diffusion coefficients to evaluate.",
     )
     parser.add_argument(
         "--t-sunset",
@@ -161,7 +183,11 @@ def build_solver(
         dt=dt,
         initial_condition=gaussian_initial_condition,
         coefficient_attraction=COEFFICIENT_ATTRACTION,
-        coefficient_diffusion=BASE_COEFFICIENT_DIFFUSION * float(diffusion_scale),
+        coefficient_diffusion=np.full(
+            NUMBER_OF_POPULATIONS,
+            float(diffusion_scale),
+            dtype=float,
+        ),
         cycle_period=CYCLE_PERIOD,
         number_of_population=NUMBER_OF_POPULATIONS,
         day_start=lighting_regime["day_start"],
@@ -315,6 +341,7 @@ def run_case_with_retries(
             return {
                 "status": "ok",
                 "diffusion_scale": float(diffusion_scale),
+                "diffusion_label": format_diffusion_label(diffusion_scale),
                 "activity_label": activity_regime["label"],
                 "activity_code": activity_regime["code"],
                 "weight_index": weight_index,
@@ -329,7 +356,7 @@ def run_case_with_retries(
             failure_messages.append(
                 (
                     f"Timeout for {activity_regime['label']} ({activity_regime['code']}), "
-                    f"D scale={diffusion_scale:g}, w={sight_weight:g}, attempt "
+                    f"{format_diffusion_label(diffusion_scale)}, w={sight_weight:g}, attempt "
                     f"{attempt_index} with {attempt_points} points and dt={attempt_dt:g}."
                 )
             )
@@ -337,7 +364,7 @@ def run_case_with_retries(
             failure_messages.append(
                 (
                     f"Failure for {activity_regime['label']} ({activity_regime['code']}), "
-                    f"D scale={diffusion_scale:g}, w={sight_weight:g}, attempt "
+                    f"{format_diffusion_label(diffusion_scale)}, w={sight_weight:g}, attempt "
                     f"{attempt_index} with {attempt_points} points and dt={attempt_dt:g}: "
                     f"{summarize_error_message(payload['message'])}"
                 )
@@ -346,6 +373,7 @@ def run_case_with_retries(
     return {
         "status": "failed",
         "diffusion_scale": float(diffusion_scale),
+        "diffusion_label": format_diffusion_label(diffusion_scale),
         "activity_label": activity_regime["label"],
         "activity_code": activity_regime["code"],
         "weight_index": weight_index,
@@ -381,13 +409,26 @@ def run_all_cases(
             activity_regime,
             sight_weight,
         )
-        for diffusion_index, diffusion_scale in enumerate(diffusion_scales)
         for regime_index, activity_regime in enumerate(activity_regimes)
         for weight_index, sight_weight in enumerate(sight_weights)
+        for diffusion_index, diffusion_scale in sorted(
+            enumerate(diffusion_scales),
+            key=lambda item: item[1],
+            reverse=True,
+        )
     ]
 
     recovered_cases = []
     failed_cases = []
+    total_case_count = len(case_specs)
+
+    print(
+        (
+            f"Running {total_case_count} case(s) with max_workers={max_workers} "
+            f"and timeout={case_timeout_seconds:g}s per attempt."
+        ),
+        flush=True,
+    )
 
     def record_case_result(case_result):
         psi_by_diffusion[case_result["diffusion_scale"]][case_result["activity_label"]][
@@ -400,7 +441,7 @@ def run_all_cases(
                 print(
                     (
                         f"Recovered {case_result['activity_label']} ({case_result['activity_code']}), "
-                        f"D scale={case_result['diffusion_scale']:g}, "
+                        f"{case_result['diffusion_label']}, "
                         f"w={case_result['sight_weight']:g} on attempt "
                         f"{case_result['attempt_index']} with {case_result['attempt_points']} "
                         f"points and dt={case_result['attempt_dt']:g}."
@@ -411,7 +452,7 @@ def run_all_cases(
                 print(
                     (
                         f"Finished {case_result['activity_label']} ({case_result['activity_code']}), "
-                        f"D scale={case_result['diffusion_scale']:g}, "
+                        f"{case_result['diffusion_label']}, "
                         f"w={case_result['sight_weight']:g}"
                     ),
                     flush=True,
@@ -424,14 +465,14 @@ def run_all_cases(
         print(
             (
                 f"Skipped {case_result['activity_label']} ({case_result['activity_code']}), "
-                f"D scale={case_result['diffusion_scale']:g}, "
+                f"{case_result['diffusion_label']}, "
                 f"w={case_result['sight_weight']:g} after all retries."
             ),
             flush=True,
         )
 
     if max_workers <= 1:
-        for case_spec in case_specs:
+        for completed_case_count, case_spec in enumerate(case_specs, start=1):
             record_case_result(
                 run_case_with_retries(
                     case_spec,
@@ -440,6 +481,10 @@ def run_all_cases(
                     dt,
                     case_timeout_seconds,
                 )
+            )
+            print(
+                f"Progress: {completed_case_count}/{total_case_count} case(s) completed.",
+                flush=True,
             )
         return psi_by_diffusion, recovered_cases, failed_cases
 
@@ -455,21 +500,36 @@ def run_all_cases(
             ): case_spec
             for case_spec in case_specs
         }
+        pending_futures = set(future_to_case)
+        completed_case_count = 0
 
-        for future in as_completed(future_to_case):
-            record_case_result(future.result())
+        while pending_futures:
+            done_futures, pending_futures = wait(
+                pending_futures,
+                timeout=PROGRESS_REPORT_SECONDS,
+                return_when=FIRST_COMPLETED,
+            )
+
+            if not done_futures:
+                print(
+                    (
+                        f"Progress: {completed_case_count}/{total_case_count} "
+                        f"case(s) completed; {len(pending_futures)} still running."
+                    ),
+                    flush=True,
+                )
+                continue
+
+            for future in done_futures:
+                record_case_result(future.result())
+                completed_case_count += 1
+
+            print(
+                f"Progress: {completed_case_count}/{total_case_count} case(s) completed.",
+                flush=True,
+            )
 
     return psi_by_diffusion, recovered_cases, failed_cases
-
-
-def format_diffusion_title(diffusion_scale):
-    if np.isclose(diffusion_scale, 0.1):
-        return r"$D/10$"
-    if np.isclose(diffusion_scale, 1.0):
-        return r"$D$"
-    if np.isclose(diffusion_scale, 10.0):
-        return r"$10D$"
-    return rf"${diffusion_scale:g}D$"
 
 
 def save_spread_plot(
@@ -486,7 +546,6 @@ def save_spread_plot(
         figsize=(5.2 * len(diffusion_scales), 5.1),
         sharex=True,
         sharey=True,
-        constrained_layout=True,
     )
     axes = np.atleast_1d(axes)
     legend_handles = []
@@ -507,7 +566,11 @@ def save_spread_plot(
                 legend_handles.append(line)
                 legend_labels.append(f"{regime['label']} ({regime['code']})")
 
-        axis.set_title(format_diffusion_title(diffusion_scale))
+        axis.set_title(
+            format_diffusion_label(diffusion_scale, math_mode=True),
+            fontsize=11,
+            pad=8,
+        )
         axis.set_xlim(0.0, 1.0)
         axis.set_ylim(0.0, 1.0)
         axis.set_xticks(np.linspace(0.0, 1.0, 6))
@@ -516,18 +579,14 @@ def save_spread_plot(
         axis.grid(True, alpha=0.3)
 
     axes[0].set_ylabel(r"$\Psi$")
-    figure.suptitle(
-        "Sleep-pattern spread across diffusion levels\n"
-        f"$t_{{sunset}}={t_sunset:g}$"
-    )
+    figure.tight_layout(rect=(0.0, 0.14, 1.0, 0.96))
     figure.legend(
         legend_handles,
         legend_labels,
-        loc="upper center",
+        loc="lower center",
         ncol=3,
         frameon=False,
-        bbox_to_anchor=(0.5, 0.98),
-        title="Circadian activity pattern",
+        bbox_to_anchor=(0.5, 0.02),
     )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     figure.savefig(output_path, bbox_inches="tight", dpi=200)
@@ -546,11 +605,11 @@ def main():
         raise ValueError("t_sunset must lie in the interval [0, 1].")
 
     if any(scale <= 0.0 for scale in diffusion_scales):
-        raise ValueError("All diffusion scales must be positive.")
+        raise ValueError("All diffusion coefficients must be positive.")
 
     rounded_scales = [round(scale, 12) for scale in diffusion_scales]
     if len(set(rounded_scales)) != len(rounded_scales):
-        raise ValueError("diffusion scales must be distinct.")
+        raise ValueError("diffusion coefficients must be distinct.")
 
     if args.number_of_points < 2:
         raise ValueError("number_of_points must be at least 2.")

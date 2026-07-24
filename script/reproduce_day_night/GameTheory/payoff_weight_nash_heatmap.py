@@ -64,7 +64,15 @@ DEFAULT_DETAILS_FILENAME = "nash_weight_details.json"
 DEFAULT_COMPONENTS_FIGURE_FILENAME = "nash_consensus_components.png"
 DEFAULT_DIAGNOSTICS_FIGURE_FILENAME = "nash_equilibrium_diagnostics.png"
 DEFAULT_CONFIG_FILENAME = "run_config.json"
+TWO_POPULATION_BASE_CONFIG = TWO_POPULATION_SIMULATION_CONFIG["base"]
 TWO_POPULATION_ANALYSIS_CONFIG = TWO_POPULATION_SIMULATION_CONFIG["analysis"]
+DEFAULT_NUMBER_OF_POINTS = TWO_POPULATION_BASE_CONFIG["number_of_points"]
+DEFAULT_DT = TWO_POPULATION_BASE_CONFIG["dt"]
+DEFAULT_NUMBER_OF_CYCLES = TWO_POPULATION_BASE_CONFIG["number_of_cycles"]
+DEFAULT_OBSERVATION_WINDOW = TWO_POPULATION_BASE_CONFIG["observation_window"]
+DEFAULT_WEIGHT_SWEEP_PAYOFF_MODE = TWO_POPULATION_ANALYSIS_CONFIG[
+    "weight_sweep_payoff_mode"
+]
 DEFAULT_WEIGHT_VALUES = TWO_POPULATION_ANALYSIS_CONFIG["weight_sweep_values"]
 WEIGHT_RUNS_DIRECTORY_NAME = "weight_runs"
 REMAINING_PIPELINE_SCRIPT_FILENAME = "run_remaining_pipeline.sh"
@@ -123,8 +131,11 @@ def parse_args():
     parser.add_argument(
         "--payoff-mode",
         choices=PAYOFF_MODE_CHOICES,
-        default=TWO_POPULATION_ANALYSIS_CONFIG["weight_sweep_payoff_mode"],
-        help="Payoff functional used to build each matrix. Default: net-growth.",
+        default=DEFAULT_WEIGHT_SWEEP_PAYOFF_MODE,
+        help=(
+            "Payoff functional used to build each matrix. Default: "
+            f"{DEFAULT_WEIGHT_SWEEP_PAYOFF_MODE}."
+        ),
     )
     parser.add_argument(
         "--t-sunset",
@@ -177,26 +188,35 @@ def parse_args():
     parser.add_argument(
         "--number-of-points",
         type=int,
-        default=128,
-        help="Number of spatial grid points. Default: 128.",
+        default=DEFAULT_NUMBER_OF_POINTS,
+        help=(
+            "Number of spatial grid points. Default: "
+            f"{DEFAULT_NUMBER_OF_POINTS}."
+        ),
     )
     parser.add_argument(
         "--dt",
         type=float,
-        default=0.1,
-        help="Stored output timestep. Default: 0.1.",
+        default=DEFAULT_DT,
+        help=f"Stored output timestep. Default: {DEFAULT_DT:g}.",
     )
     parser.add_argument(
         "--number-of-cycles",
         type=int,
-        default=4,
-        help="Number of daily cycles to simulate. Default: 4.",
+        default=DEFAULT_NUMBER_OF_CYCLES,
+        help=(
+            "Number of daily cycles to simulate. Default: "
+            f"{DEFAULT_NUMBER_OF_CYCLES}."
+        ),
     )
     parser.add_argument(
         "--observation-window",
         type=float,
-        default=2.0,
-        help="Final-time window used to evaluate the payoff functional. Default: 2.0.",
+        default=DEFAULT_OBSERVATION_WINDOW,
+        help=(
+            "Final-time window used to evaluate the payoff functional. "
+            f"Default: {DEFAULT_OBSERVATION_WINDOW:g}."
+        ),
     )
     parser.add_argument(
         "--prey-growth",

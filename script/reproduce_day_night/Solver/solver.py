@@ -4,6 +4,10 @@ import sys
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation, PillowWriter
 
+
+POSITIVITY_TAIL_RELATIVE_TOLERANCE = 3.0e-5
+CANDIDATE_NEGATIVE_RELATIVE_TOLERANCE = 3.0e-3
+
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
@@ -530,7 +534,8 @@ class DayNightModel1D:
         rhs = self._compute_rhs(time, population)
         density_floor = np.maximum(
             1.0e-12,
-            1.0e-5 * np.max(population, axis=0, keepdims=True),
+            POSITIVITY_TAIL_RELATIVE_TOLERANCE
+            * np.max(population, axis=0, keepdims=True),
         )
         unstable_mask = (rhs < 0.0) & (population > density_floor)
         if not np.any(unstable_mask):
@@ -949,7 +954,7 @@ class DayNightModel1D:
         )
         negative_tolerance = np.maximum(
             1.0e-10,
-            1.0e-5 * max_population_by_species,
+            CANDIDATE_NEGATIVE_RELATIVE_TOLERANCE * max_population_by_species,
         )
         if np.any(candidate_population < -negative_tolerance):
             return None
@@ -1023,6 +1028,8 @@ class DayNightModel1D:
 
             current_time += dt_step
             remaining_time = max(remaining_time - dt_step, 0.0)
+            if remaining_time <= minimum_dt_step:
+                remaining_time = 0.0
 
         return next_population
 

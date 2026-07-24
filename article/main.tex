@@ -161,7 +161,7 @@ To illustrate how these distinct sensory mechanisms interact, thanks to the Lemm
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{figures/kernel_combinaison.png}
-    \caption{Examples of perception kernels during the day created by combining a sight kernel and a smell kernel with different weights. With $R_{sight}=0.1$ and $R_{smell}=0.2$.}
+    \caption{Daytime perception kernels used in the numerical experiments: a Gaussian smell kernel with $R_{\mathrm{smell}}=0.2$, an exponential sight kernel with $R_{\mathrm{sight}}=0.1$, and representative weighted mixtures shown for $w\in\{0.25,0.5,0.75\}$ on the unit spatial scale $L=1$.}
     \label{fig:kernel-combinaison}
 \end{figure}
 
@@ -196,7 +196,7 @@ With this mathematical framework in place, we can classify populations based on 
         \hline
     \end{tabular}
 
-    \caption{Mathematical representation of common ecological sleep-wake patterns based on the intersection of a species' circadian activity ($\mathcal{T}_{active}$) and the day-night cycle ($\mathcal{T}_{day}$, $\mathcal{T}_{night}$).}
+    \caption{Standardized circadian schedules used throughout the simulations and the game-theoretic analysis. Each schedule is $1$-periodic on $[0,1)$ with $t_{\mathrm{sunrise}}=0$; unless stated otherwise, numerical comparisons use the baseline day-night cycle $t_{\mathrm{sunset}}=0.5$, and the second column gives the corresponding active set $\mathcal{T}_{active}$.}
     \label{tab:circadian_patterns}
 \end{table}
 
@@ -205,7 +205,7 @@ Even if $t_{\mathrm{sunset}}$ depends on the geographical location and time of y
 \begin{figure}[H]
     \hspace*{20px}
     \includegraphics[width=0.8\linewidth]{figures/circadian_activity_patterns.png}
-    \caption{Illustration of the circadian activity patterns defined in Table~\ref{tab:circadian_patterns}.}
+    \caption{Standardized circadian activity schedules used in the simulations for a unit daily period with $t_{\mathrm{sunrise}}=0$ and $t_{\mathrm{sunset}}=0.5$. The active sets are $D=[0,0.5)$, $N=[0.5,1)$, $M_1=[0,0.25)\cup[0.75,1)$, $M_2=[0.25,0.75)$, $P_1=[0,0.25)\cup[0.5,0.75)$, and $P_2=[0.25,0.5)\cup[0.75,1)$.}
     \label{fig-circadian-activity}
 \end{figure}
 
@@ -256,7 +256,7 @@ where $w\in[0,1]$ is the reliance of the population on sight and $1-w$ is the re
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/sight_weight_sunset_heatmaps.png}
-    \caption{Heatmaps of the population distribution for different values of $w$ and $t_{\mathrm{sunset}}$. The $x$-axis represents space and the $y$-axis represents time. The color represents the density of the population at a given time and space. For the initial condition we use a Gaussian distribution.}
+    \caption{Space-time heatmaps of the one-population density on the periodic domain $\Omega=[0,1)$ for an always-active population. Columns correspond to $w\in\{0,0.5,1\}$ and rows to $t_{\mathrm{sunset}}\in\{1,0.5,0\}$; simulations use $256$ grid points, $\Delta t=0.01$, three daily cycles, $D_0=0.04$, $\chi_0=0.1$, $(R_{\mathrm{sight}},R_{\mathrm{smell}})=(0.1,0.2)$, and a mass-normalized periodic Gaussian initial condition centered at $x_0=0.5$ with width $\sigma=0.08$. Color encodes population density.}
     \label{fig:heatmaps-constant-activity}
 \end{figure}
 
@@ -266,7 +266,7 @@ We note a population based on smell is not affected by the day-night cycle, and 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{figures/sight_weight_sunset_spread.png}
-    \caption{Spread indicator $\Psi$ as a function of sight weight $w$ for different values of $t_{\mathrm{sunset}}$.}
+    \caption{Normalized spread indicator $\Psi$ for the always-active one-population simulations, computed over the final day after three daily cycles. Curves correspond to $t_{\mathrm{sunset}}\in\{1,0.5,0\}$ and are sampled at $w\in\{0,0.1,\ldots,1\}$; other parameters are $\Omega=[0,1)$, $256$ grid points, $\Delta t=0.01$, $D_0=0.04$, $\chi_0=0.1$, $(R_{\mathrm{sight}},R_{\mathrm{smell}})=(0.1,0.2)$, and the same normalized periodic Gaussian initial condition.}
     \label{fig:spread-constant-activity}
 \end{figure}
 \color{black}
@@ -278,7 +278,7 @@ To understand he impact of the daylight cycle on the spacial dynamics of the pop
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{figures/spread_diurnal_vs_nocturnal.png}
-    \caption{Spread indicator $\Psi$ as a function of sight weight $w$ for diurnal and nocturnal populations.}
+    \caption{Normalized spread indicator $\Psi$ for diurnal and nocturnal activity schedules under the equatorial light regime $t_{\mathrm{sunset}}=0.5$, using $w\in\{0,0.1,\ldots,1\}$. Simulations use the periodic domain $\Omega=[0,1)$, $256$ grid points, $\Delta t=0.01$, two daily cycles, a one-day observation window, $D_0=0.04$, $\chi_0=0.1$, $(R_{\mathrm{sight}},R_{\mathrm{smell}})=(0.1,0.2)$, and a mass-normalized periodic Gaussian initial condition centered at $x_0=0.5$ with width $\sigma=0.08$.}
     \label{fig:spread-diurnal-vs-nocturnal}
 \end{figure}
 
@@ -295,7 +295,7 @@ We remark that some simulations has small active periods during the day or durin
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{figures/spread_polyphasic_matutinal.png}
-    \caption{Spread indicator $\Psi$ as a function of sight weight $w$ for polyphasic and matutinal populations.}
+    \caption{Normalized spread indicator $\Psi$ for the fragmented activity schedules $P_1$, $P_2$, $M_1$, and $M_2$, using $w\in\{0,0.1,\ldots,1\}$ and $t_{\mathrm{sunset}}\in\{0.3,0.5,0.7\}$. Simulations use the periodic domain $\Omega=[0,1)$, $256$ grid points, $\Delta t=0.01$, two daily cycles, a one-day observation window, $D_0=0.04$, $\chi_0=0.1$, $(R_{\mathrm{sight}},R_{\mathrm{smell}})=(0.1,0.2)$, and the same normalized periodic Gaussian initial condition.}
     \label{fig:spread-polyphasic-matutinal}
 \end{figure}
 
@@ -366,24 +366,44 @@ To complement this static equilibrium notion, we model the evolution of strategy
 \end{equation*}
 These equations increase the frequency of strategies whose payoff exceeds the current population average. In particular, every Nash equilibrium is a stationary point of the replicator system, every interior stationary point is a mixed Nash equilibrium, and strict Nash equilibria are locally asymptotically stable. It's important to note that the replicator dynamics will not necessarily converge to a mixed Nash equilibrium, it depends on the stability of the equilibrium and the initial conditions. However, it provides a useful tool to understand how the populations may evolve over time and how they may respond to changes in the environment or in the strategies of their opponents. We initialize the dynamics from the uniform state $p_i(0)=q_j(0)=1/|\mathcal{S}|$. It is also noted that there are two time scales in the framework. The first one corresponding to the population dynamics, which is the time scale of the PDEs, and the second one corresponding to the evolution of the strategies, which is the time scale of the replicator dynamics. Intuitively, the scale of the replicator can be interpreted as generation.
 
-For each pair of sensory weights $(w_1,w_2)\in[0,1]^2$, we compute the mixed Nash equilibrium set associated with the payoff matrices $\mathbf{A}(w_1,w_2)$ and $\mathbf{B}(w_1,w_2)$. We can then compute the mixed Nash equilibrium set associated with the payoff matrices because we have a finite number of strategies and players \citep{nash1951non}. Finally, we summarize the whole $(w_1,w_2)$ plane by labeling each cell with the leading equilibrium component, which is the strategy with the largest probability in $p^\ast$ for the prey and in $q^\ast$ for the predator. If all equilibria found for that cell have the same unique leader, we record that strategy as the consensus leader; otherwise, the cell is labeled \emph{Multi}. This provides a clear visual representation of how sensory reliance and circadian alignment interact to shape evolutionary outcomes in predator-prey dynamics.
+These dynamical trajectories should therefore be read as a complement to the static Nash description. In each of the following examples, the dashed lines indicate the mixed Nash equilibrium components, while the solid curves show the corresponding replicator trajectories started from the uniform state.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/strategy_frequencies.png}
+    \caption{Asymmetric replicator dynamics for the $6\times6$ predator-prey game generated from the two-population PDE with $(w_1,w_2)=(0.5,0.5)$ and strategy set $\mathcal{S}=\{D,N,P_1,P_2,M_1,M_2\}$. The underlying payoff matrices are computed on $\Omega=[0,1)$ with $128$ grid points, $\Delta t=0.1$, four daily cycles, final observation window $[2,4]$, $t_{\mathrm{sunset}}=0.5$, $D_1=D_2=0.04$, $(R_{\mathrm{sight}},R_{\mathrm{smell}})=(0.1,0.2)$ for both species, $\chi_{11}=0.1$, $\chi_{12}=-0.2$, $\chi_{21}=0.2$, $\chi_{22}=0.1$, reaction rates $(r_1,r_2,a,b)=(0.2,0.1,0.15,0.08)$, and Gaussian initial peaks at $x_1=0.25$ and $x_2=0.70$ with width $\sigma=0.1$. Replicator trajectories start from the uniform mixed state and are integrated over $40$ generations with $800$ sampled times; the left panel shows prey strategy frequencies, the right panel predator frequencies, and dashed lines indicate the mixed Nash equilibrium components.}
+    \label{fig:game-theory-replicator-balanced}
+\end{figure}
+
+For balanced sensory weights $(w_1,w_2)=(0.5,0.5)$, the mixed equilibrium has support size two for both populations: the prey equilibrium is approximately $0.224D+0.776M_2$, whereas the predator equilibrium is approximately $0.834D+0.166N$. The trajectories remain concentrated on these dominant strategies, but they do not converge monotonically to the equilibrium point. Instead, the dynamics cycle around the equilibrium support, which shows that the Nash point identifies the relevant active schedules even when the long-time evolutionary response remains oscillatory.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/strategy_frequencies_3_strategies.png}
+    \caption{Asymmetric replicator dynamics for the same predator-prey PDE and replicator settings as Figure~\ref{fig:game-theory-replicator-balanced}, but with $(w_1,w_2)=(0.8,0)$. Here the mixed Nash equilibrium has support size three for both populations, and the dashed lines again indicate the equilibrium components.}
+    \label{fig:game-theory-replicator-three-strategy}
+\end{figure}
+
+A second representative regime shows that an equilibrium point need not be supported by only two strategies. For $(w_1,w_2)=(0.8,0)$, the prey equilibrium is approximately $0.193D+0.668P_1+0.138M_2$, whereas the predator equilibrium is approximately $0.449D+0.180P_1+0.371M_2$. The corresponding trajectories repeatedly redistribute mass among these three schedules, so the support is genuinely three-dimensional for both species. In other words, a mixed equilibrium in our six-strategy game can encode coexistence between several circadian patterns, not just a binary compromise between two competitors.
+
+Motivated by these representative trajectories, we next sweep the sensory weights over the whole square $(w_1,w_2)\in[0,1]^2$. For each weight pair, we compute the mixed Nash equilibrium set associated with the payoff matrices $\mathbf{A}(w_1,w_2)$ and $\mathbf{B}(w_1,w_2)$, then summarize the outcome by recording the leading equilibrium component, namely the strategy with the largest probability in $p^\ast$ for the prey and in $q^\ast$ for the predator. If all equilibria found for a cell share the same unique leader, we record that strategy as the consensus label; otherwise, we label the cell \emph{Multi}. This produces the summary map analyzed in the next subsection.
 
 \subsection{Results}
 
-We now turn to the predator-prey game associated with the population-integral payoff introduced above. For each pair of sensory weights $(w_1,w_2)\in[0,1]^2$, sampled on the grid $\{0,0.1,\ldots,1\}^2$, we computed the prey and predator payoff matrices over the six circadian strategies and then determined the mixed Nash equilibrium set. In all $121$ tested weight pairs, the game admits a unique mixed Nash equilibrium. Figure~\ref{fig:game-theory-nash-components} summarizes the leading component of that equilibrium for both species over the whole weight plane.
+Applying this procedure on the grid $\{0,0.1,\ldots,1\}^2$, we computed the prey and predator payoff matrices over the six circadian strategies and then determined the mixed Nash equilibrium set for all $121$ weight pairs. In every tested cell, the game admits a unique mixed Nash equilibrium. Figure~\ref{fig:game-theory-nash-components} summarizes the leading component of that equilibrium for both species over the whole weight plane.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/nash_consensus_components.png}
-    \caption{Consensus leading component of the mixed Nash equilibrium as a function of the prey sight weight $w_1$ and predator sight weight $w_2$. Each cell corresponds to one weight pair and is labeled by the strategy with the largest probability in the unique mixed Nash equilibrium. The left panel shows the prey leader and the right panel shows the predator leader.}
+    \caption{Consensus leading component of the mixed Nash equilibrium over the sight-weight grid $(w_1,w_2)\in\{0,0.1,\ldots,1\}^2$ for the same two-population PDE parameters as Figure~\ref{fig:game-theory-replicator-balanced}. For each of the $121$ weight pairs, all $36$ strategy matchups in $\mathcal{S}=\{D,N,P_1,P_2,M_1,M_2\}$ are simulated on $\Omega=[0,1)$ with $128$ grid points, $\Delta t=0.1$, four daily cycles, and a population-integral payoff evaluated over the final two days; each cell is labeled by the largest component of the unique mixed Nash equilibrium. The left panel shows the prey leader and the right panel shows the predator leader.}
     \label{fig:game-theory-nash-components}
 \end{figure}
 
 The main pattern is not a transition from diurnality to nocturnality. Instead, the equilibrium leaders are overwhelmingly concentrated in the diurnal strategy $D$ and the shifted matutinal strategy $M_2$. For the prey, $D$ is the leading component in $60$ cells and $M_2$ in $55$ cells, while for the predator $D$ leads in $61$ cells and $M_2$ in $42$ cells. The nocturnal strategy $N$ and the configurations $P_2$ and $M_1$ never emerge as leading components on this grid. Moreover, the most frequent equilibrium pairings are $(M_2,D)$, which occurs in $43$ cells, and $(D,M_2)$, which occurs in $36$ cells. This shows that the game primarily selects complementary temporal niches rather than a common activity schedule for both populations.
 
-The prey response is strongly organized by its own visual reliance. When $w_1$ is small, the prey remains almost entirely diurnal across the whole parameter plane. As $w_1$ increases, the leading prey component progressively shifts toward $M_2$, indicating that a species with stronger daylight-dependent perception benefits from partially displacing its activity toward the day-night interface rather than remaining strictly aligned with daylight. This result may seem strange because, even though the prey focuses its perception on its vision, it tends to shift its activity to coincide with daylight this leads to reduced or even absent perception at night. One hypothesis is that by dispersing, the prey population makes it harder for predators to access the entire population, since predators that remain in groups cannot cover all of their prey. The predator exhibits a related but distinct transition. For low $w_2$, the polyphasic strategy $P_1$ still appears in a restricted portion of the plane, but increasing $w_2$ mainly selects $D$ and then $M_2$. In other words, stronger visual reliance does not favor a nocturnal inversion of the game. Instead, it promotes a reorganization between a purely diurnal schedule and a boundary-crossing schedule. In fact, there is a distinction between these two cycles that depends on perception and, therefore, on the cycles of the prey. 
+The prey response is strongly organized by its own visual reliance. When $w_1$ is small, the prey remains almost entirely diurnal across the whole parameter plane. As $w_1$ increases, the leading prey component progressively shifts toward $M_2$, indicating that a species with stronger daylight-dependent perception benefits from partially displacing its activity toward the day-night interface rather than remaining strictly aligned with daylight. This result may seem strange because, even though the prey focuses its perception on its vision, it tends to shift its activity to coincide with daylight this leads to reduced or even absent perception at night. One hypothesis is that by dispersing, the prey population makes it harder for predators to access the entire population, since predators that remain in groups cannot cover all of their prey. The predator exhibits a related but distinct transition. For low $w_2$, the polyphasic strategy $P_1$ still appears in a restricted portion of the plane, but increasing $w_2$ mainly selects $D$ and then $M_2$. In other words, stronger visual reliance does not favor a nocturnal inversion of the game. Instead, it promotes a reorganization between a purely diurnal schedule and a boundary-crossing schedule. In fact, there is a distinction between these two cycles that depends on perception and, therefore, on the cycles of the prey.
 
-Two representative parameter regimes illustrate this mechanism. For balanced sensory weights $(w_1,w_2)=(0.5,0.5)$, the equilibrium prey strategy is approximately $0.224D+0.776M_2$, whereas the predator strategy is approximately $0.834D+0.166N$. The associated security-value analysis also selects $M_2$ for the prey and $D$ for the predator, showing that the prey gains robustness by shifting part of its activity away from the daylight window while the predator remains mainly diurnal.
+Taken together, the weight sweep confirms the mechanism already visible in the replicator examples: daylight-dependent perception does not produce a simple day-versus-night split, but instead reshapes the equilibrium support within a smaller family of diurnal, polyphasic, and boundary-crossing schedules. The map records which component becomes dominant in each sensory regime, while the replicator trajectories clarify that these dominant labels may still sit inside richer mixed equilibria involving two, three, or more active strategies.
 
 \section{Discussion}
 

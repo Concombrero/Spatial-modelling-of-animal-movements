@@ -150,7 +150,7 @@ ONE_POPULATION_SIMULATION_CONFIG = {
             "activity_codes": ACTIVITY_CODES,
             "diffusion_scales": (0.1, 1.0, 10.0),
             "max_workers": min(6, os.cpu_count() or 1),
-            "case_timeout_seconds": 45.0,
+            "case_timeout_seconds": 300.0,
             "retry_point_scales": (1.0, 0.5, 0.25),
             "retry_dt_scales": (1.0, 1.0, 2.0),
             "min_retry_number_of_points": 64,
@@ -189,7 +189,7 @@ TWO_POPULATION_SIMULATION_CONFIG = {
     "analysis": {
         "max_workers": min(16, os.cpu_count() or 1),
         "weight_sweep_values": tuple(round(0.1 * index, 10) for index in range(11)),
-        "weight_sweep_payoff_mode": "net-growth",
+        "weight_sweep_payoff_mode": "population-integral",
         "replicator_time_span": 40.0,
         "replicator_time_steps": 800,
         "mean_x_axes": ("w1", "w2", "cycle1", "cycle2"),
