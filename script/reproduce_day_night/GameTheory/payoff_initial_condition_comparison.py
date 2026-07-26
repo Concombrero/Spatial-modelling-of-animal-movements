@@ -1,4 +1,5 @@
 import argparse
+import json
 from dataclasses import dataclass
 from pathlib import Path
 import sys
@@ -34,6 +35,7 @@ from script.reproduce_day_night.GameTheory.payoff_matrix import (
     OBSERVATION_WINDOW,
     PERTURBED_HOMOGENEOUS_INITIAL_CONDITION_PROFILE,
     POPULATION_INTEGRAL_PAYOFF_MODE,
+    build_config_from_run_config_payload,
     build_config,
     build_initial_condition,
     resolve_activity_regimes,
@@ -110,6 +112,16 @@ def parse_args():
             "the saved figure shows one initial condition together with the "
             "corresponding prey and predator payoff matrices."
         )
+    )
+    parser.add_argument(
+        "--run-config",
+        type=Path,
+        help=(
+            "Load shared two-population parameters from an existing "
+            "payoff_matrix or payoff_weight_nash_heatmap run_config.json file. "
+            "The comparison still uses --weight for the displayed fixed-weight "
+            "slice and keeps the built-in initial-condition families."
+        ),
     )
     parser.add_argument(
         "--conditions",
@@ -201,19 +213,97 @@ def parse_args():
     return parser.parse_args()
 
 
-def build_case_config(case, args, activity_regimes):
+def resolve_activity_regimes_from_run_config_payload(payload, *, source_path):
+    activity_codes = payload.get("activity_codes")
+    if activity_codes is None:
+        activity_codes = payload.get("strategy_codes")
+
+    if activity_codes is None and isinstance(payload.get("payoff_config"), dict):
+        activity_codes = payload["payoff_config"].get("strategy_codes")
+
+    if activity_codes is None:
+        return resolve_activity_regimes(None)
+
+    if isinstance(activity_codes, str):
+        activity_codes_text = activity_codes
+    elif isinstance(activity_codes, (list, tuple)):
+        activity_codes_text = ",".join(str(code) for code in activity_codes)
+    else:
+        raise ValueError(
+            f"Expected strategy codes in {source_path} to be a string or list."
+        )
+
+    return resolve_activity_regimes(activity_codes_text)
+
+
+def load_shared_run_configuration(config_path):
+    config_path = Path(config_path).expanduser().resolve()
+    if not config_path.is_file():
+        raise FileNotFoundError(f"run_config.json not found: {config_path}")
+
+    with config_path.open("r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+
+    if not isinstance(payload, dict):
+        raise ValueError(f"Expected a JSON object in {config_path}.")
+
+    config_payload = payload
+    if "payoff_config" in payload:
+        config_payload = dict(payload["payoff_config"])
+        if "strategy_codes" not in config_payload and "activity_codes" in payload:
+            config_payload["strategy_codes"] = payload["activity_codes"]
+
+    shared_base_config = build_config_from_run_config_payload(
+        config_payload,
+        source_path=config_path,
+    )
+    activity_regimes = resolve_activity_regimes_from_run_config_payload(
+        payload,
+        source_path=config_path,
+    )
+    return shared_base_config, activity_regimes
+
+
+def build_case_config(case, args, activity_regimes, *, shared_base_config=None):
+    if shared_base_config is None:
+        t_sunset = args.t_sunset
+        sight_radius = (DEFAULT_SIGHT_RADIUS, DEFAULT_SIGHT_RADIUS)
+        smell_radius = (DEFAULT_SMELL_RADIUS, DEFAULT_SMELL_RADIUS)
+        number_of_points = args.number_of_points
+        dt = args.dt
+        number_of_cycles = args.number_of_cycles
+        observation_window = args.observation_window
+        payoff_mode = POPULATION_INTEGRAL_PAYOFF_MODE
+        initial_width = args.initial_width
+        diffusion = args.diffusion
+        attraction = DEFAULT_ATTRACTION
+        reaction_rates = DEFAULT_REACTION_RATES
+    else:
+        t_sunset = shared_base_config["t_sunset"]
+        sight_radius = shared_base_config["sight_radius"]
+        smell_radius = shared_base_config["smell_radius"]
+        number_of_points = shared_base_config["number_of_points"]
+        dt = shared_base_config["dt"]
+        number_of_cycles = shared_base_config["number_of_cycles"]
+        observation_window = shared_base_config["observation_window"]
+        payoff_mode = shared_base_config["payoff_mode"]
+        initial_width = shared_base_config["initial_width"]
+        diffusion = shared_base_config["diffusion"]
+        attraction = shared_base_config["attraction"]
+        reaction_rates = shared_base_config["reaction_rates"]
+
     config = build_config(
-        t_sunset=args.t_sunset,
+        t_sunset=t_sunset,
         weights=(args.weight, args.weight),
-        sight_radius=(DEFAULT_SIGHT_RADIUS, DEFAULT_SIGHT_RADIUS),
-        smell_radius=(DEFAULT_SMELL_RADIUS, DEFAULT_SMELL_RADIUS),
-        number_of_points=args.number_of_points,
-        dt=args.dt,
-        number_of_cycles=args.number_of_cycles,
-        observation_window=args.observation_window,
-        payoff_mode=POPULATION_INTEGRAL_PAYOFF_MODE,
+        sight_radius=sight_radius,
+        smell_radius=smell_radius,
+        number_of_points=number_of_points,
+        dt=dt,
+        number_of_cycles=number_of_cycles,
+        observation_window=observation_window,
+        payoff_mode=payoff_mode,
         initial_centers=case.centers,
-        initial_width=args.initial_width,
+        initial_width=initial_width,
         initial_condition_profile=case.profile,
         initial_condition_perturbation_amplitude=(
             DEFAULT_INITIAL_CONDITION_PERTURBATION_AMPLITUDE
@@ -222,9 +312,9 @@ def build_case_config(case, args, activity_regimes):
             DEFAULT_INITIAL_CONDITION_PERTURBATION_LENGTH
         ),
         initial_condition_perturbation_seed=DEFAULT_INITIAL_CONDITION_PERTURBATION_SEED,
-        diffusion=args.diffusion,
-        attraction=DEFAULT_ATTRACTION,
-        reaction_rates=DEFAULT_REACTION_RATES,
+        diffusion=diffusion,
+        attraction=attraction,
+        reaction_rates=reaction_rates,
     )
     config["strategy_codes"] = tuple(regime["code"] for regime in activity_regimes)
     return config
@@ -368,7 +458,13 @@ def render_comparison_figure(results, activity_regimes, output_path, weight, t_s
 
 def main():
     args = parse_args()
-    activity_regimes = resolve_activity_regimes(None)
+    shared_base_config = None
+    if args.run_config is None:
+        activity_regimes = resolve_activity_regimes(None)
+    else:
+        shared_base_config, activity_regimes = load_shared_run_configuration(
+            args.run_config
+        )
     selected_cases = [INITIAL_CONDITION_CASES[name] for name in args.conditions]
 
     ensure_directory(args.cache_dir)
@@ -379,7 +475,12 @@ def main():
             f"[{case_index}/{len(selected_cases)}] Computing {case.label}...",
             flush=True,
         )
-        config = build_case_config(case, args, activity_regimes)
+        config = build_case_config(
+            case,
+            args,
+            activity_regimes,
+            shared_base_config=shared_base_config,
+        )
         run_result = run_payoff_experiment(
             output_dir=args.cache_dir / case.slug,
             config=config,
@@ -407,7 +508,11 @@ def main():
         activity_regimes,
         args.output_path,
         args.weight,
-        args.t_sunset,
+        (
+            args.t_sunset
+            if shared_base_config is None
+            else shared_base_config["t_sunset"]
+        ),
     )
     print(f"Saved comparison figure to {args.output_path}", flush=True)
     return 0

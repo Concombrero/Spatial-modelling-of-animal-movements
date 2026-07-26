@@ -1,0 +1,6 @@
+Loaded 1 payoff run(s).
+Grouped by: w2
+Variance subplot: off
+Saved figure: /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/payoff_pipeline/mean_analysis/mean_vs_w2.png
+value,count,mean,variance
+0.5,36,0.8920440901,0.0015681955

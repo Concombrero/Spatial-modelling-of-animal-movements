@@ -1,30 +1,29 @@
 {
-  "payoff_mode": "population-integral",
-  "prey_payoff_matrix": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/payoff_pipeline/payoff_matrix_prey.csv",
-  "predator_payoff_matrix": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/payoff_pipeline/payoff_matrix_predator.csv",
+  "payoff_mode": "overlap",
+  "prey_payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/payoff_pipeline/payoff_matrix.csv",
+  "predator_payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/payoff_pipeline/payoff_matrix.csv",
   "row_player": "Prey",
   "column_player": "Predator",
-  "row_player_objective": "maximize payoff",
+  "row_player_objective": "maximize negative payoff",
   "column_player_objective": "maximize payoff",
   "equilibrium_count": 1,
   "equilibria": [
     {
       "algorithm": "support_enumeration",
       "prey_mixed_strategy": {
-        "N": 0.325041603931555,
-        "P1": 0.27851129576882394,
-        "P2": 0.16028618504126094,
-        "M2": 0.23616091525836014
+        "D": 0.04778033168207663,
+        "P2": 0.7172825106951305,
+        "M1": 0.23493715762279288
       },
       "predator_mixed_strategy": {
-        "N": 0.1398945610183464,
-        "P1": 0.03436182199980577,
-        "M1": 0.21678994246581182,
-        "M2": 0.608953674516036
+        "N": 0.044224444740408875,
+        "P1": 0.7483662538524202,
+        "P2": 0.207409301407171
       },
-      "prey_expected_payoff": 0.8518577899919877,
-      "predator_expected_payoff": 1.0502870355375726
+      "prey_expected_payoff": -0.8976316705419972,
+      "predator_expected_payoff": 0.8976316705419972
     }
   ],
-  "warnings": []
+  "warnings": [],
+  "payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/payoff_pipeline/payoff_matrix.csv"
 }

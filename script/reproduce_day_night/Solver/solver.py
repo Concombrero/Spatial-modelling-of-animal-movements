@@ -44,7 +44,7 @@ class DayNightModel1D:
         activity_periods=None,
         sight_weight=0.5,
         sight_radius=0.05,
-        smell_radius=0.15,
+        smell_radius=0.2,
         reaction_term=None,
     ):
         self.a_border = float(a_border)

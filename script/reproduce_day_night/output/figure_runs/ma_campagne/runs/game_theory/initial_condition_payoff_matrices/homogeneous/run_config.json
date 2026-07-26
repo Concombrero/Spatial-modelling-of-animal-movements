@@ -35,8 +35,8 @@
     0.1
   ],
   "smell_radius": [
-    0.1,
-    0.1
+    0.2,
+    0.2
   ],
   "strategy_codes": [
     "D",
