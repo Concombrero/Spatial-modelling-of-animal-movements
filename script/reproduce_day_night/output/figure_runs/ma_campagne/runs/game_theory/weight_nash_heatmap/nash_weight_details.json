@@ -1,0 +1,3012 @@
+{
+  "activity_codes": [
+    "D",
+    "N",
+    "P1",
+    "P2",
+    "M1",
+    "M2"
+  ],
+  "pairs": [
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0401991740947407,
+          "predator_mixed_strategy": {
+            "D": 0.6656072412797291,
+            "P1": 0.3343927587202709
+          },
+          "prey_expected_payoff": 0.8777998160886624,
+          "prey_mixed_strategy": {
+            "D": 0.3967526768459013,
+            "P1": 0.6032473231540987
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0",
+      "w1": 0.0,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0404902486371175,
+          "predator_mixed_strategy": {
+            "D": 0.508166176590181,
+            "M1": 0.25816770978020886,
+            "P1": 0.23366611362961007
+          },
+          "prey_expected_payoff": 0.8744134181736019,
+          "prey_mixed_strategy": {
+            "D": 0.20323835266408985,
+            "M1": 0.3426515899366779,
+            "P1": 0.45411005739923227
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p1",
+      "w1": 0.0,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0441920828734579,
+          "predator_mixed_strategy": {
+            "M1": 0.46701102131579847,
+            "M2": 0.16701413135885726,
+            "P1": 0.3659748473253443
+          },
+          "prey_expected_payoff": 0.8707856724409857,
+          "prey_mixed_strategy": {
+            "D": 0.27532525872250685,
+            "M1": 0.2883964761562205,
+            "P1": 0.4362782651212726
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M1",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p2",
+      "w1": 0.0,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0487788934835889,
+          "predator_mixed_strategy": {
+            "M1": 0.8205811744372332,
+            "M2": 0.10590685156116067,
+            "N": 0.07351197400160614
+          },
+          "prey_expected_payoff": 0.8638568836396993,
+          "prey_mixed_strategy": {
+            "D": 0.08636191107677793,
+            "M1": 0.033597494419030476,
+            "P1": 0.8800405945041916
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M1",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p3",
+      "w1": 0.0,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.059766498239445,
+          "predator_mixed_strategy": {
+            "M1": 0.024650226994413844,
+            "M2": 0.017827458108622664,
+            "N": 0.6938906852017965,
+            "P1": 0.001273852357715367,
+            "P2": 0.2623577773374516
+          },
+          "prey_expected_payoff": 0.843136448099007,
+          "prey_mixed_strategy": {
+            "M1": 0.04681027193252974,
+            "M2": 0.07399404944312116,
+            "N": 0.08202101081414692,
+            "P1": 0.6830004251493784,
+            "P2": 0.11417424266082378
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p4",
+      "w1": 0.0,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0670742867884644,
+          "predator_mixed_strategy": {
+            "N": 0.7707052830940263,
+            "P1": 0.06284133596109363,
+            "P2": 0.16645338094488
+          },
+          "prey_expected_payoff": 0.8288597306544543,
+          "prey_mixed_strategy": {
+            "M2": 0.004035740132890678,
+            "N": 0.20243281687010484,
+            "P1": 0.7935314429970045
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p5",
+      "w1": 0.0,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.073968132862995,
+          "predator_mixed_strategy": {
+            "M2": 0.12211179161092482,
+            "N": 0.8778882083890752
+          },
+          "prey_expected_payoff": 0.8165223902199963,
+          "prey_mixed_strategy": {
+            "N": 0.1798158911365838,
+            "P1": 0.8201841088634162
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p6",
+      "w1": 0.0,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0805648531600094,
+          "predator_mixed_strategy": {
+            "M1": 0.012714570457577129,
+            "M2": 0.15369619859891437,
+            "N": 0.8335892309435085
+          },
+          "prey_expected_payoff": 0.8067593627086935,
+          "prey_mixed_strategy": {
+            "M2": 0.2721343422895565,
+            "N": 0.02497604716771773,
+            "P1": 0.7028896105427257
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p7",
+      "w1": 0.0,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0785704919212944,
+          "predator_mixed_strategy": {
+            "M1": 0.06406478434440642,
+            "M2": 0.308129379595013,
+            "N": 0.517785663804517,
+            "P1": 0.11002017225606357
+          },
+          "prey_expected_payoff": 0.8064958338919476,
+          "prey_mixed_strategy": {
+            "D": 0.22210647814991494,
+            "M2": 0.08534943189867396,
+            "P1": 0.24940183606981334,
+            "P2": 0.4431422538815978
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "P2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p8",
+      "w1": 0.0,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0743045514908682,
+          "predator_mixed_strategy": {
+            "M1": 0.08293526360072512,
+            "M2": 0.9170647363992749
+          },
+          "prey_expected_payoff": 0.8225146334118756,
+          "prey_mixed_strategy": {
+            "D": 0.7331890774286538,
+            "M2": 0.26681092257134625
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_0p9",
+      "w1": 0.0,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0740980608685828,
+          "predator_mixed_strategy": {
+            "M1": 0.10675098201716815,
+            "M2": 0.8932490179828318
+          },
+          "prey_expected_payoff": 0.8223654346438474,
+          "prey_mixed_strategy": {
+            "D": 0.6877636906823709,
+            "M2": 0.31223630931762913
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0__w2_1",
+      "w1": 0.0,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0381081776823713,
+          "predator_mixed_strategy": {
+            "D": 0.9165860083035839,
+            "P1": 0.0834139916964161
+          },
+          "prey_expected_payoff": 0.8808995706580693,
+          "prey_mixed_strategy": {
+            "D": 0.4247454457066421,
+            "P1": 0.5752545542933579
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0",
+      "w1": 0.1,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.038160420595874,
+          "predator_mixed_strategy": {
+            "D": 0.9262132301043909,
+            "P1": 0.07378676989560902
+          },
+          "prey_expected_payoff": 0.8792272827041194,
+          "prey_mixed_strategy": {
+            "D": 0.2517944640034915,
+            "P1": 0.7482055359965085
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p1",
+      "w1": 0.1,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0386919075303864,
+          "predator_mixed_strategy": {
+            "M1": 0.8207326532229791,
+            "M2": 0.17926734677702097
+          },
+          "prey_expected_payoff": 0.8819575377454195,
+          "prey_mixed_strategy": {
+            "M1": 0.017603456694120362,
+            "P1": 0.9823965433058797
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M1",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p2",
+      "w1": 0.1,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0455112336573025,
+          "predator_mixed_strategy": {
+            "M1": 0.03560220465255027,
+            "M2": 0.847174147107939,
+            "N": 0.1172236482395107
+          },
+          "prey_expected_payoff": 0.8720942497751711,
+          "prey_mixed_strategy": {
+            "D": 0.1085155013293726,
+            "M2": 0.032470585743889335,
+            "P1": 0.859013912926738
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p3",
+      "w1": 0.1,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0557468314683411,
+          "predator_mixed_strategy": {
+            "M1": 0.06104951416416682,
+            "N": 0.5076922433225411,
+            "P2": 0.43125824251329187
+          },
+          "prey_expected_payoff": 0.8524345760440836,
+          "prey_mixed_strategy": {
+            "M2": 0.10257687868541562,
+            "P1": 0.7613123923285237,
+            "P2": 0.13611072898606072
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p4",
+      "w1": 0.1,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0624045331945813,
+          "predator_mixed_strategy": {
+            "N": 0.7866696235911412,
+            "P1": 0.06265804814710997,
+            "P2": 0.15067232826174887
+          },
+          "prey_expected_payoff": 0.8379398824716303,
+          "prey_mixed_strategy": {
+            "M2": 0.0726663979294291,
+            "N": 0.17797677672448153,
+            "P1": 0.7493568253460894
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p5",
+      "w1": 0.1,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0704348069546878,
+          "predator_mixed_strategy": {
+            "M2": 0.12361047346386718,
+            "N": 0.8763895265361328
+          },
+          "prey_expected_payoff": 0.8249342600698822,
+          "prey_mixed_strategy": {
+            "N": 0.10713830009205683,
+            "P1": 0.8928616999079432
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p6",
+      "w1": 0.1,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.076388841928638,
+          "predator_mixed_strategy": {
+            "M1": 0.11657078440756789,
+            "M2": 0.5194138053552351,
+            "N": 0.364015410237197
+          },
+          "prey_expected_payoff": 0.810207070640826,
+          "prey_mixed_strategy": {
+            "M2": 0.23588357882336886,
+            "P1": 0.5891718253430813,
+            "P2": 0.17494459583354982
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p7",
+      "w1": 0.1,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0752678468563308,
+          "predator_mixed_strategy": {
+            "M1": 0.11068881379335087,
+            "M2": 0.37232219748043344,
+            "N": 0.4389577331555188,
+            "P1": 0.07803125557069704
+          },
+          "prey_expected_payoff": 0.8099730563017561,
+          "prey_mixed_strategy": {
+            "D": 0.1753327975528044,
+            "M2": 0.03975049995060111,
+            "P1": 0.19171789515197224,
+            "P2": 0.5931988073446223
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "P2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p8",
+      "w1": 0.1,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0732098887652686,
+          "predator_mixed_strategy": {
+            "M1": 0.09021829115421531,
+            "M2": 0.9097817088457847
+          },
+          "prey_expected_payoff": 0.824077975378919,
+          "prey_mixed_strategy": {
+            "D": 0.710892895246868,
+            "M2": 0.289107104753132
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_0p9",
+      "w1": 0.1,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0729779296984894,
+          "predator_mixed_strategy": {
+            "M1": 0.11385433528858557,
+            "M2": 0.8861456647114144
+          },
+          "prey_expected_payoff": 0.8238610272926439,
+          "prey_mixed_strategy": {
+            "D": 0.65668589557764,
+            "M2": 0.34331410442236
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p1__w2_1",
+      "w1": 0.1,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.034509205813861,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.8838394036832106,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0",
+      "w1": 0.2,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0354657955122244,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.8818270856168204,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p1",
+      "w1": 0.2,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0374127801593331,
+          "predator_mixed_strategy": {
+            "D": 0.9923882500590983,
+            "P1": 0.007611749940901794
+          },
+          "prey_expected_payoff": 0.8798129650101868,
+          "prey_mixed_strategy": {
+            "D": 0.24185778233449584,
+            "P1": 0.7581422176655042
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p2",
+      "w1": 0.2,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0431097349427731,
+          "predator_mixed_strategy": {
+            "M1": 0.05241236281349243,
+            "M2": 0.8796334915828854,
+            "N": 0.06795414560362217
+          },
+          "prey_expected_payoff": 0.8762342598772865,
+          "prey_mixed_strategy": {
+            "D": 0.13354765088605136,
+            "M2": 0.06831417134554375,
+            "P1": 0.7981381777684049
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p3",
+      "w1": 0.2,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.050646412564068,
+          "predator_mixed_strategy": {
+            "M1": 0.0908388866542376,
+            "N": 0.3556710930035294,
+            "P2": 0.553490020342233
+          },
+          "prey_expected_payoff": 0.8617776909357012,
+          "prey_mixed_strategy": {
+            "M2": 0.11242227078156211,
+            "P1": 0.7568320182523817,
+            "P2": 0.13074571096605625
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p4",
+      "w1": 0.2,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0579456123096913,
+          "predator_mixed_strategy": {
+            "M2": 0.08224737708490379,
+            "N": 0.8321090640390257,
+            "P2": 0.08564355887607052
+          },
+          "prey_expected_payoff": 0.8469039350561589,
+          "prey_mixed_strategy": {
+            "M2": 0.12373670995693617,
+            "N": 0.1497225012733825,
+            "P1": 0.7265407887696813
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p5",
+      "w1": 0.2,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0673887145567105,
+          "predator_mixed_strategy": {
+            "M2": 0.17615483602691556,
+            "N": 0.8238451639730844
+          },
+          "prey_expected_payoff": 0.8322251670786259,
+          "prey_mixed_strategy": {
+            "M2": 0.13347358376912347,
+            "P1": 0.8665264162308766
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p6",
+      "w1": 0.2,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.073359234703229,
+          "predator_mixed_strategy": {
+            "M1": 0.15051368687990438,
+            "M2": 0.537823629541509,
+            "N": 0.3116626835785866
+          },
+          "prey_expected_payoff": 0.8138552540946637,
+          "prey_mixed_strategy": {
+            "M2": 0.2303927185316327,
+            "P1": 0.47036755267842595,
+            "P2": 0.2992397287899414
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p7",
+      "w1": 0.2,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.071685240491484,
+          "predator_mixed_strategy": {
+            "M1": 0.1977329668944493,
+            "M2": 0.4337097445197102,
+            "N": 0.36855728858584047
+          },
+          "prey_expected_payoff": 0.8136077418840193,
+          "prey_mixed_strategy": {
+            "D": 0.10449015095212519,
+            "P1": 0.12869598074135583,
+            "P2": 0.766813868306519
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p8",
+      "w1": 0.2,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.072028386631123,
+          "predator_mixed_strategy": {
+            "M1": 0.10308088242329616,
+            "M2": 0.8969191175767038
+          },
+          "prey_expected_payoff": 0.8256645829149771,
+          "prey_mixed_strategy": {
+            "D": 0.6820172726027116,
+            "M2": 0.31798272739728844
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_0p9",
+      "w1": 0.2,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0717550498205637,
+          "predator_mixed_strategy": {
+            "M1": 0.12565829867487832,
+            "M2": 0.8743417013251217
+          },
+          "prey_expected_payoff": 0.8253484568873047,
+          "prey_mixed_strategy": {
+            "D": 0.6154493801472092,
+            "M2": 0.38455061985279076
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p2__w2_1",
+      "w1": 0.2,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0324186002999736,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.8875467653096487,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0",
+      "w1": 0.3,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0335197447739242,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.8853101308879628,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p1",
+      "w1": 0.3,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0345844390796741,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.8831606974231164,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p2",
+      "w1": 0.3,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0404520512075999,
+          "predator_mixed_strategy": {
+            "M1": 0.07306768537431052,
+            "M2": 0.9055440986218669,
+            "N": 0.02138821600382257
+          },
+          "prey_expected_payoff": 0.880631040247398,
+          "prey_mixed_strategy": {
+            "D": 0.1431652141579599,
+            "M2": 0.10489628469436471,
+            "P1": 0.7519385011476754
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p3",
+      "w1": 0.3,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.046924217170214,
+          "predator_mixed_strategy": {
+            "M1": 0.11155093561582156,
+            "M2": 0.4322694975767841,
+            "N": 0.07047300723773625,
+            "P2": 0.38570655956965805
+          },
+          "prey_expected_payoff": 0.8683894003385435,
+          "prey_mixed_strategy": {
+            "D": 0.023107232525183097,
+            "M2": 0.14067213302319725,
+            "P1": 0.8127856756688175,
+            "P2": 0.023434958782802072
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p4",
+      "w1": 0.3,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.055300110206224,
+          "predator_mixed_strategy": {
+            "M1": 0.14163461774213362,
+            "M2": 0.13412672692655067,
+            "N": 0.1878359733240662,
+            "P2": 0.5364026820072495
+          },
+          "prey_expected_payoff": 0.8530655064299402,
+          "prey_mixed_strategy": {
+            "M2": 0.17410214715529168,
+            "N": 0.025374929151284142,
+            "P1": 0.7948476343453449,
+            "P2": 0.005675289348079253
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p5",
+      "w1": 0.3,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0655096600226417,
+          "predator_mixed_strategy": {
+            "M1": 0.14939163411075795,
+            "M2": 0.6972181108260808,
+            "N": 0.15339025506316128
+          },
+          "prey_expected_payoff": 0.8298328129732544,
+          "prey_mixed_strategy": {
+            "M2": 0.24832991790747755,
+            "P1": 0.6178339356707062,
+            "P2": 0.13383614642181615
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p6",
+      "w1": 0.3,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.070894515295873,
+          "predator_mixed_strategy": {
+            "M1": 0.19006961445352297,
+            "M2": 0.5055582789909483,
+            "N": 0.3043721065555287
+          },
+          "prey_expected_payoff": 0.8176259882331125,
+          "prey_mixed_strategy": {
+            "M2": 0.26415489921690855,
+            "P1": 0.38578996109115055,
+            "P2": 0.35005513969194096
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p7",
+      "w1": 0.3,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0678636512497695,
+          "predator_mixed_strategy": {
+            "M1": 0.2595293615284026,
+            "M2": 0.4315489151409971,
+            "N": 0.30892172333060036
+          },
+          "prey_expected_payoff": 0.8180270497893622,
+          "prey_mixed_strategy": {
+            "D": 0.022368040222435173,
+            "P1": 0.08352837047645693,
+            "P2": 0.8941035893011079
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p8",
+      "w1": 0.3,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0706329740722833,
+          "predator_mixed_strategy": {
+            "M1": 0.1263263302711558,
+            "M2": 0.8736736697288442
+          },
+          "prey_expected_payoff": 0.8274496655029066,
+          "prey_mixed_strategy": {
+            "D": 0.6430590762061236,
+            "M2": 0.35694092379387643
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_0p9",
+      "w1": 0.3,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0702561902896348,
+          "predator_mixed_strategy": {
+            "M1": 0.1468692947859821,
+            "M2": 0.8531307052140179
+          },
+          "prey_expected_payoff": 0.8270650174159051,
+          "prey_mixed_strategy": {
+            "D": 0.5588775920961403,
+            "M2": 0.4411224079038597
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p3__w2_1",
+      "w1": 0.3,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0299325099112544,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.8920952147758233,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0",
+      "w1": 0.4,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0309190386147717,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.8901043596634052,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p1",
+      "w1": 0.4,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0318390583030035,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.8882621620003132,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p2",
+      "w1": 0.4,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0365393648849726,
+          "predator_mixed_strategy": {
+            "M1": 0.10268813554995082,
+            "M2": 0.8973118644500492
+          },
+          "prey_expected_payoff": 0.8860541266862342,
+          "prey_mixed_strategy": {
+            "M2": 0.18201415938595128,
+            "P1": 0.8179858406140488
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p3",
+      "w1": 0.4,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0451296191214205,
+          "predator_mixed_strategy": {
+            "M1": 0.11371494419003571,
+            "M2": 0.8625436186213274,
+            "N": 0.023741437188636846
+          },
+          "prey_expected_payoff": 0.8703563957158567,
+          "prey_mixed_strategy": {
+            "D": 0.04568459701558214,
+            "M2": 0.18834997331686892,
+            "P1": 0.7659654296675489
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p4",
+      "w1": 0.4,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0547223877323926,
+          "predator_mixed_strategy": {
+            "M1": 0.14965630598151353,
+            "M2": 0.7732502527426395,
+            "N": 0.077093441275847
+          },
+          "prey_expected_payoff": 0.8502865890920834,
+          "prey_mixed_strategy": {
+            "M2": 0.2331428394702629,
+            "P1": 0.6566122704216946,
+            "P2": 0.11024489010804256
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p5",
+      "w1": 0.4,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.060920598401971,
+          "predator_mixed_strategy": {
+            "M1": 0.19880960320756313,
+            "M2": 0.5758090138726724,
+            "N": 0.22379489349184878,
+            "P1": 0.0015864894279157256
+          },
+          "prey_expected_payoff": 0.8319793020356026,
+          "prey_mixed_strategy": {
+            "M2": 0.2425372086696429,
+            "N": 0.2726417581935756,
+            "P1": 0.2508761120958106,
+            "P2": 0.23394492104097087
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "N",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p6",
+      "w1": 0.4,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0644943909166846,
+          "predator_mixed_strategy": {
+            "M1": 0.22701039160906414,
+            "M2": 0.42223699453948677,
+            "N": 0.26923154067662247,
+            "P1": 0.08152107317482662
+          },
+          "prey_expected_payoff": 0.823260137722214,
+          "prey_mixed_strategy": {
+            "M2": 0.21616765610496316,
+            "N": 0.3018006555852604,
+            "P1": 0.1132620747159107,
+            "P2": 0.36876961359386573
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p7",
+      "w1": 0.4,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.064984064114668,
+          "predator_mixed_strategy": {
+            "M1": 0.26375070249583915,
+            "M2": 0.37206014130206894,
+            "N": 0.36418915620209186
+          },
+          "prey_expected_payoff": 0.8243035147360549,
+          "prey_mixed_strategy": {
+            "M2": 0.1057542832754398,
+            "P1": 0.08414613925056047,
+            "P2": 0.8100995774739997
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p8",
+      "w1": 0.4,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0688090644567776,
+          "predator_mixed_strategy": {
+            "M1": 0.16835602978876507,
+            "M2": 0.8316439702112349
+          },
+          "prey_expected_payoff": 0.8297511705933168,
+          "prey_mixed_strategy": {
+            "D": 0.5884520911550744,
+            "M2": 0.4115479088449256
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_0p9",
+      "w1": 0.4,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0681792311781697,
+          "predator_mixed_strategy": {
+            "M1": 0.18649202270655008,
+            "M2": 0.8135079772934499
+          },
+          "prey_expected_payoff": 0.8294631633094866,
+          "prey_mixed_strategy": {
+            "D": 0.47883787086906515,
+            "M2": 0.5211621291309348
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p4__w2_1",
+      "w1": 0.4,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0265938274523883,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.8983161326824297,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0",
+      "w1": 0.5,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0274494576307716,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.8965872606552641,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p1",
+      "w1": 0.5,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0283187110024878,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.8948617828736821,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p2",
+      "w1": 0.5,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0331273826290537,
+          "predator_mixed_strategy": {
+            "M1": 0.15951550243902413,
+            "M2": 0.8404844975609759
+          },
+          "prey_expected_payoff": 0.8918285449336201,
+          "prey_mixed_strategy": {
+            "M2": 0.2623583566081697,
+            "P1": 0.7376416433918302
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p3",
+      "w1": 0.5,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.042159284914189,
+          "predator_mixed_strategy": {
+            "M1": 0.1858096525290889,
+            "M2": 0.7797073201600986,
+            "N": 0.034483027310812514
+          },
+          "prey_expected_payoff": 0.872147334288791,
+          "prey_mixed_strategy": {
+            "M2": 0.23264503529445843,
+            "P1": 0.5495780142810752,
+            "P2": 0.2177769504244663
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p4",
+      "w1": 0.5,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0502870355452563,
+          "predator_mixed_strategy": {
+            "M1": 0.21678994258086223,
+            "M2": 0.608953674281373,
+            "N": 0.1398945601380907,
+            "P1": 0.03436182299967402
+          },
+          "prey_expected_payoff": 0.851857789986368,
+          "prey_mixed_strategy": {
+            "M2": 0.23616091561951144,
+            "N": 0.3250416027662776,
+            "P1": 0.27851129664612106,
+            "P2": 0.16028618496808986
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "N",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5",
+      "w1": 0.5,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.055314442151722,
+          "predator_mixed_strategy": {
+            "M1": 0.24267528051701656,
+            "M2": 0.3968197739771952,
+            "N": 0.12793338824953931,
+            "P1": 0.23257155725624884
+          },
+          "prey_expected_payoff": 0.8397814117919589,
+          "prey_mixed_strategy": {
+            "M2": 0.2559514071851727,
+            "N": 0.4219875188368922,
+            "P1": 0.13445173517739578,
+            "P2": 0.18760933880053934
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "N",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p6",
+      "w1": 0.5,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0587437027949997,
+          "predator_mixed_strategy": {
+            "M1": 0.24867429306083888,
+            "M2": 0.29434544445543426,
+            "N": 0.20067289295420176,
+            "P1": 0.25630736952952504
+          },
+          "prey_expected_payoff": 0.8327598709051169,
+          "prey_mixed_strategy": {
+            "M2": 0.24026599928605577,
+            "N": 0.4101016060204637,
+            "P1": 0.06643632163210879,
+            "P2": 0.2831960730613718
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "N",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p7",
+      "w1": 0.5,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0591615003123303,
+          "predator_mixed_strategy": {
+            "M1": 0.30125028396965586,
+            "M2": 0.47371562124645966,
+            "N": 0.22503409478388442
+          },
+          "prey_expected_payoff": 0.8322882410706016,
+          "prey_mixed_strategy": {
+            "M2": 0.15038488559760274,
+            "N": 0.22127245456038025,
+            "P2": 0.628342659842017
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p8",
+      "w1": 0.5,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0662094782535771,
+          "predator_mixed_strategy": {
+            "M1": 0.24328272698615616,
+            "M2": 0.7567172730138438
+          },
+          "prey_expected_payoff": 0.8331088613895754,
+          "prey_mixed_strategy": {
+            "D": 0.5085568265695568,
+            "M2": 0.4914431734304432
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "D",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p9",
+      "w1": 0.5,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0650172298529976,
+          "predator_mixed_strategy": {
+            "M1": 0.26082879221024957,
+            "M2": 0.7391712077897504
+          },
+          "prey_expected_payoff": 0.8333782746669338,
+          "prey_mixed_strategy": {
+            "D": 0.3630124802263768,
+            "M2": 0.6369875197736232
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_1",
+      "w1": 0.5,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.022684374930097,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.9056574622167946,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0",
+      "w1": 0.6,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0237455188467017,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.9035383936358665,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p1",
+      "w1": 0.6,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.025113043470855,
+          "predator_mixed_strategy": {
+            "D": 0.4612758772890764,
+            "M2": 0.5387241227109236
+          },
+          "prey_expected_payoff": 0.9047712728319757,
+          "prey_mixed_strategy": {
+            "M2": 0.013205197484373687,
+            "P1": 0.9867948025156263
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p2",
+      "w1": 0.6,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0302360342154753,
+          "predator_mixed_strategy": {
+            "D": 0.5615381373843094,
+            "M2": 0.43846186261569065
+          },
+          "prey_expected_payoff": 0.8929027496919181,
+          "prey_mixed_strategy": {
+            "M2": 0.388606099357992,
+            "P1": 0.6113939006420079
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p3",
+      "w1": 0.6,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0410639422995378,
+          "predator_mixed_strategy": {
+            "M1": 0.28010361314700305,
+            "M2": 0.6039316711969549,
+            "N": 0.11596471565604205
+          },
+          "prey_expected_payoff": 0.8748416446942331,
+          "prey_mixed_strategy": {
+            "M2": 0.34806707452850766,
+            "P1": 0.46214511131414504,
+            "P2": 0.18978781415734722
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p4",
+      "w1": 0.6,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0471306303713726,
+          "predator_mixed_strategy": {
+            "M1": 0.3025375227754646,
+            "M2": 0.4544688090485516,
+            "N": 0.1472230162432009,
+            "P1": 0.09577065193278296
+          },
+          "prey_expected_payoff": 0.8562238723652652,
+          "prey_mixed_strategy": {
+            "M2": 0.2646225933529302,
+            "N": 0.4381350870450539,
+            "P1": 0.16616037207934506,
+            "P2": 0.13108194752267083
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "N",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p5",
+      "w1": 0.6,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0509367422338616,
+          "predator_mixed_strategy": {
+            "M1": 0.31315120561276943,
+            "M2": 0.2918934745909088,
+            "N": 0.12117757015998804,
+            "P1": 0.2737777496363338
+          },
+          "prey_expected_payoff": 0.847377779043306,
+          "prey_mixed_strategy": {
+            "M2": 0.2670275781650984,
+            "N": 0.5046520041181468,
+            "P1": 0.08778235435735261,
+            "P2": 0.14053806335940217
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M1",
+      "prey_consensus_leader": "N",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p6",
+      "w1": 0.6,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0537544065965088,
+          "predator_mixed_strategy": {
+            "M1": 0.31123983531057525,
+            "M2": 0.21063387165958403,
+            "N": 0.15784485458080788,
+            "P1": 0.32028143844903284
+          },
+          "prey_expected_payoff": 0.8421146378813928,
+          "prey_mixed_strategy": {
+            "M2": 0.2797272833577775,
+            "N": 0.4594856822091662,
+            "P1": 0.0483876105393163,
+            "P2": 0.21239942389374003
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "P1",
+      "prey_consensus_leader": "N",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p7",
+      "w1": 0.6,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0545195093096473,
+          "predator_mixed_strategy": {
+            "M1": 0.3341957886828673,
+            "M2": 0.5626137250629385,
+            "N": 0.10319048625419419
+          },
+          "prey_expected_payoff": 0.8413525942653592,
+          "prey_mixed_strategy": {
+            "M2": 0.27258912411896763,
+            "N": 0.2282704590962169,
+            "P2": 0.49914041678481547
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p8",
+      "w1": 0.6,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0565568660618674,
+          "predator_mixed_strategy": {
+            "M1": 0.34327643750948933,
+            "M2": 0.6567235624905107
+          },
+          "prey_expected_payoff": 0.839353678545494,
+          "prey_mixed_strategy": {
+            "M2": 0.3946001769374283,
+            "P2": 0.6053998230625717
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_0p9",
+      "w1": 0.6,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.06003881680842,
+          "predator_mixed_strategy": {
+            "M1": 0.3957227636966367,
+            "M2": 0.6042772363033633
+          },
+          "prey_expected_payoff": 0.8401422253022173,
+          "prey_mixed_strategy": {
+            "D": 0.1923801514975082,
+            "M2": 0.8076198485024918
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p6__w2_1",
+      "w1": 0.6,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0194049277648136,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.9118288390674364,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0",
+      "w1": 0.7,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0212414894416466,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.9082141204937474,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p1",
+      "w1": 0.7,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0237622367505046,
+          "predator_mixed_strategy": {
+            "D": 0.4548080573278058,
+            "M2": 0.5451919426721942
+          },
+          "prey_expected_payoff": 0.9071002194683739,
+          "prey_mixed_strategy": {
+            "M2": 0.03311084203667044,
+            "P1": 0.9668891579633295
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p2",
+      "w1": 0.7,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0306820104763714,
+          "predator_mixed_strategy": {
+            "D": 0.5923444677481939,
+            "M2": 0.407655532251806
+          },
+          "prey_expected_payoff": 0.8918038984606178,
+          "prey_mixed_strategy": {
+            "M2": 0.415609599085889,
+            "P1": 0.584390400914111
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p3",
+      "w1": 0.7,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0397022179628497,
+          "predator_mixed_strategy": {
+            "M1": 0.4151927360628267,
+            "M2": 0.44032109456874935,
+            "N": 0.14448616936842396
+          },
+          "prey_expected_payoff": 0.8782125629937595,
+          "prey_mixed_strategy": {
+            "M2": 0.5223560545875456,
+            "P1": 0.3587800923244321,
+            "P2": 0.11886385308802228
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p4",
+      "w1": 0.7,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0492038597331648,
+          "predator_mixed_strategy": {
+            "M1": 0.4386936464036371,
+            "M2": 0.3601893532538709,
+            "N": 0.20111700034249197
+          },
+          "prey_expected_payoff": 0.8607431561173484,
+          "prey_mixed_strategy": {
+            "M2": 0.6099570473897618,
+            "P1": 0.29777023797244273,
+            "P2": 0.09227271463779553
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M1",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p5",
+      "w1": 0.7,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0479588294020443,
+          "predator_mixed_strategy": {
+            "M1": 0.4530300288754685,
+            "M2": 0.2395627713753247,
+            "N": 0.14610450190713753,
+            "P1": 0.1613026978420693
+          },
+          "prey_expected_payoff": 0.8534873425053111,
+          "prey_mixed_strategy": {
+            "M2": 0.30835983082911533,
+            "N": 0.532164548456751,
+            "P1": 0.06116408400655918,
+            "P2": 0.09831153670757457
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M1",
+      "prey_consensus_leader": "N",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p6",
+      "w1": 0.7,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0497401366011165,
+          "predator_mixed_strategy": {
+            "M1": 0.4536874877465699,
+            "M2": 0.15965063311787525,
+            "N": 0.13825563383030506,
+            "P1": 0.2484062453052497
+          },
+          "prey_expected_payoff": 0.850606513106313,
+          "prey_mixed_strategy": {
+            "M2": 0.3622366533474719,
+            "N": 0.45405981002009516,
+            "P1": 0.03064498417359002,
+            "P2": 0.15305855245884295
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M1",
+      "prey_consensus_leader": "N",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p7",
+      "w1": 0.7,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0511564644161204,
+          "predator_mixed_strategy": {
+            "M1": 0.42266801288516576,
+            "M2": 0.51277437136452,
+            "N": 0.06455761575031427
+          },
+          "prey_expected_payoff": 0.8502571111699929,
+          "prey_mixed_strategy": {
+            "M2": 0.4977399155665013,
+            "N": 0.10294407234926956,
+            "P2": 0.3993160120842291
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p8",
+      "w1": 0.7,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0528338705400668,
+          "predator_mixed_strategy": {
+            "M1": 0.4105255984820627,
+            "M2": 0.5894744015179373
+          },
+          "prey_expected_payoff": 0.8490932674254907,
+          "prey_mixed_strategy": {
+            "M2": 0.7404329633990201,
+            "P2": 0.2595670366009799
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_0p9",
+      "w1": 0.7,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0539940999421535,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 0.8477640889367327,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p7__w2_1",
+      "w1": 0.7,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0181466125729515,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.9141649661367336,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0",
+      "w1": 0.8,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0211423605757781,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.9082854641015301,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p1",
+      "w1": 0.8,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0248306165857195,
+          "predator_mixed_strategy": {
+            "D": 0.4745703453139003,
+            "M2": 0.5254296546860997
+          },
+          "prey_expected_payoff": 0.9048380707364465,
+          "prey_mixed_strategy": {
+            "M2": 0.03332953018774674,
+            "P1": 0.9666704698122532
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p2",
+      "w1": 0.8,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0333216173165365,
+          "predator_mixed_strategy": {
+            "D": 0.6334232499063281,
+            "M2": 0.36657675009367185
+          },
+          "prey_expected_payoff": 0.886602514461551,
+          "prey_mixed_strategy": {
+            "M2": 0.42310768162631673,
+            "P1": 0.5768923183736833
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p3",
+      "w1": 0.8,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0395233110742497,
+          "predator_mixed_strategy": {
+            "D": 0.7551928772423622,
+            "M2": 0.24480712275763783
+          },
+          "prey_expected_payoff": 0.8735007470305732,
+          "prey_mixed_strategy": {
+            "M2": 0.696957662486046,
+            "P1": 0.30304233751395404
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p4",
+      "w1": 0.8,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.044957559294035,
+          "predator_mixed_strategy": {
+            "M2": 0.05682280365766545,
+            "N": 0.9431771963423345
+          },
+          "prey_expected_payoff": 0.8726450862243856,
+          "prey_mixed_strategy": {
+            "M2": 0.808421848235736,
+            "P1": 0.19157815176426396
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p5",
+      "w1": 0.8,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0473978076696024,
+          "predator_mixed_strategy": {
+            "M1": 0.31987954486092857,
+            "M2": 0.10071901200014872,
+            "N": 0.5794014431389227
+          },
+          "prey_expected_payoff": 0.8642370242830407,
+          "prey_mixed_strategy": {
+            "M2": 0.7959033355330087,
+            "N": 0.10395542459953032,
+            "P1": 0.10014123986746094
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p6",
+      "w1": 0.8,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0456244064025872,
+          "predator_mixed_strategy": {
+            "M1": 0.7229437889306262,
+            "M2": 0.11011875105346225,
+            "N": 0.14384867386762634,
+            "P1": 0.023088786148285235
+          },
+          "prey_expected_payoff": 0.8606376158690983,
+          "prey_mixed_strategy": {
+            "M2": 0.5406915518807327,
+            "N": 0.38266351842525337,
+            "P1": 0.00424740197118475,
+            "P2": 0.0723975277228292
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M1",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p7",
+      "w1": 0.8,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0484434448310989,
+          "predator_mixed_strategy": {
+            "M1": 0.5440752584884232,
+            "M2": 0.45592474151157675
+          },
+          "prey_expected_payoff": 0.8593688455589213,
+          "prey_mixed_strategy": {
+            "M2": 0.9591722174661856,
+            "P2": 0.04082778253381436
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M1",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p8",
+      "w1": 0.8,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0510306486817436,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 0.8532487331581223,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0p9",
+      "w1": 0.8,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0531919353742905,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 0.8491943172599765,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_1",
+      "w1": 0.8,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0192914678107763,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.9118893531558865,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0",
+      "w1": 0.9,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0234880252718614,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.9036172322109046,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p1",
+      "w1": 0.9,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.027945432318659,
+          "predator_mixed_strategy": {
+            "D": 0.5373571596844335,
+            "P2": 0.4626428403155665
+          },
+          "prey_expected_payoff": 0.8994220197709148,
+          "prey_mixed_strategy": {
+            "M2": 0.016057055275345875,
+            "P1": 0.9839429447246542
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p2",
+      "w1": 0.9,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0367773504319713,
+          "predator_mixed_strategy": {
+            "D": 0.7124459223349546,
+            "M2": 0.2875540776650454
+          },
+          "prey_expected_payoff": 0.87946657714545,
+          "prey_mixed_strategy": {
+            "M2": 0.43772791669265804,
+            "P1": 0.562272083307342
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p3",
+      "w1": 0.9,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0421989914847458,
+          "predator_mixed_strategy": {
+            "D": 0.8366294151908278,
+            "M2": 0.16337058480917227
+          },
+          "prey_expected_payoff": 0.8678966762169233,
+          "prey_mixed_strategy": {
+            "M2": 0.6950998553413632,
+            "P1": 0.3049001446586368
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p4",
+      "w1": 0.9,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0455329328705822,
+          "predator_mixed_strategy": {
+            "M2": 0.050752654130009414,
+            "N": 0.9492473458699906
+          },
+          "prey_expected_payoff": 0.8714908073128911,
+          "prey_mixed_strategy": {
+            "M2": 0.8260931819627012,
+            "P1": 0.1739068180372988
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p5",
+      "w1": 0.9,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0459563156376332,
+          "predator_mixed_strategy": {
+            "D": 0.0014729545453837645,
+            "M2": 0.03771623064821952,
+            "N": 0.9608108148063967
+          },
+          "prey_expected_payoff": 0.8669037641968381,
+          "prey_mixed_strategy": {
+            "M2": 0.7423215240044976,
+            "N": 0.18760752960316168,
+            "P1": 0.07007094639234075
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p6",
+      "w1": 0.9,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0454169236171247,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 0.8638889297370187,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p7",
+      "w1": 0.9,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0489593693681822,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 0.8570475662924164,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p8",
+      "w1": 0.9,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.051603293942819,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 0.851977104480276,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_0p9",
+      "w1": 0.9,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.048558598022549,
+          "predator_mixed_strategy": {
+            "M2": 0.999476010148342,
+            "P1": 0.0005239898516580244
+          },
+          "prey_expected_payoff": 0.8485210963719889,
+          "prey_mixed_strategy": {
+            "M2": 0.3143477503846087,
+            "N": 0.6856522496153913
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "N",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p9__w2_1",
+      "w1": 0.9,
+      "w2": 1.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0221542578421923,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.9062444089386259,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0",
+      "w1": 1.0,
+      "w2": 0.0
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.02737067161804,
+          "predator_mixed_strategy": {
+            "D": 1.0
+          },
+          "prey_expected_payoff": 0.8958600907495486,
+          "prey_mixed_strategy": {
+            "P1": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p1",
+      "w1": 1.0,
+      "w2": 0.1
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0323604647621343,
+          "predator_mixed_strategy": {
+            "D": 0.6984607826607407,
+            "P2": 0.30153921733925926
+          },
+          "prey_expected_payoff": 0.8877203918087894,
+          "prey_mixed_strategy": {
+            "M1": 0.24585533994037082,
+            "P1": 0.7541446600596292
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p2/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p2",
+      "w1": 1.0,
+      "w2": 0.2
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0396987061812717,
+          "predator_mixed_strategy": {
+            "D": 0.8519644767844224,
+            "M2": 0.09254206627158959,
+            "P2": 0.055493456943987995
+          },
+          "prey_expected_payoff": 0.8727227788587527,
+          "prey_mixed_strategy": {
+            "M1": 0.012239484680659933,
+            "M2": 0.4509731349125547,
+            "P1": 0.5367873804067853
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "P1",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p3/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p3",
+      "w1": 1.0,
+      "w2": 0.3
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0434280573189727,
+          "predator_mixed_strategy": {
+            "D": 0.9554307482862919,
+            "M2": 0.038679682238826514,
+            "N": 0.005889569474881469
+          },
+          "prey_expected_payoff": 0.8647013595233648,
+          "prey_mixed_strategy": {
+            "D": 0.00740558649432832,
+            "M2": 0.7187509995414955,
+            "P1": 0.2738434139641762
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "D",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p4/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p4",
+      "w1": 1.0,
+      "w2": 0.4
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0465720910842575,
+          "predator_mixed_strategy": {
+            "M2": 0.04725181305918703,
+            "N": 0.952748186940813
+          },
+          "prey_expected_payoff": 0.8693112548780622,
+          "prey_mixed_strategy": {
+            "M2": 0.8416805447317789,
+            "P1": 0.1583194552682211
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p5/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p5",
+      "w1": 1.0,
+      "w2": 0.5
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0471202889729343,
+          "predator_mixed_strategy": {
+            "M2": 0.034880982923341984,
+            "N": 0.965119017076658
+          },
+          "prey_expected_payoff": 0.8677225193886765,
+          "prey_mixed_strategy": {
+            "M2": 0.9441503763949598,
+            "P1": 0.0558496236050402
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "N",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p6/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p6",
+      "w1": 1.0,
+      "w2": 0.6
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0471371754389938,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 0.8603850877005514,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p7/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p7",
+      "w1": 1.0,
+      "w2": 0.7
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0505830776521343,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 0.8537086351978446,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p8/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p8",
+      "w1": 1.0,
+      "w2": 0.8
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.0530135668161291,
+          "predator_mixed_strategy": {
+            "M2": 1.0
+          },
+          "prey_expected_payoff": 0.8490278940443566,
+          "prey_mixed_strategy": {
+            "M2": 1.0
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "M2",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p9/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_0p9",
+      "w1": 1.0,
+      "w2": 0.9
+    },
+    {
+      "equilibria": [
+        {
+          "algorithm": "support_enumeration",
+          "predator_expected_payoff": 1.047342404660221,
+          "predator_mixed_strategy": {
+            "M2": 0.8597161024950809,
+            "P1": 0.1402838975049191
+          },
+          "prey_expected_payoff": 0.8507831667120074,
+          "prey_mixed_strategy": {
+            "M2": 0.31292597238191533,
+            "N": 0.6870740276180847
+          }
+        }
+      ],
+      "equilibrium_count": 1,
+      "predator_consensus_leader": "M2",
+      "prey_consensus_leader": "N",
+      "remaining_pipeline_script": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_1/run_remaining_pipeline.sh",
+      "run_directory": "/home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/ma_campagne/runs/game_theory/weight_nash_heatmap/weight_runs/w1_1__w2_1",
+      "w1": 1.0,
+      "w2": 1.0
+    }
+  ],
+  "w1_values": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0
+  ],
+  "w2_values": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0
+  ]
+}
