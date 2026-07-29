@@ -31,10 +31,10 @@ PY
 
 OUTPUT_DIR=""
 RUN_CONFIG=""
-MEAN_X_AXES=${MEAN_X_AXES:-$(read_analysis_default mean_x_axes)}
-MEAN_SHOW_VARIANCE=${MEAN_SHOW_VARIANCE:-$(read_analysis_default mean_show_variance)}
-REPLICATOR_TIME_SPAN=${REPLICATOR_TIME_SPAN:-$(read_analysis_default replicator_time_span)}
-REPLICATOR_TIME_STEPS=${REPLICATOR_TIME_STEPS:-$(read_analysis_default replicator_time_steps)}
+MEAN_X_AXES=${MEAN_X_AXES:-}
+MEAN_SHOW_VARIANCE=${MEAN_SHOW_VARIANCE:-}
+REPLICATOR_TIME_SPAN=${REPLICATOR_TIME_SPAN:-}
+REPLICATOR_TIME_STEPS=${REPLICATOR_TIME_STEPS:-}
 REPLICATOR_PLOT_STYLE="line"
 PAYOFF_MODE=""
 PAYOFF_MODE_SET="false"
@@ -300,6 +300,22 @@ fi
 
 if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
     fail "Python executable not found: $PYTHON_BIN"
+fi
+
+if [[ -z "$MEAN_X_AXES" ]]; then
+    MEAN_X_AXES=$(read_analysis_default mean_x_axes)
+fi
+
+if [[ -z "$MEAN_SHOW_VARIANCE" ]]; then
+    MEAN_SHOW_VARIANCE=$(read_analysis_default mean_show_variance)
+fi
+
+if [[ -z "$REPLICATOR_TIME_SPAN" ]]; then
+    REPLICATOR_TIME_SPAN=$(read_analysis_default replicator_time_span)
+fi
+
+if [[ -z "$REPLICATOR_TIME_STEPS" ]]; then
+    REPLICATOR_TIME_STEPS=$(read_analysis_default replicator_time_steps)
 fi
 
 if [[ -n "$RUN_CONFIG" ]]; then

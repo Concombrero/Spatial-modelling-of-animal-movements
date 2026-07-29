@@ -1,0 +1,295 @@
+{
+  "campaign": {
+    "figure_scripts": [
+      "script.reproduce_day_night.GameTheory.payoff_initial_condition_comparison",
+      "script.reproduce_day_night.GameTheory.payoff_weight_nash_heatmap",
+      "script.reproduce_day_night.GameTheory.run_payoff_pipeline.sh"
+    ],
+    "game_theory_only": true,
+    "game_theory_parameter_source": "shared_config",
+    "payoff_mode": "population-integral",
+    "shared_payoff_run_config": null,
+    "skip_weight_sweep": false,
+    "weight_sweep_parameter_source": "shared_config"
+  },
+  "generated_at_utc": "2026-07-29T19:53:22.563883+00:00",
+  "one_population_simulation_config": {
+    "base": {
+      "coefficient_attraction": [
+        [
+          0.1
+        ]
+      ],
+      "coefficient_diffusion": [
+        0.04
+      ],
+      "cycle_period": 1.0,
+      "day_start": 0.0,
+      "dt": 0.01,
+      "number_of_points": 256,
+      "number_of_populations": 1,
+      "observation_window": 1.0,
+      "sight_radius": 0.1,
+      "smell_radius": 0.2
+    },
+    "experiments": {
+      "activity_const_heatmaps": {
+        "number_of_cycles": 3,
+        "sunset_values": [
+          1.0,
+          0.5,
+          0.0
+        ],
+        "weights": [
+          0.0,
+          0.5,
+          1.0
+        ]
+      },
+      "activity_const_spread": {
+        "max_workers": 3,
+        "number_of_cycles": 3,
+        "sunset_values": [
+          1.0,
+          0.5,
+          0.0
+        ],
+        "weights": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "sleep_pattern_heatmaps": {
+        "activity_codes": [
+          "D",
+          "N",
+          "P1",
+          "P2",
+          "M1",
+          "M2"
+        ],
+        "max_workers": 6,
+        "number_of_cycles": 2,
+        "t_sunset": 0.5,
+        "weights": [
+          0.0,
+          0.5,
+          1.0
+        ]
+      },
+      "sleep_pattern_spread": {
+        "activity_codes": [
+          "D",
+          "N",
+          "P1",
+          "P2",
+          "M1",
+          "M2"
+        ],
+        "max_workers": 16,
+        "number_of_cycles": 2,
+        "sunset_values": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0
+        ],
+        "weights": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "spread_diurnal_vs_nocturnal": {
+        "activity_codes": [
+          "D",
+          "N"
+        ],
+        "max_workers": 16,
+        "number_of_cycles": 2,
+        "t_sunset": 0.5,
+        "weights": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "spread_polyphasic_matutinal": {
+        "activity_codes": [
+          "P1",
+          "P2",
+          "M1",
+          "M2"
+        ],
+        "max_workers": 16,
+        "number_of_cycles": 2,
+        "sunset_values": [
+          0.3,
+          0.5,
+          0.7
+        ],
+        "weights": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      },
+      "spread_sleep_pattern_diffusion": {
+        "activity_codes": [
+          "D",
+          "N",
+          "P1",
+          "P2",
+          "M1",
+          "M2"
+        ],
+        "case_timeout_seconds": 45.0,
+        "diffusion_multipliers": [
+          0.5,
+          1.0,
+          2.0
+        ],
+        "max_workers": 6,
+        "min_retry_number_of_points": 64,
+        "number_of_cycles": 2,
+        "retry_dt_scales": [
+          1.0,
+          1.0,
+          2.0
+        ],
+        "retry_point_scales": [
+          1.0,
+          0.5,
+          0.25
+        ],
+        "t_sunset": 0.5,
+        "weights": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ]
+      }
+    }
+  },
+  "python_executable": "/home/tim/Documents/Spacial Modeling of Animal Displacment/.venv/bin/python",
+  "two_population_simulation_config": {
+    "analysis": {
+      "max_workers": 16,
+      "mean_show_variance": false,
+      "mean_x_axes": [
+        "w1",
+        "w2",
+        "cycle1",
+        "cycle2"
+      ],
+      "replicator_time_span": 40.0,
+      "replicator_time_steps": 800,
+      "strategy_codes": [
+        "D",
+        "N",
+        "P1",
+        "P2",
+        "M1",
+        "M2"
+      ],
+      "weight_sweep_payoff_mode": "net-growth",
+      "weight_sweep_values": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0
+      ]
+    },
+    "base": {
+      "attraction": [
+        [
+          0.1,
+          -0.2
+        ],
+        [
+          0.2,
+          0.1
+        ]
+      ],
+      "cycle_period": 1.0,
+      "day_start": 0.0,
+      "diffusion": [
+        0.04,
+        0.04
+      ],
+      "dt": 0.1,
+      "initial_centers": [
+        0.25,
+        0.7
+      ],
+      "initial_width": 0.1,
+      "number_of_cycles": 4,
+      "number_of_points": 128,
+      "number_of_populations": 2,
+      "observation_window": 2.0,
+      "payoff_mode": "population-integral",
+      "reaction_rates": {
+        "conversion_rate": 0.15,
+        "predation_rate": 0.25,
+        "predator_decay": 0.04,
+        "prey_growth": 0.1
+      },
+      "sight_radius": 0.1,
+      "smell_radius": 0.1,
+      "t_sunset": 0.5,
+      "weights": [
+        0.5,
+        0.5
+      ]
+    }
+  }
+}

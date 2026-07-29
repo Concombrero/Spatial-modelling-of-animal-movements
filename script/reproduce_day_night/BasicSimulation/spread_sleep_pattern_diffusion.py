@@ -16,6 +16,7 @@ import numpy as np
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
+from script.reproduce_day_night.paths import basic_simulation_output_path
 from script.reproduce_day_night.shared_config import (
     ONE_POPULATION_SIMULATION_CONFIG,
     activity_regimes_for_codes,
@@ -33,10 +34,6 @@ from script.reproduce_day_night.Solver import (
 apply_plot_typography()
 
 
-
-DIFFUSION_ATTRACTION_DENOMINATORS = (100.0, 10.0, 1.0)
-
-
 EXPERIMENT_CONFIG = resolve_experiment_config(
     ONE_POPULATION_SIMULATION_CONFIG,
     "spread_sleep_pattern_diffusion",
@@ -52,14 +49,25 @@ COEFFICIENT_ATTRACTION = np.array(
     EXPERIMENT_CONFIG["coefficient_attraction"],
     dtype=float,
 )
-ATTRACTION_REFERENCE_COEFFICIENT = float(np.max(np.abs(COEFFICIENT_ATTRACTION)))
-if ATTRACTION_REFERENCE_COEFFICIENT <= 0.0:
+COEFFICIENT_DIFFUSION = np.array(
+    EXPERIMENT_CONFIG["coefficient_diffusion"],
+    dtype=float,
+)
+if COEFFICIENT_DIFFUSION.size != NUMBER_OF_POPULATIONS:
     raise ValueError(
-        "coefficient_attraction must contain a positive value to build diffusion coefficients."
+        "coefficient_diffusion must define one value per population for this experiment."
     )
+ATTRACTION_REFERENCE_VALUE = float(COEFFICIENT_ATTRACTION[0, 0])
+if ATTRACTION_REFERENCE_VALUE <= 0.0:
+    raise ValueError(
+        "coefficient_attraction must contain a positive reference value."
+    )
+DIFFUSION_RATIO_VALUES = tuple(
+    float(ratio)
+    for ratio in EXPERIMENT_CONFIG.get("diffusion_ratio_values", (0.2, 0.4, 0.8))
+)
 DIFFUSION_SCALES = tuple(
-    ATTRACTION_REFERENCE_COEFFICIENT / float(denominator)
-    for denominator in DIFFUSION_ATTRACTION_DENOMINATORS
+    ATTRACTION_REFERENCE_VALUE * ratio for ratio in DIFFUSION_RATIO_VALUES
 )
 SIGHT_RADIUS = EXPERIMENT_CONFIG["sight_radius"]
 SMELL_RADIUS = EXPERIMENT_CONFIG["smell_radius"]
@@ -72,32 +80,24 @@ RETRY_POINT_SCALES = EXPERIMENT_CONFIG["retry_point_scales"]
 RETRY_DT_SCALES = EXPERIMENT_CONFIG["retry_dt_scales"]
 MIN_RETRY_NUMBER_OF_POINTS = EXPERIMENT_CONFIG["min_retry_number_of_points"]
 ACTIVITY_REGIMES = activity_regimes_for_codes(EXPERIMENT_CONFIG["activity_codes"])
-OUTPUT_PATH = (
-    Path(__file__).resolve().parents[3]
-    / "article"
-    / "figures"
-    / "sleep_pattern_diffusion_spread.png"
-)
+OUTPUT_PATH = basic_simulation_output_path("spread_sleep_pattern_diffusion.png")
 PROGRESS_REPORT_SECONDS = 10.0
 
 
 def format_diffusion_label(diffusion_value, math_mode=False):
-    for denominator in DIFFUSION_ATTRACTION_DENOMINATORS:
-        expected_value = ATTRACTION_REFERENCE_COEFFICIENT / float(denominator)
-        if np.isclose(diffusion_value, expected_value):
-            if math_mode:
-                return rf"$\chi$/{denominator:g}"
-            return f"Chi/{denominator:g}"
-    return f"D={diffusion_value:g}"
+    ratio = float(diffusion_value) / ATTRACTION_REFERENCE_VALUE
+
+    if math_mode:
+        return rf"$D/\chi = {ratio:g}$"
+    return f"D/Chi = {ratio:g}"
 
 
 def parse_args():
     parser = argparse.ArgumentParser(
         description=(
             "Compute the normalized spread indicator Psi for all circadian "
-            "activity patterns at fixed t_sunset=0.5 and compare diffusion "
-            "coefficients derived from the attraction coefficient in a single "
-            "article figure."
+            "activity patterns at fixed t_sunset=0.5 and compare multiple "
+            "diffusion coefficients in a three-panel BasicSimulation figure."
         )
     )
     parser.add_argument(

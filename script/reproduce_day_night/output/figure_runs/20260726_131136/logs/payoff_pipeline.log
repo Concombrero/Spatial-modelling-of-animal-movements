@@ -1,6 +1,0 @@
-Using Python executable: /home/tim/Documents/Spacial Modeling of Animal Displacment/.venv/bin/python
-Writing pipeline outputs under: /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/20260726_131136/runs/game_theory/payoff_pipeline
-
-==> payoff_matrix
-    /home/tim/Documents/Spacial\ Modeling\ of\ Animal\ Displacment/.venv/bin/python -m script.reproduce_day_night.GameTheory.payoff_matrix --output-dir /home/tim/Documents/Spacial\ Modeling\ of\ Animal\ Displacment/script/reproduce_day_night/output/figure_runs/20260726_131136/runs/game_theory/payoff_pipeline --payoff-mode population-integral 
-  Solving 36 payoff case(s) with 16 worker(s).

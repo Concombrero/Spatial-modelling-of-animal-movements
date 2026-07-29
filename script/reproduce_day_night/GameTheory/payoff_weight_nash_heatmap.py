@@ -294,6 +294,15 @@ def parse_args():
         default=MAX_WORKERS,
         help="Parallel workers used for each payoff-matrix solve.",
     )
+    parser.add_argument(
+        "--plot-only",
+        action="store_true",
+        help=(
+            "Regenerate the summary figures from the existing "
+            f"{DEFAULT_SUMMARY_FILENAME} in --output-dir without recomputing "
+            "the weight sweep."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -416,7 +425,13 @@ def load_saved_weight_nash_run_config(config_path):
 
 
 def resolve_weight_sweep_configuration(args):
-    if args.run_config is None:
+    run_config_path = args.run_config
+    if run_config_path is None and args.plot_only:
+        inferred_run_config_path = resolve_output_dir(args) / DEFAULT_CONFIG_FILENAME
+        if inferred_run_config_path.is_file():
+            run_config_path = inferred_run_config_path
+
+    if run_config_path is None:
         return {
             "w1_values": resolve_weight_values(args.w1_values, option_name="--w1-values"),
             "w2_values": resolve_weight_values(args.w2_values, option_name="--w2-values"),
@@ -424,7 +439,7 @@ def resolve_weight_sweep_configuration(args):
             "base_config": build_base_config(args),
         }
 
-    return load_saved_weight_nash_run_config(args.run_config)
+    return load_saved_weight_nash_run_config(run_config_path)
 
 
 def resolve_output_dir(args):
@@ -661,6 +676,12 @@ def summarize_cell(labels, equilibria):
     }
 
 
+def resolve_support_size_display_value(minimum_size, maximum_size):
+    if int(minimum_size) == int(maximum_size):
+        return float(minimum_size)
+    return np.nan
+
+
 def build_equilibrium_details(labels, equilibria):
     details = []
     for equilibrium in equilibria:
@@ -699,6 +720,16 @@ def compute_nash_weight_summary(
     predator_component_grid = np.zeros((len(w1_values), len(w2_values)), dtype=int)
     prey_probability_grid = np.full((len(w1_values), len(w2_values)), np.nan, dtype=float)
     predator_probability_grid = np.full(
+        (len(w1_values), len(w2_values)),
+        np.nan,
+        dtype=float,
+    )
+    prey_support_size_grid = np.full(
+        (len(w1_values), len(w2_values)),
+        np.nan,
+        dtype=float,
+    )
+    predator_support_size_grid = np.full(
         (len(w1_values), len(w2_values)),
         np.nan,
         dtype=float,
@@ -778,6 +809,18 @@ def compute_nash_weight_summary(
                 predator_probability_grid[row_index, column_index] = cell_summary[
                     "predator"
                 ]["consensus_probability_mean"]
+            prey_support_size_grid[row_index, column_index] = (
+                resolve_support_size_display_value(
+                    cell_summary["prey"]["support_size_min"],
+                    cell_summary["prey"]["support_size_max"],
+                )
+            )
+            predator_support_size_grid[row_index, column_index] = (
+                resolve_support_size_display_value(
+                    cell_summary["predator"]["support_size_min"],
+                    cell_summary["predator"]["support_size_max"],
+                )
+            )
             equilibrium_count_grid[row_index, column_index] = float(
                 cell_summary["equilibrium_count"]
             )
@@ -875,6 +918,8 @@ def compute_nash_weight_summary(
         "predator_component_grid": predator_component_grid,
         "prey_probability_grid": prey_probability_grid,
         "predator_probability_grid": predator_probability_grid,
+        "prey_support_size_grid": prey_support_size_grid,
+        "predator_support_size_grid": predator_support_size_grid,
         "equilibrium_count_grid": equilibrium_count_grid,
         "component_labels": component_labels,
     }
@@ -982,6 +1027,159 @@ def save_summary_csv(summary_rows, output_path):
             )
 
 
+def parse_optional_float(value):
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    text = str(value).strip()
+    if not text:
+        return None
+    return float(text)
+
+
+def parse_required_float(value, *, field_name):
+    parsed_value = parse_optional_float(value)
+    if parsed_value is None:
+        raise ValueError(f"Missing required float field: {field_name}.")
+    return parsed_value
+
+
+def parse_required_int(value, *, field_name):
+    parsed_value = parse_optional_float(value)
+    if parsed_value is None:
+        raise ValueError(f"Missing required integer field: {field_name}.")
+    return int(parsed_value)
+
+
+def load_summary_csv(summary_path):
+    summary_path = Path(summary_path).expanduser().resolve()
+    if not summary_path.is_file():
+        raise FileNotFoundError(f"Nash summary CSV not found: {summary_path}")
+
+    with summary_path.open("r", newline="", encoding="utf-8") as handle:
+        rows = [dict(row) for row in csv.DictReader(handle)]
+
+    if not rows:
+        raise ValueError(f"Nash summary CSV is empty: {summary_path}")
+
+    return rows
+
+
+def build_plot_grids_from_summary_rows(
+    summary_rows,
+    component_labels,
+    w1_values,
+    w2_values,
+):
+    component_index = {label: index for index, label in enumerate(component_labels)}
+    w1_index = {round(float(value), 10): index for index, value in enumerate(w1_values)}
+    w2_index = {round(float(value), 10): index for index, value in enumerate(w2_values)}
+
+    prey_component_grid = np.full(
+        (len(w1_values), len(w2_values)),
+        component_index[CONSENSUS_LABEL],
+        dtype=int,
+    )
+    predator_component_grid = np.full(
+        (len(w1_values), len(w2_values)),
+        component_index[CONSENSUS_LABEL],
+        dtype=int,
+    )
+    prey_probability_grid = np.full((len(w1_values), len(w2_values)), np.nan, dtype=float)
+    predator_probability_grid = np.full(
+        (len(w1_values), len(w2_values)),
+        np.nan,
+        dtype=float,
+    )
+    prey_support_size_grid = np.full(
+        (len(w1_values), len(w2_values)),
+        np.nan,
+        dtype=float,
+    )
+    predator_support_size_grid = np.full(
+        (len(w1_values), len(w2_values)),
+        np.nan,
+        dtype=float,
+    )
+    equilibrium_count_grid = np.full((len(w1_values), len(w2_values)), np.nan, dtype=float)
+    filled_mask = np.zeros((len(w1_values), len(w2_values)), dtype=bool)
+
+    for row in summary_rows:
+        w1 = round(parse_required_float(row.get("w1"), field_name="w1"), 10)
+        w2 = round(parse_required_float(row.get("w2"), field_name="w2"), 10)
+        if w1 not in w1_index or w2 not in w2_index:
+            raise ValueError(
+                f"Summary row has weights outside the configured grid: w1={w1:g}, w2={w2:g}."
+            )
+
+        row_index = w1_index[w1]
+        column_index = w2_index[w2]
+        if filled_mask[row_index, column_index]:
+            raise ValueError(
+                f"Duplicate summary row for w1={w1:g}, w2={w2:g}."
+            )
+
+        prey_label = str(row.get("prey_consensus_leader", "")).strip() or CONSENSUS_LABEL
+        predator_label = (
+            str(row.get("predator_consensus_leader", "")).strip() or CONSENSUS_LABEL
+        )
+        if prey_label not in component_index:
+            raise ValueError(f"Unknown prey consensus leader in summary: {prey_label}")
+        if predator_label not in component_index:
+            raise ValueError(
+                f"Unknown predator consensus leader in summary: {predator_label}"
+            )
+
+        prey_component_grid[row_index, column_index] = component_index[prey_label]
+        predator_component_grid[row_index, column_index] = component_index[predator_label]
+
+        prey_probability = parse_optional_float(row.get("prey_consensus_probability_mean"))
+        if prey_probability is not None:
+            prey_probability_grid[row_index, column_index] = prey_probability
+        predator_probability = parse_optional_float(
+            row.get("predator_consensus_probability_mean")
+        )
+        if predator_probability is not None:
+            predator_probability_grid[row_index, column_index] = predator_probability
+
+        prey_support_size_grid[row_index, column_index] = resolve_support_size_display_value(
+            parse_required_int(row.get("prey_support_size_min"), field_name="prey_support_size_min"),
+            parse_required_int(row.get("prey_support_size_max"), field_name="prey_support_size_max"),
+        )
+        predator_support_size_grid[row_index, column_index] = resolve_support_size_display_value(
+            parse_required_int(
+                row.get("predator_support_size_min"),
+                field_name="predator_support_size_min",
+            ),
+            parse_required_int(
+                row.get("predator_support_size_max"),
+                field_name="predator_support_size_max",
+            ),
+        )
+        equilibrium_count_grid[row_index, column_index] = float(
+            parse_required_int(row.get("equilibrium_count"), field_name="equilibrium_count")
+        )
+        filled_mask[row_index, column_index] = True
+
+    if not np.all(filled_mask):
+        missing_row_index, missing_column_index = np.argwhere(~filled_mask)[0]
+        raise ValueError(
+            "Summary CSV is missing a weight pair for the configured grid: "
+            f"w1={w1_values[missing_row_index]:g}, w2={w2_values[missing_column_index]:g}."
+        )
+
+    return {
+        "prey_component_grid": prey_component_grid,
+        "predator_component_grid": predator_component_grid,
+        "prey_probability_grid": prey_probability_grid,
+        "predator_probability_grid": predator_probability_grid,
+        "prey_support_size_grid": prey_support_size_grid,
+        "predator_support_size_grid": predator_support_size_grid,
+        "equilibrium_count_grid": equilibrium_count_grid,
+    }
+
+
 def save_detail_json(
     output_path,
     *,
@@ -1044,6 +1242,10 @@ def style_weight_axes(axis, w1_values, w2_values):
 def save_consensus_component_heatmap(
     prey_component_grid,
     predator_component_grid,
+    prey_probability_grid,
+    predator_probability_grid,
+    prey_support_size_grid,
+    predator_support_size_grid,
     component_labels,
     w1_values,
     w2_values,
@@ -1087,40 +1289,155 @@ def save_consensus_component_heatmap(
             )
         )
 
-    figure_height = max(4.8, 0.55 * len(w1_values))
-    figure, axes = plt.subplots(
-        1,
-        3,
-        figsize=(14.5, figure_height),
-        gridspec_kw={"width_ratios": [1.0, 1.0, 0.42]},
-        sharey=True,
+    probability_cmap = plt.get_cmap("viridis").copy()
+    probability_cmap.set_bad("#f3f3f3")
+    support_cmap = plt.get_cmap("magma").copy()
+    support_cmap.set_bad("#f3f3f3")
+    combined_support_values = np.concatenate(
+        (
+            np.ravel(prey_support_size_grid),
+            np.ravel(predator_support_size_grid),
+        )
+    )
+    valid_support_values = combined_support_values[~np.isnan(combined_support_values)]
+    has_support_values = valid_support_values.size > 0
+    support_ticks = None
+    support_norm = None
+    if has_support_values:
+        support_min = int(np.min(valid_support_values))
+        support_max = int(np.max(valid_support_values))
+        support_ticks = np.arange(support_min, support_max + 1, dtype=float)
+        support_bounds = np.arange(support_min - 0.5, support_max + 1.5, 1.0)
+        support_norm = BoundaryNorm(support_bounds, support_cmap.N)
+
+    figure_height = max(8.8, 0.82 * len(w1_values))
+    figure = plt.figure(
+        figsize=(15.8, figure_height),
         constrained_layout=True,
     )
-    prey_axis, predator_axis, legend_axis = axes
-
-    for axis, grid, title in (
-        (prey_axis, prey_component_grid, "Prey consensus leader"),
-        (predator_axis, predator_component_grid, "Predator consensus leader"),
+    grid_spec = figure.add_gridspec(
+        3,
+        3,
+        height_ratios=(1.0, 1.0, 0.42),
+    )
+    axes = np.empty((2, 3), dtype=object)
+    axes[0, 0] = figure.add_subplot(grid_spec[0, 0])
+    for column_index in range(1, 3):
+        axes[0, column_index] = figure.add_subplot(
+            grid_spec[0, column_index],
+            sharex=axes[0, 0],
+            sharey=axes[0, 0],
+        )
+    for column_index in range(3):
+        axes[1, column_index] = figure.add_subplot(
+            grid_spec[1, column_index],
+            sharex=axes[0, 0],
+            sharey=axes[0, 0],
+        )
+    legend_axes = [figure.add_subplot(grid_spec[2, column_index]) for column_index in range(3)]
+    for column_index, title in enumerate(
+        (
+            "Consensus leader",
+            "Leader proportion",
+            "Number of strategies\nin Nash equilibrium",
+        )
     ):
-        axis.imshow(
-            grid,
+        axes[0, column_index].set_title(title)
+
+    row_definitions = (
+        (
+            "Prey",
+            prey_component_grid,
+            prey_probability_grid,
+            prey_support_size_grid,
+        ),
+        (
+            "Predator",
+            predator_component_grid,
+            predator_probability_grid,
+            predator_support_size_grid,
+        ),
+    )
+
+    probability_image = None
+    support_image = None
+    for row_index, (row_label, component_grid, probability_grid, support_size_grid) in enumerate(
+        row_definitions
+    ):
+        consensus_axis = axes[row_index, 0]
+        probability_axis = axes[row_index, 1]
+        support_axis = axes[row_index, 2]
+
+        consensus_axis.imshow(
+            component_grid,
             cmap=colour_map,
             norm=colour_norm,
             origin="lower",
             aspect="auto",
             interpolation="nearest",
         )
-        axis.set_title(title)
-        style_weight_axes(axis, w1_values, w2_values)
+        probability_image = probability_axis.imshow(
+            np.ma.masked_invalid(probability_grid),
+            origin="lower",
+            aspect="auto",
+            interpolation="nearest",
+            cmap=probability_cmap,
+            vmin=0.0,
+            vmax=1.0,
+        )
+        support_image = support_axis.imshow(
+            np.ma.masked_invalid(support_size_grid),
+            origin="lower",
+            aspect="auto",
+            interpolation="nearest",
+            cmap=support_cmap,
+            norm=support_norm,
+        )
 
-    prey_axis.set_ylabel("$w_1$")
-    legend_axis.axis("off")
-    legend_axis.legend(
+        for column_index, axis in enumerate(axes[row_index]):
+            style_weight_axes(axis, w1_values, w2_values)
+            if row_index == 0:
+                axis.set_xlabel("")
+                axis.tick_params(labelbottom=False)
+            if column_index > 0:
+                axis.tick_params(labelleft=False)
+
+        consensus_axis.set_ylabel(f"{row_label}\n$w_1$")
+
+    legend_axes[0].axis("off")
+    legend_axes[0].legend(
         handles=legend_handles,
-        loc="center left",
+        loc="center",
+        ncol=2,
         frameon=False,
+        fontsize=12,
         title="Consensus leader",
+        title_fontsize=15,
+        columnspacing=1.4,
+        handletextpad=0.7,
+        handlelength=1.8,
+        borderpad=0.8,
+        labelspacing=0.7,
     )
+    if probability_image is not None:
+        legend_axes[1].axis("off")
+        probability_colorbar_axis = legend_axes[1].inset_axes([0.12, 0.28, 0.76, 0.5])
+        figure.colorbar(
+            probability_image,
+            cax=probability_colorbar_axis,
+            orientation="horizontal",
+            label="Probability",
+        )
+    if has_support_values and support_image is not None:
+        legend_axes[2].axis("off")
+        support_colorbar_axis = legend_axes[2].inset_axes([0.12, 0.28, 0.76, 0.5])
+        figure.colorbar(
+            support_image,
+            cax=support_colorbar_axis,
+            orientation="horizontal",
+            label="Support size",
+            ticks=support_ticks.tolist(),
+        )
     figure.savefig(output_path, bbox_inches="tight", dpi=200)
     plt.close(figure)
 
@@ -1231,39 +1548,54 @@ def main():
         payoff_mode = base_config["payoff_mode"]
         t_sunset = base_config["t_sunset"]
 
-        result = compute_nash_weight_summary(
-            activity_regimes,
-            base_config,
-            w1_values,
-            w2_values,
-            output_dir=output_dir,
-            max_workers=args.max_workers,
-        )
-
         summary_output_path = output_dir / DEFAULT_SUMMARY_FILENAME
         details_output_path = output_dir / DEFAULT_DETAILS_FILENAME
         components_output_path = output_dir / DEFAULT_COMPONENTS_FIGURE_FILENAME
         diagnostics_output_path = output_dir / DEFAULT_DIAGNOSTICS_FIGURE_FILENAME
         config_output_path = output_dir / DEFAULT_CONFIG_FILENAME
 
-        save_summary_csv(result["summary_rows"], summary_output_path)
-        save_detail_json(
-            details_output_path,
-            w1_values=w1_values,
-            w2_values=w2_values,
-            activity_regimes=activity_regimes,
-            detail_rows=result["detail_rows"],
-        )
-        save_run_config(
-            config_output_path,
-            base_config=base_config,
-            w1_values=w1_values,
-            w2_values=w2_values,
-            activity_regimes=activity_regimes,
-        )
+        if args.plot_only:
+            result = build_plot_grids_from_summary_rows(
+                load_summary_csv(summary_output_path),
+                [regime["code"] for regime in activity_regimes] + [CONSENSUS_LABEL],
+                w1_values,
+                w2_values,
+            )
+            result["component_labels"] = [
+                regime["code"] for regime in activity_regimes
+            ] + [CONSENSUS_LABEL]
+        else:
+            result = compute_nash_weight_summary(
+                activity_regimes,
+                base_config,
+                w1_values,
+                w2_values,
+                output_dir=output_dir,
+                max_workers=args.max_workers,
+            )
+
+            save_summary_csv(result["summary_rows"], summary_output_path)
+            save_detail_json(
+                details_output_path,
+                w1_values=w1_values,
+                w2_values=w2_values,
+                activity_regimes=activity_regimes,
+                detail_rows=result["detail_rows"],
+            )
+            save_run_config(
+                config_output_path,
+                base_config=base_config,
+                w1_values=w1_values,
+                w2_values=w2_values,
+                activity_regimes=activity_regimes,
+            )
         save_consensus_component_heatmap(
             result["prey_component_grid"],
             result["predator_component_grid"],
+            result["prey_probability_grid"],
+            result["predator_probability_grid"],
+            result["prey_support_size_grid"],
+            result["predator_support_size_grid"],
             result["component_labels"],
             w1_values,
             w2_values,
@@ -1282,13 +1614,20 @@ def main():
             t_sunset=t_sunset,
         )
 
-        print(
-            f"Saved Nash summary CSV to {summary_output_path}\n"
-            f"Saved Nash detail JSON to {details_output_path}\n"
-            f"Saved consensus component figure to {components_output_path}\n"
-            f"Saved diagnostic figure to {diagnostics_output_path}\n"
-            f"Saved run config to {config_output_path}"
-        )
+        if args.plot_only:
+            print(
+                f"Regenerated consensus component figure at {components_output_path}\n"
+                f"Regenerated diagnostic figure at {diagnostics_output_path}\n"
+                f"Used saved summary CSV at {summary_output_path}"
+            )
+        else:
+            print(
+                f"Saved Nash summary CSV to {summary_output_path}\n"
+                f"Saved Nash detail JSON to {details_output_path}\n"
+                f"Saved consensus component figure to {components_output_path}\n"
+                f"Saved diagnostic figure to {diagnostics_output_path}\n"
+                f"Saved run config to {config_output_path}"
+            )
     except MissingDependencyError as error:
         raise SystemExit(str(error)) from error
 

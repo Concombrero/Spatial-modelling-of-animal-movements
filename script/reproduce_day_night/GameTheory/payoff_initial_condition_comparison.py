@@ -57,6 +57,7 @@ DEFAULT_OUTPUT_PATH = (
 DEFAULT_CACHE_DIRECTORY = game_theory_output_path("initial_condition_payoff_matrices")
 DEFAULT_COMPARISON_NUMBER_OF_CYCLES = NUMBER_OF_CYCLES
 DEFAULT_PROFILE_POINTS = 512
+DEFAULT_INITIAL_PROFILE_YLIM = (0.0, 4.0)
 PREY_LINE_COLOR = "#3B3B3B"
 PREDATOR_LINE_COLOR = "#D1495B"
 PREY_LINE_STYLE = "--"
@@ -399,6 +400,7 @@ def render_comparison_figure(results, activity_regimes, output_path, weight, t_s
             label="Predator",
         )
         condition_axis.set_xlim(0.0, 1.0)
+        condition_axis.set_ylim(*DEFAULT_INITIAL_PROFILE_YLIM)
         condition_axis.set_xlabel("x")
         condition_axis.set_ylabel("density")
         condition_axis.set_title(result["case"].label)

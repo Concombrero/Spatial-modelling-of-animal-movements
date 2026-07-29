@@ -37,6 +37,8 @@
 
 \begin{abstract}
 
+The formation and strength of population aggregations in social species emerge from a complex interplay between circadian rhythms and the mechanisms individuals use to perceive their environment. Extending this framework to a two-species predator–prey system, we use game-theoretic approaches to show that the optimal sleep strategy of each species is shaped not only by its own sensory capabilities, but also by those of its ecological opponent. Our results highlight how the evolution of sleep and sensing strategies may be intrinsically linked through species interactions, with profound consequences for population-level aggregation and predator–prey dynamics.
+
 \end{abstract}
 
 \bigskip
@@ -196,11 +198,11 @@ With this mathematical framework in place, we can classify populations based on 
         \hline
     \end{tabular}
 
-    \caption{Standardized circadian schedules used throughout the simulations and the game-theoretic analysis. Each schedule is $1$-periodic on $[0,1)$ with $t_{\mathrm{sunrise}}=0$; unless stated otherwise, numerical comparisons use the baseline day-night cycle $t_{\mathrm{sunset}}=0.5$, and the second column gives the corresponding active set $\mathcal{T}_{active}$.}
+    \caption{Standardized circadian schedules used throughout the simulations and the game-theoretic analysis. Each schedule is $1$-periodic on $[0,1)$ with $t_{\mathrm{sunrise}}=0$; unless stated otherwise, numerical comparisons use the baseline day-night cycle $t_{\mathrm{sunset}}=0.5$.}
     \label{tab:circadian_patterns}
 \end{table}
 
-Even if $t_{\mathrm{sunset}}$ depends on the geographical location and time of year, we can considerate his average value over the year and the earth as a whole to be around 0.5. In this case, if we divide the interval $[0,1)$ into four equal parts, we can systematically define a set of standardized circadian activity cycles. As illustrated in the figure, while Diurnal and Nocturnal behaviors occupy two consecutive quarters corresponding respectively to the day and the night, this subdivision also allows us to easily represent fragmented schedules. By combining different quarters, we can construct Polyphasic profiles (alternating active and inactive phases every quarter of a day) and Matutinal profiles (grouping activity around specific transitional periods). These idealized models provide a clear mathematical framework to evaluate how various temporal strategies interact with daylight-dependent perception.
+Even if $t_{\mathrm{sunset}}$ depends on the geographical location and time of year, we can considerate his average value over the year and the earth as a whole to be around 0.5. In this case, if we divide the interval $[0,1)$ into four equal parts, we can systematically define a set of standardized circadian activity cycles. As illustrated in the Figure \ref{fig-circadian-activity}, while Diurnal and Nocturnal behaviors occupy two consecutive quarters corresponding respectively to the day and the night, this subdivision also allows us to easily represent fragmented schedules. By combining different quarters, we can construct Polyphasic profiles (alternating active and inactive phases every quarter of a day) and Matutinal profiles (grouping activity around specific transitional periods). These idealized models provide a clear mathematical framework to evaluate how various temporal strategies interact with daylight-dependent perception.
 
 \begin{figure}[H]
     \hspace*{20px}
@@ -209,11 +211,11 @@ Even if $t_{\mathrm{sunset}}$ depends on the geographical location and time of y
     \label{fig-circadian-activity}
 \end{figure}
 
-Now that we have defined the circadian activity cycle, it's important to clarify how it interacts with the population dynamics model. There are two types of activity: the displacement activity, which corresponds to the movement of the population, and the reaction activity, which corresponds to the growth or decay of the population. We assume that both of these activities are governed by the same circadian activity cycle, meaning that the population is only moving and growing during the active periods defined by $\mathcal{T}_{active}$. This means that during the inactive periods, the population is not moving and not growing, which can be interpreted as a resting phase. This assumption allows us to capture the impact of the circadian activity on both the movement and growth of the population in a consistent way. 
+Now that we have defined the circadian activity cycle, it's important to clarify how it interacts with the population dynamics model. There are two types of activity: the displacement activity, which corresponds to the movement of the population, and the reaction activity, which corresponds to the growth or decay of the population. We assume that both of these activities are governed by the same circadian activity cycle, meaning that the population is only moving and growing during the active periods defined by $\mathcal{T}_{active}$. This means that the inactive periods can be interpreted as a resting phase. This assumption allows us to capture the impact of the circadian activity on both the movement and growth of the population in a consistent way. 
 
-For the displacement activity, we can consider that the population is only moving during the active periods, which means that the diffusion coefficient $D$ and the attraction strength $\chi$ are only non-zero during the active periods. For example, we can define $D(t) = D_0 \mathbf{1}_{\{t \in \mathcal{T}_{active}\}}$ and $\chi(t) = \chi_0 \mathbf{1}_{\{t \in \mathcal{T}_{active}\}}$, where $D_0$ and $\chi_0$ are positive constants representing the diffusion coefficient and attraction strength during the active periods, and $\mathbf{1}$ is the indicator function.
+For the displacement activity, considering that the population is only moving during the active periods meaning that the diffusion coefficient $D$ and the attraction strength $\chi$ are only non-zero during the active periods. For example, we can define $D(t) = D_0 \mathbf{1}_{\{t \in \mathcal{T}_{active}\}}$ and $\chi(t) = \chi_0 \mathbf{1}_{\{t \in \mathcal{T}_{active}\}}$, where $D_0$ and $\chi_0$ are positive constants representing the diffusion coefficient and attraction strength during the active periods, and $\mathbf{1}$ is the indicator function.
 
-For the reaction activity we will consider that the population can only grow during the active periods. This means that we fix the reproduction of our reaction model to be zero during the inactive periods. For example, if we consider a logistic growth term of the form $f(u,t) = r(t)u(1-u)$, we can define $r(t) = r_0 \mathbf{1}_{\{t \in \mathcal{T}_{active}\}}$, where $r_0$ is a positive constant representing the intrinsic growth rate during the active periods. However, we will not use reaction terms in our first simulations where we want to study only the evolution of one population under the influence of the day-night cycle, and we will focus on the impact of the circadian activity on the movement of the population.
+For the reaction activity, this means that we fix the reproduction of our reaction model to be zero during the inactive periods. For example, if we consider a logistic growth term of the form $f(u,t) = r(t)u(1-u)$, we can define $r(t) = r_0 \mathbf{1}_{\{t \in \mathcal{T}_{active}\}}$, where $r_0$ is a positive constant representing the intrinsic growth rate during the active periods. However, we will not use reaction terms in our first simulations where we want to study only the evolution of one population under the influence of the day-night cycle, and we will focus on the impact of the circadian activity on the movement of the population.
 
 
 
@@ -256,57 +258,35 @@ where $w\in[0,1]$ is the reliance of the population on sight and $1-w$ is the re
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/sight_weight_sunset_heatmaps.png}
-    \caption{Space-time heatmaps of the one-population density on the periodic domain $\Omega=[0,1)$ for an always-active population. Columns correspond to $w\in\{0,0.5,1\}$ and rows to $t_{\mathrm{sunset}}\in\{1,0.5,0\}$; simulations use $256$ grid points, $\Delta t=0.01$, three daily cycles, $D_0=0.04$, $\chi_0=0.1$, $(R_{\mathrm{sight}},R_{\mathrm{smell}})=(0.1,0.2)$, and a mass-normalized periodic Gaussian initial condition centered at $x_0=0.5$ with width $\sigma=0.08$. Color encodes population density.}
+    \caption{Space-time heatmaps of the one-population density on the periodic domain $\Omega=[0,1)$ for an always-active population. Columns correspond to $w\in\{0,0.5,1\}$ and rows to $t_{\mathrm{sunset}}\in\{1,0.5,0\}$. Simulations use three daily cycles, $D_0=0.04$, $\chi_0=0.1$, $(R_{\mathrm{sight}},R_{\mathrm{smell}})=(0.1,0.2)$, and a mass-normalized periodic Gaussian initial condition centered at $x_0=0.5$ with width $\sigma=0.08$. Color encodes population density.}
     \label{fig:heatmaps-constant-activity}
 \end{figure}
 
-We note a population based on smell is not affected by the day-night cycle, and therefore the population distribution is the same for all values of $t$. On the other hand, a population based on sight is affected by the day-night cycle, and therefore the population distribution is more concentrated during the day and more spread out during the night. We also note that as $t_{\mathrm{sunset}}$ increases the population become more concentrated because the population has an active perception during a larger proportion of the day. The Figure ~\ref{fig:spread-constant-activity} quantifies this observation by showing the spread indicator $\Psi$ as a function of the sight weight $w$ for different values of $t_{\mathrm{sunset}}$. We observe that once night falls to a certain extent, overreliance on sight perception will cause the population to disperse.
+We note a population purely based on smell is not affected by the day-night cycle, and therefore the population distribution is the same for all values of $t$. On the other hand, a population based on sight is affected by the day-night cycle, and therefore the population distribution is more concentrated during the day and more spread out during the night. We also note that as $t_{\mathrm{sunset}}$ increases the population become more concentrated because the population has an active perception during a larger proportion of the day. The Figure ~\ref{fig:spread-constant-activity} quantifies this observation by showing the spread indicator $\Psi$ as a function of the sight weight $w$ for different values of $t_{\mathrm{sunset}}$. We observe that once night falls to a certain extent, overreliance on sight perception will cause the population to disperse.
 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{figures/sight_weight_sunset_spread.png}
-    \caption{Normalized spread indicator $\Psi$ for the always-active one-population simulations, computed over the final day after three daily cycles. Curves correspond to $t_{\mathrm{sunset}}\in\{1,0.5,0\}$ and are sampled at $w\in\{0,0.1,\ldots,1\}$; other parameters are $\Omega=[0,1)$, $256$ grid points, $\Delta t=0.01$, $D_0=0.04$, $\chi_0=0.1$, $(R_{\mathrm{sight}},R_{\mathrm{smell}})=(0.1,0.2)$, and the same normalized periodic Gaussian initial condition.}
+    \caption{Normalized spread indicator $\Psi$ for the always-active one-population simulations, computed over the final day after three daily cycles. Curves correspond to $t_{\mathrm{sunset}}\in\{1,0.5,0\}$ and are sampled at $w\in\{0,0.1,\ldots,1\}$. Simulations used the same parameters as in Figure~\ref{fig:heatmaps-constant-activity}.}
     \label{fig:spread-constant-activity}
 \end{figure}
 \color{black}
 
 \subsection{Impact of sleep pattern}
 
-To understand he impact of the daylight cycle on the spacial dynamics of the population we will firstly consider the behavior of the diurnal and nocturnal populations in an equatorial habitat where the day-night cycle is perfectly balanced, that is $t_{\mathrm{sunset}}=0.5$. 
+To understand the impact of the circadian activity on the population distribution, we will consider the case of a population which is active only during certain periods of the day, that is $\mathcal{T}_{active}\subset\mathbb{R}^+$. In particular, we will consider the four standardized circadian activity cycles defined in Table~\ref{tab:circadian_patterns} and illustrated in Figure~\ref{fig-circadian-activity}. We will study the impact of these circadian activity cycles on the population distribution for different values of $w$.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{figures/spread_diurnal_vs_nocturnal.png}
-    \caption{Normalized spread indicator $\Psi$ for diurnal and nocturnal activity schedules under the equatorial light regime $t_{\mathrm{sunset}}=0.5$, using $w\in\{0,0.1,\ldots,1\}$. Simulations use the periodic domain $\Omega=[0,1)$, $256$ grid points, $\Delta t=0.01$, two daily cycles, a one-day observation window, $D_0=0.04$, $\chi_0=0.1$, $(R_{\mathrm{sight}},R_{\mathrm{smell}})=(0.1,0.2)$, and a mass-normalized periodic Gaussian initial condition centered at $x_0=0.5$ with width $\sigma=0.08$.}
-    \label{fig:spread-diurnal-vs-nocturnal}
+    \includegraphics[width=1\textwidth]{figures/spread_sleep_pattern_diffusion.png}
+    \caption{Normalized spread indicator $\Psi$ in function of the perception weight $w$ for the six standardized circadian activity cycles for 3 different values of the diffusion coefficient $\{0.01, 0.02, 0.04 \}$. The other parameters are the same as in Figure~\ref{fig:spread-constant-activity} with $t_{\mathrm{sunset}}=0.5$.}
+\label{fig:spread-sleep-pattern-diffusion}
 \end{figure}
 
-For the diurnal population, the active periods coincide with the daylight hours ($\mathcal{T}_{active} = \mathcal{T}_{day}$). Therefore, the sight-based perception kernel is entirely active during the population's active periods, allowing individuals to effectively perceive their environment and aggregate. As a result, we expect the diurnal population to exhibit a high degree of aggregation, particularly as the reliance on sight ($w$) increases. This is reflected in the spread indicator $\Psi$, which decreases as $w$ increases, indicating a more concentrated population distribution.
+The first thing we remark is the shocking asymmetry in the spread indicator $\Psi$ between the diurnal and nocturnal populations. As expected based on the initial simulations, the $w$ parameter promotes propagation for the nocturnal population while suppressing it for the diurnal's one. 
 
-On the other hand, for the nocturnal population, the active periods coincide with the nighttime hours ($\mathcal{T}_{active} = \mathcal{T}_{night}$). During these periods, the sight-based perception kernel is inactive (zero), meaning that individuals cannot rely on sight to perceive their environment. Instead, they must rely entirely on the smell-based perception kernel, which remains constant regardless of the time of day. As a result, we expect the nocturnal population to exhibit a more spread out distribution compared to the diurnal population, particularly as the reliance on sight ($w$) increases. This is reflected in the spread indicator $\Psi$, which remains relatively high and does not decrease significantly as $w$ increases, indicating a more dispersed population distribution.
-
-\vspace{10px}
-We extend our analysis to fragmented activity patterns, namely polyphasic and matutinal behaviors, illustrated across four configurations: Polyphasic 1 \& 2, Matutinal 1 \& 2. The following Figure ~\ref{fig:polyphasic-matutinal-activity-cycles} visually represents these configurations, showing the temporal distribution of active and inactive periods within a day for each simulated population for different values of $t_{\mathrm{sunset}}$.
-
-We remark that some simulations has small active periods during the day or during the night, however each one fits the definition given for it. To understand the ecological consequences of these temporal alignments, we investigate how the interplay between fragmented schedules and varying daylight durations impacts the spatial aggregation of the population. By altering the proportion of daylight ($t_{\mathrm{sunset}} \in \{0.3,0.5,0.7\}$), we can evaluate the robustness of these strategies under shifting environmental conditions. To quantify this effect, we compute the spread indicator $\Psi$ across the full spectrum of sensory reliance $w$.
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{figures/spread_polyphasic_matutinal.png}
-    \caption{Normalized spread indicator $\Psi$ for the fragmented activity schedules $P_1$, $P_2$, $M_1$, and $M_2$, using $w\in\{0,0.1,\ldots,1\}$ and $t_{\mathrm{sunset}}\in\{0.3,0.5,0.7\}$. Simulations use the periodic domain $\Omega=[0,1)$, $256$ grid points, $\Delta t=0.01$, two daily cycles, a one-day observation window, $D_0=0.04$, $\chi_0=0.1$, $(R_{\mathrm{sight}},R_{\mathrm{smell}})=(0.1,0.2)$, and the same normalized periodic Gaussian initial condition.}
-    \label{fig:spread-polyphasic-matutinal}
-\end{figure}
-
-Since sunrise is fixed at $t_{\mathrm{sunrise}}$ = 0, populations whose first block of activity begins simultaneously with the daily cycle (Polyphasic 1 and Matutinal 1) systematically ensure a period of overlap with the diurnal phase $\mathcal{T}_{\mathrm{day}}$. Even during short days ($t_{\mathrm{sunset}}$ = 0.3), the visual kernel $K_{\mathrm{sight}}$ is sufficiently engaged during movement to allow aggregation. The indicator $\Psi$ remains at very low values across all studied daylight durations. These activity patterns thus provide the population with excellent spatial resilience against seasonal or latitudinal variations in light.
-
-Conversely, shifted profiles (Polyphasic 2 and Matutinal 2), which only initiate their motor phase at $t$ = 0.25, are extremely sensitive to daylight duration. During long days ($t_{\mathrm{sunset}}$ = 0.7), these populations have sufficient daylight hours for vision to operate effectively, leading to strong aggregation ($\Psi$ approaches 0). However, when days shorten ($t_{\mathrm{sunset}}$ = 0.3), the majority of their activity phase shifts into darkness. For species highly dependent on vision ($w \rightarrow 1$), this translates into severe sensory deprivation. Their dispersion trajectories then critically mirror those of strictly nocturnal species, resulting in major population spread. These results highlight that a temporal fragmentation of activity only guarantees the spatial cohesion of a visual species if at least one of the movement phases is firmly anchored within the daylight window. Otherwise, only a preponderance of olfaction ($w$ close to 0) can compensate for the lack of visual information and maintain population clustering independently of fluctuations in $\mathcal{T}_{\mathrm{day}}$
-
-
-\vspace{10px}
-
-Thus we conclude that the alignment of active periods with daylight is a crucial factor in determining the spatial dynamics of a population, particularly for species that rely heavily on vision. Fragmented activity patterns can provide resilience against changes in daylight duration, but only if they ensure sufficient overlap with the diurnal phase. We also note that for populations based purely on vision, it’s better to do nothing than to act without being aware of your surroundings. As a result, the circadian rhythm does not always act as a constraint on individuals but can also be a strategy to optimize the use of sensory information and therefore the spatial dynamics of the population. In another way, we could incorporate a concept of energy into our model, favoring populations that conserve energy through their circadian cycle, and therefore giving an advantage to populations with a more fragmented activity pattern. This would allow us to study the trade-off between energy conservation and spatial aggregation, and how this trade-off is affected by the day-night cycle.
+In contrast to the extreme sensitivities observed in the single-block rhythms (Diurnal and Nocturnal), the fragmented Polyphasic (P1, P2) and Matutinal (M1, M2) patterns demonstrate a remarkable invariance to changes in the weight parameter. Across all tested diffusion regimes, the propagation capabilities of these profiles remain relatively stable and clustered together. This plateau effect suggests an intrinsic robustness inherent to fragmented activity patterns, effectively buffering them against the variations induced by $w$ and maintaining a consistent, albeit intermediate, level of spread.
 
 \section{Interspecific interaction}
 
@@ -370,8 +350,8 @@ These dynamical trajectories should therefore be read as a complement to the sta
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{figures/strategy_frequencies.png}
-    \caption{Asymmetric replicator dynamics for the $6\times6$ predator-prey game generated from the two-population PDE with $(w_1,w_2)=(0.5,0.5)$ and strategy set $\mathcal{S}=\{D,N,P_1,P_2,M_1,M_2\}$. The underlying payoff matrices are computed on $\Omega=[0,1)$ with $128$ grid points, $\Delta t=0.1$, four daily cycles, final observation window $[2,4]$, $t_{\mathrm{sunset}}=0.5$, $D_1=D_2=0.04$, $(R_{\mathrm{sight}},R_{\mathrm{smell}})=(0.1,0.2)$ for both species, $\chi_{11}=0.1$, $\chi_{12}=-0.2$, $\chi_{21}=0.2$, $\chi_{22}=0.1$, reaction rates $(r_1,r_2,a,b)=(0.2,0.1,0.15,0.08)$, and Gaussian initial peaks at $x_1=0.25$ and $x_2=0.70$ with width $\sigma=0.1$. Replicator trajectories start from the uniform mixed state and are integrated over $40$ generations with $800$ sampled times; the left panel shows prey strategy frequencies, the right panel predator frequencies, and dashed lines indicate the mixed Nash equilibrium components.}
+    \includegraphics[width=0.95\textwidth]{figures/strategy_frequencies_0.5_0.5.png}
+    \caption{Asymmetric replicator dynamics for the predator-prey game generated from the two-population PDE with $(w_1,w_2)=(0.5,0.5)$. The underlying payoff matrices are computed with $D_1=D_2=0.04$, $(R_{\mathrm{sight}},R_{\mathrm{smell}})=(0.1,0.2)$ for both species, $\chi_{11}=0.1$, $\chi_{12}=-0.2$, $\chi_{21}=0.2$, $\chi_{22}=0.1$, reaction rates $(r_1,r_2,a,b)=(0.2,0.1,0.15,0.08)$, and Gaussian initial peaks at $x_1=0.25$ and $x_2=0.70$ with width $\sigma=0.1$.}
     \label{fig:game-theory-replicator-balanced}
 \end{figure}
 
@@ -379,23 +359,23 @@ For balanced sensory weights $(w_1,w_2)=(0.5,0.5)$, the mixed equilibrium has su
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{figures/strategy_frequencies_3_strategies.png}
+    \includegraphics[width=0.95\textwidth]{figures/strategy_frequencies_0.8_0.png}
     \caption{Asymmetric replicator dynamics for the same predator-prey PDE and replicator settings as Figure~\ref{fig:game-theory-replicator-balanced}, but with $(w_1,w_2)=(0.8,0)$. Here the mixed Nash equilibrium has support size three for both populations, and the dashed lines again indicate the equilibrium components.}
     \label{fig:game-theory-replicator-three-strategy}
 \end{figure}
 
 A second representative regime shows that an equilibrium point need not be supported by only two strategies. For $(w_1,w_2)=(0.8,0)$, the prey equilibrium is approximately $0.193D+0.668P_1+0.138M_2$, whereas the predator equilibrium is approximately $0.449D+0.180P_1+0.371M_2$. The corresponding trajectories repeatedly redistribute mass among these three schedules, so the support is genuinely three-dimensional for both species. In other words, a mixed equilibrium in our six-strategy game can encode coexistence between several circadian patterns, not just a binary compromise between two competitors.
 
-Motivated by these representative trajectories, we next sweep the sensory weights over the whole square $(w_1,w_2)\in[0,1]^2$. For each weight pair, we compute the mixed Nash equilibrium set associated with the payoff matrices $\mathbf{A}(w_1,w_2)$ and $\mathbf{B}(w_1,w_2)$, then summarize the outcome by recording the leading equilibrium component, namely the strategy with the largest probability in $p^\ast$ for the prey and in $q^\ast$ for the predator. If all equilibria found for a cell share the same unique leader, we record that strategy as the consensus label; otherwise, we label the cell \emph{Multi}. This produces the summary map analyzed in the next subsection.
+Motivated by these representative trajectories, we next sweep the sensory weights over the whole square $(w_1,w_2)\in[0,1]^2$. For each weight pair, we compute the mixed Nash equilibrium set associated with the payoff matrices $\mathbf{A}(w_1,w_2)$ and $\mathbf{B}(w_1,w_2)$, then summarize the outcome by recording the leading equilibrium component, namely the strategy with the largest probability in $p^\ast$ for the prey and in $q^\ast$ for the predator.
 
 \subsection{Results}
 
-Applying this procedure on the grid $\{0,0.1,\ldots,1\}^2$, we computed the prey and predator payoff matrices over the six circadian strategies and then determined the mixed Nash equilibrium set for all $121$ weight pairs. In every tested cell, the game admits a unique mixed Nash equilibrium. Figure~\ref{fig:game-theory-nash-components} summarizes the leading component of that equilibrium for both species over the whole weight plane.
+We applied this procedure on the grid $\{0,0.1,\ldots,1\}^2$. In every tested cell, the game admits a unique mixed Nash equilibrium. Figure~\ref{fig:game-theory-nash-components} summarizes the leading component of that equilibrium for both species over the whole weight plane.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/nash_consensus_components.png}
-    \caption{Consensus leading component of the mixed Nash equilibrium over the sight-weight grid $(w_1,w_2)\in\{0,0.1,\ldots,1\}^2$ for the same two-population PDE parameters as Figure~\ref{fig:game-theory-replicator-balanced}. For each of the $121$ weight pairs, all $36$ strategy matchups in $\mathcal{S}=\{D,N,P_1,P_2,M_1,M_2\}$ are simulated on $\Omega=[0,1)$ with $128$ grid points, $\Delta t=0.1$, four daily cycles, and a population-integral payoff evaluated over the final two days; each cell is labeled by the largest component of the unique mixed Nash equilibrium. The left panel shows the prey leader and the right panel shows the predator leader.}
+    \caption{Consensus leading component of the mixed Nash equilibrium over the sight-weight grid $(w_1,w_2)\in\{0,0.1,\ldots,1\}^2$ for the same two-population PDE parameters as Figure~\ref{fig:game-theory-replicator-balanced}. The prey leading component is shown in the left panel, and the predator leading component is shown in the right panel.}
     \label{fig:game-theory-nash-components}
 \end{figure}
 
