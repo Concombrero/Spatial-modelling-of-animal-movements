@@ -123,11 +123,11 @@ def build_pattern_groups(_t_sunset):
             "tracks": [ACTIVITY_REGIME_BY_CODE["N"]],
         },
         {
-            "label": "Matutinal 1 (M1)",
+            "label": "Matutinal (M1)",
             "tracks": [ACTIVITY_REGIME_BY_CODE["M1"]],
         },
         {
-            "label": "Matutinal 2 (M2)",
+            "label": "Vespertine (M2)",
             "tracks": [ACTIVITY_REGIME_BY_CODE["M2"]],
         },
         {

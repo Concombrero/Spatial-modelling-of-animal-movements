@@ -56,7 +56,7 @@ ACTIVITY_REGIMES = (
     },
     {
         "code": "M1",
-        "label": "Matutinal 1",
+        "label": "Matutinal",
         "group": "Matutinal",
         "periods": ((0.0, 0.25), (0.75, 1.0)),
         "color": "#FF7F51",
@@ -64,8 +64,8 @@ ACTIVITY_REGIMES = (
     },
     {
         "code": "M2",
-        "label": "Matutinal 2",
-        "group": "Matutinal",
+        "label": "Vespertine",
+        "group": "Vespertine",
         "periods": ((0.25, 0.75),),
         "color": "#D1495B",
         "marker": "P",
