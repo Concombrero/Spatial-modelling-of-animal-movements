@@ -22,6 +22,7 @@ from script.reproduce_day_night.shared_config import (
     activity_regimes_for_codes,
     apply_plot_typography,
     build_periodic_lighting_regime,
+    display_activity_code,
     resolve_experiment_config,
 )
 from script.reproduce_day_night.Solver import (
@@ -564,7 +565,9 @@ def save_spread_plot(
             )
             if axis is axes[0]:
                 legend_handles.append(line)
-                legend_labels.append(f"{regime['label']} ({regime['code']})")
+                legend_labels.append(
+                    f"{regime['label']} ({display_activity_code(regime['code'])})"
+                )
 
         axis.set_title(
             format_diffusion_label(diffusion_scale, math_mode=True),

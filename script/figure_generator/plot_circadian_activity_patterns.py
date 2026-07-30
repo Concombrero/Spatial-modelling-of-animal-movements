@@ -16,6 +16,7 @@ from script.reproduce_day_night.shared_config import (
     ACTIVITY_REGIME_BY_CODE,
     ONE_POPULATION_SIMULATION_CONFIG,
     PLOT_STYLE,
+    display_activity_code,
     resolve_experiment_config,
 )
 
@@ -123,11 +124,11 @@ def build_pattern_groups(_t_sunset):
             "tracks": [ACTIVITY_REGIME_BY_CODE["N"]],
         },
         {
-            "label": "Matutinal (M1)",
+            "label": f"Matutinal ({display_activity_code('M1')})",
             "tracks": [ACTIVITY_REGIME_BY_CODE["M1"]],
         },
         {
-            "label": "Vespertine (M2)",
+            "label": f"Vespertine ({display_activity_code('M2')})",
             "tracks": [ACTIVITY_REGIME_BY_CODE["M2"]],
         },
         {

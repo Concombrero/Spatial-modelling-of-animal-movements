@@ -42,7 +42,10 @@ from script.reproduce_day_night.GameTheory.payoff_matrix import (
     run_payoff_experiment,
 )
 from script.reproduce_day_night.paths import ensure_directory, game_theory_output_path
-from script.reproduce_day_night.shared_config import apply_plot_typography
+from script.reproduce_day_night.shared_config import (
+    apply_plot_typography,
+    display_activity_code,
+)
 
 
 apply_plot_typography()
@@ -360,7 +363,7 @@ def _annotate_heatmap(axis, matrix, threshold):
 
 
 def render_comparison_figure(results, activity_regimes, output_path, weight, t_sunset):
-    labels = [regime["code"] for regime in activity_regimes]
+    labels = [display_activity_code(regime["code"]) for regime in activity_regimes]
     row_count = len(results)
     figure, axes = plt.subplots(
         row_count,

@@ -22,6 +22,8 @@ from script.reproduce_day_night.shared_config import (
     ACTIVITY_CODES as ACTIVITY_REGIME_CODES,
     ACTIVITY_REGIMES,
     TWO_POPULATION_SIMULATION_CONFIG,
+    display_activity_code,
+    normalize_activity_code,
     apply_plot_typography,
     build_periodic_lighting_regime,
 )
@@ -348,24 +350,27 @@ def parse_args():
         type=str,
         help=(
             "Optional comma-separated subset of activity codes to include in the "
-            "payoff matrix, for example D,N,P1,M1. Default: all six codes."
+            "payoff matrix, for example D,N,P1,M. Display aliases M/V and legacy "
+            "M1/M2 are both accepted. Default: all six codes."
         ),
     )
     parser.add_argument(
         "--heatmap-prey",
-        choices=ACTIVITY_REGIME_CODES,
+        type=str,
         help=(
             "Prey activity code filter for the saved population heatmaps. "
             "Use together with --heatmap-predator to save only one activity pair. "
+            "Display aliases M/V and legacy M1/M2 are both accepted. "
             "When both are omitted, the script saves heatmaps for every matrix entry."
         ),
     )
     parser.add_argument(
         "--heatmap-predator",
-        choices=ACTIVITY_REGIME_CODES,
+        type=str,
         help=(
             "Predator activity code filter for the saved population heatmaps. "
-            "Use together with --heatmap-prey."
+            "Use together with --heatmap-prey. Display aliases M/V and legacy "
+            "M1/M2 are both accepted."
         ),
     )
     parser.add_argument(
@@ -397,22 +402,27 @@ def resolve_activity_regimes(strategy_codes_text):
     if strategy_codes_text is None:
         return ACTIVITY_REGIMES
 
-    regime_by_code = {regime["code"]: regime for regime in ACTIVITY_REGIMES}
     selected_regimes = []
     seen_codes = set()
     for raw_code in str(strategy_codes_text).split(","):
         strategy_code = raw_code.strip()
         if not strategy_code:
             continue
-        if strategy_code not in regime_by_code:
+        try:
+            canonical_code = normalize_activity_code(strategy_code)
+        except KeyError as error:
             raise ValueError(f"Unknown strategy code: {strategy_code}")
-        if strategy_code in seen_codes:
+        if canonical_code in seen_codes:
             continue
-        selected_regimes.append(regime_by_code[strategy_code])
-        seen_codes.add(strategy_code)
+        selected_regimes.append(next(
+            regime for regime in ACTIVITY_REGIMES if regime["code"] == canonical_code
+        ))
+        seen_codes.add(canonical_code)
 
     if not selected_regimes:
         raise ValueError("--strategy-codes must include at least one valid code.")
+
+    return tuple(selected_regimes)
 
     return tuple(selected_regimes)
 
@@ -1118,7 +1128,7 @@ def save_payoff_heatmap(
     colorbar_label,
 ):
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    labels = [regime["code"] for regime in activity_regimes]
+    labels = [display_activity_code(regime["code"]) for regime in activity_regimes]
 
     figure, axis = plt.subplots(figsize=(7.2, 6.1), constrained_layout=True)
     image = axis.imshow(matrix, cmap="viridis")
@@ -1196,7 +1206,9 @@ def save_population_heatmaps(
             vmin=vmin,
             vmax=vmax,
         )
-        axis.set_title(f"{population_label}\n{regime['label']} [{regime['code']}]")
+        axis.set_title(
+            f"{population_label}\n{regime['label']} [{display_activity_code(regime['code'])}]"
+        )
         axis.set_xlabel("x")
         if population_index == 0:
             axis.set_ylabel("t")
@@ -1570,6 +1582,20 @@ def run_payoff_experiment(
     save_population_heatmaps=True,
     echo=True,
 ):
+    if heatmap_prey_code is not None:
+        try:
+            heatmap_prey_code = normalize_activity_code(heatmap_prey_code)
+        except KeyError as error:
+            raise ValueError(f"Unknown prey activity code: {heatmap_prey_code}") from error
+
+    if heatmap_predator_code is not None:
+        try:
+            heatmap_predator_code = normalize_activity_code(heatmap_predator_code)
+        except KeyError as error:
+            raise ValueError(
+                f"Unknown predator activity code: {heatmap_predator_code}"
+            ) from error
+
     validate_config(
         config,
         max_workers,

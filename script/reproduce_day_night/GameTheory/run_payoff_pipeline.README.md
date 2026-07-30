@@ -140,7 +140,7 @@ Useful overrides:
 
 - `--w1-values 0 0.2 0.4 0.6 0.8 1`
 - `--w2-values 0 0.2 0.4 0.6 0.8 1`
-- `--strategy-codes D,N,P1,M1`
+- `--strategy-codes D,N,P1,M`
 
 This writes:
 

@@ -46,9 +46,9 @@ script/reproduce_day_night/GameTheory/run_payoff_pipeline.sh \
 Observed replicator outcome from the saved payoff matrix:
 
 1. Prey final dominant regime: `N` with final share `0.5484`.
-2. Prey second regime: `M2` with final share `0.4179`.
+2. Prey second regime: `V` with final share `0.4179`.
 3. Predator transient diurnal peak: `D` reaches `0.1744` at `t ~= 2.85`.
-4. Predator final dominant regime: `M2` with final share `0.8070`.
+4. Predator final dominant regime: `V` with final share `0.8070`.
 5. Predator second regime: `P2` with final share `0.1930`.
 
 Interpretation:
@@ -74,14 +74,14 @@ Parameters to continue from:
 5. `prey smell radius = 0.20`
 6. `predator sight radius = 0.10`
 7. `predator smell radius = 0.20`
-8. `strategy subset = D, N, P1, M1`
+8. `strategy subset = D, N, P1, M`
 
 Rationale:
 
 1. Short days penalize shifted daylight strategies and favor dawn-touching
    fragmented regimes.
 2. High visual reliance should strengthen the refuge advantage of `P1` and
-   `M1`.
+  `M`.
 3. This is the most defensible Story 2 candidate consistent with the article
    intuition and the current search evidence.
 
@@ -92,7 +92,7 @@ bash script/reproduce_day_night/GameTheory/run_payoff_pipeline.sh \
   --output-dir script/reproduce_day_night/GameTheory/output/story2_minimal \
   --python .venv/bin/python \
   --mean-x-axes cycle1,cycle2 \
-  --strategy-codes D,N,P1,M1 \
+  --strategy-codes D,N,P1,M \
   --t-sunset 0.3 \
   --weights 1.0 1.0 \
   --number-of-points 4 \
@@ -129,7 +129,7 @@ Current interpretation:
 - This is the best Story 2 candidate found so far.
 - It should still be considered a candidate, not a validated match, until one
   of the short-day bash runs completes and the replicator output confirms that
-  `P1` or `M1` dominates while `D` and `N` recede.
+  `P1` or `M` dominates while `D` and `N` recede.
 
 ## Ruled-out historical dynamic-game reference
 

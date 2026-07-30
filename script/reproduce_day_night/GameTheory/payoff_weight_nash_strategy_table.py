@@ -8,6 +8,8 @@ import sys
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
+from script.reproduce_day_night.shared_config import display_activity_code
+
 
 DEFAULT_DETAILS_FILENAME = "nash_weight_details.json"
 DEFAULT_OUTPUT_CSV_FILENAME = "nash_strategy_frequency_summary.csv"
@@ -269,7 +271,7 @@ def build_markdown_table(rows, *, weight_pair_count, equilibrium_instance_count)
             "| {strategy} | {prey_leader_count} | {prey_support_count} | {prey_support_percentage} | {prey_percentage} | "
             "{predator_leader_count} | {predator_support_count} | {predator_support_percentage} | {predator_percentage} | "
             "{total_leader_count} | {total_support_count} | {total_support_percentage} | {total_percentage} |".format(
-                strategy=row["strategy"],
+                strategy=display_activity_code(row["strategy"]),
                 prey_leader_count=row["prey_leader_count"],
                 prey_support_count=row["prey_support_count"],
                 prey_support_percentage=format_percentage(

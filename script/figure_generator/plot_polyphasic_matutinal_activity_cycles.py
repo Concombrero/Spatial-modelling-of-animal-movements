@@ -21,6 +21,7 @@ from script.reproduce_day_night.shared_config import (
     activity_regimes_for_codes,
     apply_plot_typography,
     describe_lighting_regime,
+    display_activity_code,
     resolve_experiment_config,
 )
 
@@ -235,7 +236,7 @@ def configure_panel(axis, t_sunset, show_row_labels):
             axis.text(
                 -0.10,
                 current_y,
-                f"{regime['code']}  {regime['label']}",
+                f"{display_activity_code(regime['code'])}  {regime['label']}",
                 ha="right",
                 va="center",
                 fontsize=12,

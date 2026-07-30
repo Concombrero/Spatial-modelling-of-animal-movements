@@ -52,6 +52,7 @@ from script.reproduce_day_night.shared_config import (
     PLOT_STYLE,
     TWO_POPULATION_SIMULATION_CONFIG,
     apply_plot_typography,
+    display_activity_code,
 )
 
 
@@ -125,7 +126,8 @@ def parse_args():
         type=str,
         help=(
             "Optional comma-separated subset of activity codes, for example "
-            "D,N,P1,M1. Default: all six codes."
+            "D,N,P1,M. Display aliases M/V and legacy M1/M2 are both accepted. "
+            "Default: all six codes."
         ),
     )
     parser.add_argument(
@@ -741,7 +743,7 @@ def compute_nash_weight_summary(
 
     print(
         f"Computing Nash heatmaps for {total_pair_count} weight pair(s) with "
-        f"strategies {', '.join(labels)}.",
+        f"strategies {', '.join(display_activity_code(label) for label in labels)}.",
         flush=True,
     )
 
@@ -1276,7 +1278,9 @@ def save_consensus_component_heatmap(
         if label == CONSENSUS_LABEL:
             legend_text = CONSENSUS_LABEL
         else:
-            legend_text = f"{label} ({ACTIVITY_LABELS[label]})"
+            legend_text = (
+                f"{display_activity_code(label)} ({ACTIVITY_LABELS[label]})"
+            )
         legend_handles.append(
             Patch(
                 facecolor=(

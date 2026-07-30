@@ -40,8 +40,8 @@ All plotting scripts use the non-interactive Matplotlib `Agg` backend.
 | `N` | Nocturnal | `[0.5, 1.0]` |
 | `P1` | Polyphasic 1 | `[0.0, 0.25] + [0.5, 0.75]` |
 | `P2` | Polyphasic 2 | `[0.25, 0.5] + [0.75, 1.0]` |
-| `M1` | Matutinal | `[0.0, 0.25] + [0.75, 1.0]` |
-| `M2` | Vespertine | `[0.25, 0.75]` |
+| `M` | Matutinal | `[0.0, 0.25] + [0.75, 1.0]` |
+| `V` | Vespertine | `[0.25, 0.75]` |
 
 ## Common workflows
 

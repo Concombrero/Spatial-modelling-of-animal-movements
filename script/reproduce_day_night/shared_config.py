@@ -24,6 +24,7 @@ PLOT_STYLE = {
 ACTIVITY_REGIMES = (
     {
         "code": "D",
+        "display_code": "D",
         "label": "Diurnal",
         "group": "Diurnal",
         "periods": ((0.0, 0.5),),
@@ -32,6 +33,7 @@ ACTIVITY_REGIMES = (
     },
     {
         "code": "N",
+        "display_code": "N",
         "label": "Nocturnal",
         "group": "Nocturnal",
         "periods": ((0.5, 1.0),),
@@ -40,6 +42,7 @@ ACTIVITY_REGIMES = (
     },
     {
         "code": "P1",
+        "display_code": "P1",
         "label": "Polyphasic 1",
         "group": "Polyphasic",
         "periods": ((0.0, 0.25), (0.5, 0.75)),
@@ -48,6 +51,7 @@ ACTIVITY_REGIMES = (
     },
     {
         "code": "P2",
+        "display_code": "P2",
         "label": "Polyphasic 2",
         "group": "Polyphasic",
         "periods": ((0.25, 0.5), (0.75, 1.0)),
@@ -56,6 +60,7 @@ ACTIVITY_REGIMES = (
     },
     {
         "code": "M1",
+        "display_code": "M",
         "label": "Matutinal",
         "group": "Matutinal",
         "periods": ((0.0, 0.25), (0.75, 1.0)),
@@ -64,6 +69,7 @@ ACTIVITY_REGIMES = (
     },
     {
         "code": "M2",
+        "display_code": "V",
         "label": "Vespertine",
         "group": "Vespertine",
         "periods": ((0.25, 0.75),),
@@ -76,6 +82,12 @@ ACTIVITY_REGIME_BY_CODE = {
     regime["code"]: regime for regime in ACTIVITY_REGIMES
 }
 ACTIVITY_CODES = tuple(regime["code"] for regime in ACTIVITY_REGIMES)
+ACTIVITY_DISPLAY_CODES = {
+    regime["code"]: regime["display_code"] for regime in ACTIVITY_REGIMES
+}
+ACTIVITY_CODE_ALIASES = {
+    regime["display_code"]: regime["code"] for regime in ACTIVITY_REGIMES
+}
 ACTIVITY_LABELS = {
     regime["code"]: regime["label"] for regime in ACTIVITY_REGIMES
 }
@@ -205,11 +217,27 @@ def resolve_experiment_config(study_config, experiment_name):
     return merged
 
 
+def normalize_activity_code(code):
+    normalized_code = str(code).strip().upper()
+    if not normalized_code:
+        raise KeyError("Activity code cannot be empty.")
+
+    canonical_code = ACTIVITY_CODE_ALIASES.get(normalized_code, normalized_code)
+    if canonical_code not in ACTIVITY_REGIME_BY_CODE:
+        raise KeyError(normalized_code)
+    return canonical_code
+
+
+def display_activity_code(code):
+    canonical_code = normalize_activity_code(code)
+    return ACTIVITY_DISPLAY_CODES[canonical_code]
+
+
 def activity_regimes_for_codes(codes=None):
     if codes is None:
         return ACTIVITY_REGIMES
 
-    return tuple(ACTIVITY_REGIME_BY_CODE[code] for code in codes)
+    return tuple(ACTIVITY_REGIME_BY_CODE[normalize_activity_code(code)] for code in codes)
 
 
 def describe_lighting_regime(t_sunset):
@@ -337,6 +365,8 @@ def apply_plot_typography():
 __all__ = [
     "ACTIVITY_CODES",
     "ACTIVITY_COLORS",
+    "ACTIVITY_CODE_ALIASES",
+    "ACTIVITY_DISPLAY_CODES",
     "ACTIVITY_LABELS",
     "ACTIVITY_MARKERS",
     "ACTIVITY_REGIME_BY_CODE",
@@ -354,5 +384,7 @@ __all__ = [
     "build_periodic_lighting_regime",
     "build_periodic_lighting_regimes",
     "describe_lighting_regime",
+    "display_activity_code",
+    "normalize_activity_code",
     "resolve_experiment_config",
 ]

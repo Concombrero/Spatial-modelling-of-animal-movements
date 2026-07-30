@@ -24,6 +24,7 @@ from script.reproduce_day_night.shared_config import (
     ACTIVITY_COLORS,
     TWO_POPULATION_SIMULATION_CONFIG,
     apply_plot_typography,
+    display_activity_code,
 )
 
 
@@ -300,7 +301,9 @@ def format_mixed_strategy(strategy_labels, strategy):
     nonzero_terms = []
     for label, probability in zip(strategy_labels, strategy):
         if probability > 1.0e-10:
-            nonzero_terms.append(f"{label}={probability:.6f}")
+            nonzero_terms.append(
+                f"{display_activity_code(label)}={probability:.6f}"
+            )
     return ", ".join(nonzero_terms) if nonzero_terms else "None"
 
 
@@ -318,11 +321,11 @@ def print_analysis(payoff_game_data, equilibria):
     print()
     print(f"{payoff_game_data.row_player_label} strategies:")
     for index, label in enumerate(payoff_game_data.row_strategies, start=1):
-        print(f"  {index}. {label}")
+        print(f"  {index}. {display_activity_code(label)}")
     print()
     print(f"{payoff_game_data.column_player_label} strategies:")
     for index, label in enumerate(payoff_game_data.column_strategies, start=1):
-        print(f"  {index}. {label}")
+        print(f"  {index}. {display_activity_code(label)}")
     print()
 
     if not equilibria:
@@ -518,6 +521,13 @@ def main():
         combined_plot_path = output_directory / DEFAULT_COMBINED_FIGURE_FILENAME
         prey_colors = resolve_strategy_colors(payoff_game_data.row_strategies)
         predator_colors = resolve_strategy_colors(payoff_game_data.column_strategies)
+        prey_display_labels = [
+            display_activity_code(label) for label in payoff_game_data.row_strategies
+        ]
+        predator_display_labels = [
+            display_activity_code(label)
+            for label in payoff_game_data.column_strategies
+        ]
         prey_equilibrium = equilibria[0]["prey_strategy"] if equilibria else None
         predator_equilibrium = equilibria[0]["predator_strategy"] if equilibria else None
 
@@ -531,11 +541,11 @@ def main():
         save_combined_strategy_frequency_figure(
             time_grid,
             prey_history,
-            payoff_game_data.row_strategies,
+            prey_display_labels,
             prey_colors,
             prey_equilibrium,
             predator_history,
-            payoff_game_data.column_strategies,
+            predator_display_labels,
             predator_colors,
             predator_equilibrium,
             combined_plot_path,
