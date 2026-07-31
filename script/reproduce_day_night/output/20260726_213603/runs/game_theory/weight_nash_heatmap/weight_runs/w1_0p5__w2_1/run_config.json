@@ -1,0 +1,53 @@
+{
+  "attraction": [
+    [
+      0.1,
+      -0.2
+    ],
+    [
+      0.2,
+      0.1
+    ]
+  ],
+  "diffusion": [
+    0.04,
+    0.04
+  ],
+  "dt": 0.1,
+  "initial_centers": [
+    0.25,
+    0.7
+  ],
+  "initial_width": 0.1,
+  "number_of_cycles": 4,
+  "number_of_points": 128,
+  "observation_window": 2.0,
+  "payoff_mode": "population-integral",
+  "reaction_rates": {
+    "conversion_rate": 0.08,
+    "predation_rate": 0.15,
+    "predator_decay": 0.1,
+    "prey_growth": 0.2
+  },
+  "sight_radius": [
+    0.1,
+    0.1
+  ],
+  "smell_radius": [
+    0.2,
+    0.2
+  ],
+  "strategy_codes": [
+    "D",
+    "N",
+    "P1",
+    "P2",
+    "M1",
+    "M2"
+  ],
+  "t_sunset": 0.5,
+  "weights": [
+    0.5,
+    1.0
+  ]
+}
