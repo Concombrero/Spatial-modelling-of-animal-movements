@@ -181,7 +181,7 @@ TWO_POPULATION_SIMULATION_CONFIG = {
         "t_sunset": 0.5,
         "weights": (0.5, 0.5),
         "sight_radius": 0.1,
-        "smell_radius": 0.1,
+        "smell_radius": 0.2,
         "initial_centers": (0.25, 0.70),
         "initial_width": 0.1,
         "diffusion": (0.04, 0.04),
