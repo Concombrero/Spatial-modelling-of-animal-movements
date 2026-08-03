@@ -1,7 +1,7 @@
 {
   "payoff_mode": "population-integral",
-  "prey_payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0/payoff_matrix_prey.csv",
-  "predator_payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0/payoff_matrix_predator.csv",
+  "prey_payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0/payoff_matrix_prey.csv",
+  "predator_payoff_matrix": "/home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p8__w2_0/payoff_matrix_predator.csv",
   "row_player": "Prey",
   "column_player": "Predator",
   "analysis_type": "general_sum_security_values",

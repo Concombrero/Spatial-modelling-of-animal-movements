@@ -1,562 +1,433 @@
-Running 198 case(s) with max_workers=4 and timeout=300s per attempt.
-Finished Diurnal (D), Chi/100, w=0
+Running 198 case(s) with max_workers=6 and timeout=45s per attempt.
+Progress: 0/198 case(s) completed; 198 still running.
+Finished Diurnal (D), D/Chi = 0.2, w=0
 Progress: 1/198 case(s) completed.
-Finished Diurnal (D), Chi/10, w=0
+Finished Diurnal (D), D/Chi = 0.2, w=0.1
 Progress: 2/198 case(s) completed.
-Finished Diurnal (D), Chi/10, w=0.1
+Progress: 2/198 case(s) completed; 196 still running.
+Finished Diurnal (D), D/Chi = 0.4, w=0.1
 Progress: 3/198 case(s) completed.
-Finished Diurnal (D), Chi/100, w=0.1
+Finished Diurnal (D), D/Chi = 0.4, w=0
 Progress: 4/198 case(s) completed.
-Finished Diurnal (D), Chi/10, w=0.2
+Progress: 4/198 case(s) completed; 194 still running.
+Finished Diurnal (D), D/Chi = 0.2, w=0.2
 Progress: 5/198 case(s) completed.
-Progress: 5/198 case(s) completed; 193 still running.
-Progress: 5/198 case(s) completed; 193 still running.
-Finished Diurnal (D), Chi/100, w=0.2
+Finished Diurnal (D), D/Chi = 0.4, w=0.2
 Progress: 6/198 case(s) completed.
-Finished Diurnal (D), Chi/1, w=0
+Progress: 6/198 case(s) completed; 192 still running.
+Finished Diurnal (D), D/Chi = 0.2, w=0.3
 Progress: 7/198 case(s) completed.
-Finished Diurnal (D), Chi/1, w=0.1
+Recovered Diurnal (D), D/Chi = 0.8, w=0.1 on attempt 2 with 128 points and dt=0.01.
 Progress: 8/198 case(s) completed.
-Finished Diurnal (D), Chi/10, w=0.3
+Recovered Diurnal (D), D/Chi = 0.8, w=0 on attempt 2 with 128 points and dt=0.01.
 Progress: 9/198 case(s) completed.
-Finished Diurnal (D), Chi/1, w=0.2
+Finished Diurnal (D), D/Chi = 0.4, w=0.3
 Progress: 10/198 case(s) completed.
-Finished Diurnal (D), Chi/10, w=0.4
+Recovered Diurnal (D), D/Chi = 0.8, w=0.2 on attempt 2 with 128 points and dt=0.01.
 Progress: 11/198 case(s) completed.
-Progress: 11/198 case(s) completed; 187 still running.
-Progress: 11/198 case(s) completed; 187 still running.
-Finished Diurnal (D), Chi/1, w=0.3
+Finished Diurnal (D), D/Chi = 0.2, w=0.4
 Progress: 12/198 case(s) completed.
 Progress: 12/198 case(s) completed; 186 still running.
-Finished Diurnal (D), Chi/1, w=0.4
+Finished Diurnal (D), D/Chi = 0.4, w=0.4
 Progress: 13/198 case(s) completed.
-Finished Diurnal (D), Chi/100, w=0.3
+Recovered Diurnal (D), D/Chi = 0.8, w=0.3 on attempt 2 with 128 points and dt=0.01.
 Progress: 14/198 case(s) completed.
-Finished Diurnal (D), Chi/10, w=0.5
+Finished Diurnal (D), D/Chi = 0.2, w=0.5
 Progress: 15/198 case(s) completed.
 Progress: 15/198 case(s) completed; 183 still running.
-Progress: 15/198 case(s) completed; 183 still running.
-Finished Diurnal (D), Chi/1, w=0.5
+Finished Diurnal (D), D/Chi = 0.4, w=0.5
 Progress: 16/198 case(s) completed.
-Finished Diurnal (D), Chi/10, w=0.6
+Finished Diurnal (D), D/Chi = 0.2, w=0.6
 Progress: 17/198 case(s) completed.
 Progress: 17/198 case(s) completed; 181 still running.
-Finished Diurnal (D), Chi/1, w=0.6
+Finished Diurnal (D), D/Chi = 0.4, w=0.6
 Progress: 18/198 case(s) completed.
-Progress: 18/198 case(s) completed; 180 still running.
-Progress: 18/198 case(s) completed; 180 still running.
-Progress: 18/198 case(s) completed; 180 still running.
-Progress: 18/198 case(s) completed; 180 still running.
-Finished Diurnal (D), Chi/100, w=0.4
+Recovered Diurnal (D), D/Chi = 0.8, w=0.4 on attempt 2 with 128 points and dt=0.01.
 Progress: 19/198 case(s) completed.
-Finished Diurnal (D), Chi/1, w=0.7
+Progress: 19/198 case(s) completed; 179 still running.
+Recovered Diurnal (D), D/Chi = 0.8, w=0.5 on attempt 2 with 128 points and dt=0.01.
 Progress: 20/198 case(s) completed.
-Finished Diurnal (D), Chi/10, w=0.7
+Finished Diurnal (D), D/Chi = 0.2, w=0.7
 Progress: 21/198 case(s) completed.
-Progress: 21/198 case(s) completed; 177 still running.
-Progress: 21/198 case(s) completed; 177 still running.
-Progress: 21/198 case(s) completed; 177 still running.
-Progress: 21/198 case(s) completed; 177 still running.
-Finished Diurnal (D), Chi/1, w=0.8
+Finished Diurnal (D), D/Chi = 0.4, w=0.7
 Progress: 22/198 case(s) completed.
-Finished Diurnal (D), Chi/100, w=0.5
+Progress: 22/198 case(s) completed; 176 still running.
+Finished Diurnal (D), D/Chi = 0.2, w=0.8
 Progress: 23/198 case(s) completed.
-Finished Diurnal (D), Chi/10, w=0.8
+Recovered Diurnal (D), D/Chi = 0.8, w=0.6 on attempt 2 with 128 points and dt=0.01.
 Progress: 24/198 case(s) completed.
-Progress: 24/198 case(s) completed; 174 still running.
-Progress: 24/198 case(s) completed; 174 still running.
-Progress: 24/198 case(s) completed; 174 still running.
-Progress: 24/198 case(s) completed; 174 still running.
-Finished Diurnal (D), Chi/1, w=0.9
+Finished Diurnal (D), D/Chi = 0.4, w=0.8
 Progress: 25/198 case(s) completed.
-Progress: 25/198 case(s) completed; 173 still running.
-Finished Diurnal (D), Chi/100, w=0.6
+Recovered Diurnal (D), D/Chi = 0.8, w=0.7 on attempt 2 with 128 points and dt=0.01.
 Progress: 26/198 case(s) completed.
-Finished Diurnal (D), Chi/10, w=0.9
+Finished Diurnal (D), D/Chi = 0.2, w=0.9
 Progress: 27/198 case(s) completed.
-Progress: 27/198 case(s) completed; 171 still running.
-Progress: 27/198 case(s) completed; 171 still running.
-Progress: 27/198 case(s) completed; 171 still running.
-Progress: 27/198 case(s) completed; 171 still running.
-Finished Diurnal (D), Chi/1, w=1
+Finished Diurnal (D), D/Chi = 0.4, w=0.9
 Progress: 28/198 case(s) completed.
-Progress: 28/198 case(s) completed; 170 still running.
-Progress: 28/198 case(s) completed; 170 still running.
-Finished Diurnal (D), Chi/100, w=0.7
+Finished Diurnal (D), D/Chi = 0.2, w=1
 Progress: 29/198 case(s) completed.
-Finished Diurnal (D), Chi/10, w=1
+Recovered Diurnal (D), D/Chi = 0.8, w=0.8 on attempt 2 with 128 points and dt=0.01.
 Progress: 30/198 case(s) completed.
 Progress: 30/198 case(s) completed; 168 still running.
-Progress: 30/198 case(s) completed; 168 still running.
-Progress: 30/198 case(s) completed; 168 still running.
-Progress: 30/198 case(s) completed; 168 still running.
-Finished Nocturnal (N), Chi/1, w=0
+Finished Diurnal (D), D/Chi = 0.4, w=1
 Progress: 31/198 case(s) completed.
-Finished Nocturnal (N), Chi/10, w=0
+Finished Nocturnal (N), D/Chi = 0.2, w=0
 Progress: 32/198 case(s) completed.
-Finished Nocturnal (N), Chi/100, w=0
+Recovered Diurnal (D), D/Chi = 0.8, w=0.9 on attempt 2 with 128 points and dt=0.01.
 Progress: 33/198 case(s) completed.
 Progress: 33/198 case(s) completed; 165 still running.
-Progress: 33/198 case(s) completed; 165 still running.
-Progress: 33/198 case(s) completed; 165 still running.
-Progress: 33/198 case(s) completed; 165 still running.
-Finished Nocturnal (N), Chi/1, w=0.1
+Finished Nocturnal (N), D/Chi = 0.4, w=0
 Progress: 34/198 case(s) completed.
-Finished Nocturnal (N), Chi/10, w=0.1
+Finished Nocturnal (N), D/Chi = 0.2, w=0.1
 Progress: 35/198 case(s) completed.
-Finished Nocturnal (N), Chi/100, w=0.1
+Progress: 35/198 case(s) completed; 163 still running.
+Recovered Diurnal (D), D/Chi = 0.8, w=1 on attempt 2 with 128 points and dt=0.01.
 Progress: 36/198 case(s) completed.
-Progress: 36/198 case(s) completed; 162 still running.
-Progress: 36/198 case(s) completed; 162 still running.
-Progress: 36/198 case(s) completed; 162 still running.
-Progress: 36/198 case(s) completed; 162 still running.
-Finished Nocturnal (N), Chi/1, w=0.2
+Finished Nocturnal (N), D/Chi = 0.4, w=0.1
 Progress: 37/198 case(s) completed.
-Finished Nocturnal (N), Chi/10, w=0.2
+Progress: 37/198 case(s) completed; 161 still running.
+Finished Nocturnal (N), D/Chi = 0.2, w=0.2
 Progress: 38/198 case(s) completed.
-Finished Nocturnal (N), Chi/100, w=0.2
+Recovered Nocturnal (N), D/Chi = 0.8, w=0 on attempt 2 with 128 points and dt=0.01.
 Progress: 39/198 case(s) completed.
-Progress: 39/198 case(s) completed; 159 still running.
-Progress: 39/198 case(s) completed; 159 still running.
-Progress: 39/198 case(s) completed; 159 still running.
-Progress: 39/198 case(s) completed; 159 still running.
-Finished Nocturnal (N), Chi/1, w=0.3
+Finished Nocturnal (N), D/Chi = 0.4, w=0.2
 Progress: 40/198 case(s) completed.
-Finished Nocturnal (N), Chi/10, w=0.3
+Progress: 40/198 case(s) completed; 158 still running.
+Finished Nocturnal (N), D/Chi = 0.2, w=0.3
 Progress: 41/198 case(s) completed.
-Finished Nocturnal (N), Chi/100, w=0.3
+Recovered Nocturnal (N), D/Chi = 0.8, w=0.1 on attempt 2 with 128 points and dt=0.01.
 Progress: 42/198 case(s) completed.
-Progress: 42/198 case(s) completed; 156 still running.
-Progress: 42/198 case(s) completed; 156 still running.
-Progress: 42/198 case(s) completed; 156 still running.
-Progress: 42/198 case(s) completed; 156 still running.
-Finished Nocturnal (N), Chi/1, w=0.4
+Finished Nocturnal (N), D/Chi = 0.4, w=0.3
 Progress: 43/198 case(s) completed.
-Finished Nocturnal (N), Chi/10, w=0.4
+Finished Nocturnal (N), D/Chi = 0.2, w=0.4
 Progress: 44/198 case(s) completed.
-Finished Nocturnal (N), Chi/100, w=0.4
+Recovered Nocturnal (N), D/Chi = 0.8, w=0.2 on attempt 2 with 128 points and dt=0.01.
 Progress: 45/198 case(s) completed.
-Progress: 45/198 case(s) completed; 153 still running.
-Progress: 45/198 case(s) completed; 153 still running.
-Progress: 45/198 case(s) completed; 153 still running.
-Progress: 45/198 case(s) completed; 153 still running.
-Finished Nocturnal (N), Chi/1, w=0.5
+Finished Nocturnal (N), D/Chi = 0.4, w=0.4
 Progress: 46/198 case(s) completed.
-Finished Nocturnal (N), Chi/10, w=0.5
+Finished Nocturnal (N), D/Chi = 0.2, w=0.5
 Progress: 47/198 case(s) completed.
-Finished Nocturnal (N), Chi/100, w=0.5
+Recovered Nocturnal (N), D/Chi = 0.8, w=0.3 on attempt 2 with 128 points and dt=0.01.
 Progress: 48/198 case(s) completed.
 Progress: 48/198 case(s) completed; 150 still running.
-Progress: 48/198 case(s) completed; 150 still running.
-Progress: 48/198 case(s) completed; 150 still running.
-Progress: 48/198 case(s) completed; 150 still running.
-Finished Nocturnal (N), Chi/1, w=0.6
+Finished Nocturnal (N), D/Chi = 0.4, w=0.5
 Progress: 49/198 case(s) completed.
-Finished Nocturnal (N), Chi/10, w=0.6
+Finished Nocturnal (N), D/Chi = 0.2, w=0.6
 Progress: 50/198 case(s) completed.
-Finished Nocturnal (N), Chi/100, w=0.6
+Recovered Nocturnal (N), D/Chi = 0.8, w=0.4 on attempt 2 with 128 points and dt=0.01.
 Progress: 51/198 case(s) completed.
-Recovered Diurnal (D), Chi/100, w=0.8 on attempt 2 with 64 points and dt=0.1.
+Progress: 51/198 case(s) completed; 147 still running.
+Finished Nocturnal (N), D/Chi = 0.4, w=0.6
 Progress: 52/198 case(s) completed.
-Finished Nocturnal (N), Chi/10, w=0.7
+Finished Nocturnal (N), D/Chi = 0.2, w=0.7
 Progress: 53/198 case(s) completed.
-Finished Nocturnal (N), Chi/100, w=0.7
+Progress: 53/198 case(s) completed; 145 still running.
+Recovered Nocturnal (N), D/Chi = 0.8, w=0.5 on attempt 2 with 128 points and dt=0.01.
 Progress: 54/198 case(s) completed.
-Progress: 54/198 case(s) completed; 144 still running.
-Progress: 54/198 case(s) completed; 144 still running.
-Progress: 54/198 case(s) completed; 144 still running.
-Finished Nocturnal (N), Chi/1, w=0.7
+Finished Nocturnal (N), D/Chi = 0.4, w=0.7
 Progress: 55/198 case(s) completed.
-Finished Nocturnal (N), Chi/10, w=0.8
+Progress: 55/198 case(s) completed; 143 still running.
+Finished Nocturnal (N), D/Chi = 0.2, w=0.8
 Progress: 56/198 case(s) completed.
-Finished Nocturnal (N), Chi/100, w=0.8
+Recovered Nocturnal (N), D/Chi = 0.8, w=0.6 on attempt 2 with 128 points and dt=0.01.
 Progress: 57/198 case(s) completed.
-Finished Nocturnal (N), Chi/1, w=0.8
+Finished Nocturnal (N), D/Chi = 0.4, w=0.8
 Progress: 58/198 case(s) completed.
-Finished Nocturnal (N), Chi/10, w=0.9
+Progress: 58/198 case(s) completed; 140 still running.
+Finished Nocturnal (N), D/Chi = 0.2, w=0.9
 Progress: 59/198 case(s) completed.
-Finished Nocturnal (N), Chi/100, w=0.9
+Recovered Nocturnal (N), D/Chi = 0.8, w=0.7 on attempt 2 with 128 points and dt=0.01.
 Progress: 60/198 case(s) completed.
-Progress: 60/198 case(s) completed; 138 still running.
-Progress: 60/198 case(s) completed; 138 still running.
-Recovered Diurnal (D), Chi/100, w=0.9 on attempt 2 with 64 points and dt=0.1.
+Finished Nocturnal (N), D/Chi = 0.4, w=0.9
 Progress: 61/198 case(s) completed.
-Finished Nocturnal (N), Chi/10, w=1
+Finished Nocturnal (N), D/Chi = 0.2, w=1
 Progress: 62/198 case(s) completed.
-Finished Nocturnal (N), Chi/100, w=1
+Recovered Nocturnal (N), D/Chi = 0.8, w=0.8 on attempt 2 with 128 points and dt=0.01.
 Progress: 63/198 case(s) completed.
-Finished Nocturnal (N), Chi/1, w=0.9
+Finished Nocturnal (N), D/Chi = 0.4, w=1
 Progress: 64/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/10, w=0
+Progress: 64/198 case(s) completed; 134 still running.
+Finished Nocturnal (N), D/Chi = 0.8, w=1
 Progress: 65/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/100, w=0
+Recovered Nocturnal (N), D/Chi = 0.8, w=0.9 on attempt 2 with 128 points and dt=0.01.
 Progress: 66/198 case(s) completed.
-Finished Nocturnal (N), Chi/1, w=1
+Finished Polyphasic 1 (P1), D/Chi = 0.2, w=0
 Progress: 67/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/10, w=0.1
+Progress: 67/198 case(s) completed; 131 still running.
+Finished Polyphasic 1 (P1), D/Chi = 0.4, w=0
 Progress: 68/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/100, w=0.1
+Finished Polyphasic 1 (P1), D/Chi = 0.2, w=0.1
 Progress: 69/198 case(s) completed.
 Progress: 69/198 case(s) completed; 129 still running.
-Progress: 69/198 case(s) completed; 129 still running.
-Finished Polyphasic 1 (P1), Chi/1, w=0
+Finished Polyphasic 1 (P1), D/Chi = 0.4, w=0.1
 Progress: 70/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/10, w=0.2
+Finished Polyphasic 1 (P1), D/Chi = 0.2, w=0.2
 Progress: 71/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/1, w=0.1
+Finished Polyphasic 1 (P1), D/Chi = 0.4, w=0.2
 Progress: 72/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/100, w=0.2
+Recovered Polyphasic 1 (P1), D/Chi = 0.8, w=0 on attempt 2 with 128 points and dt=0.01.
 Progress: 73/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/10, w=0.3
+Progress: 73/198 case(s) completed; 125 still running.
+Recovered Polyphasic 1 (P1), D/Chi = 0.8, w=0.1 on attempt 2 with 128 points and dt=0.01.
 Progress: 74/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/1, w=0.2
+Finished Polyphasic 1 (P1), D/Chi = 0.2, w=0.3
 Progress: 75/198 case(s) completed.
-Progress: 75/198 case(s) completed; 123 still running.
-Recovered Diurnal (D), Chi/100, w=1 on attempt 2 with 64 points and dt=0.1.
+Finished Polyphasic 1 (P1), D/Chi = 0.4, w=0.3
 Progress: 76/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/10, w=0.4
+Recovered Polyphasic 1 (P1), D/Chi = 0.8, w=0.2 on attempt 2 with 128 points and dt=0.01.
 Progress: 77/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/100, w=0.3
+Finished Polyphasic 1 (P1), D/Chi = 0.2, w=0.4
 Progress: 78/198 case(s) completed.
 Progress: 78/198 case(s) completed; 120 still running.
-Finished Polyphasic 1 (P1), Chi/1, w=0.3
+Finished Polyphasic 1 (P1), D/Chi = 0.4, w=0.4
 Progress: 79/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/10, w=0.5
+Finished Polyphasic 1 (P1), D/Chi = 0.2, w=0.5
 Progress: 80/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/1, w=0.4
+Recovered Polyphasic 1 (P1), D/Chi = 0.8, w=0.3 on attempt 2 with 128 points and dt=0.01.
 Progress: 81/198 case(s) completed.
-Progress: 81/198 case(s) completed; 117 still running.
-Finished Polyphasic 1 (P1), Chi/1, w=0.5
+Finished Polyphasic 1 (P1), D/Chi = 0.4, w=0.5
 Progress: 82/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/100, w=0.4
+Progress: 82/198 case(s) completed; 116 still running.
+Recovered Polyphasic 1 (P1), D/Chi = 0.8, w=0.4 on attempt 2 with 128 points and dt=0.01.
 Progress: 83/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/10, w=0.6
+Finished Polyphasic 1 (P1), D/Chi = 0.2, w=0.6
 Progress: 84/198 case(s) completed.
-Progress: 84/198 case(s) completed; 114 still running.
-Progress: 84/198 case(s) completed; 114 still running.
-Finished Polyphasic 1 (P1), Chi/1, w=0.6
+Finished Polyphasic 1 (P1), D/Chi = 0.4, w=0.6
 Progress: 85/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/10, w=0.7
+Finished Polyphasic 1 (P1), D/Chi = 0.2, w=0.7
 Progress: 86/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/100, w=0.5
+Recovered Polyphasic 1 (P1), D/Chi = 0.8, w=0.5 on attempt 2 with 128 points and dt=0.01.
 Progress: 87/198 case(s) completed.
 Progress: 87/198 case(s) completed; 111 still running.
-Finished Polyphasic 1 (P1), Chi/1, w=0.7
+Finished Polyphasic 1 (P1), D/Chi = 0.4, w=0.7
 Progress: 88/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/10, w=0.8
+Finished Polyphasic 1 (P1), D/Chi = 0.2, w=0.8
 Progress: 89/198 case(s) completed.
-Progress: 89/198 case(s) completed; 109 still running.
-Progress: 89/198 case(s) completed; 109 still running.
-Finished Polyphasic 1 (P1), Chi/100, w=0.6
+Recovered Polyphasic 1 (P1), D/Chi = 0.8, w=0.6 on attempt 2 with 128 points and dt=0.01.
 Progress: 90/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/1, w=0.8
+Finished Polyphasic 1 (P1), D/Chi = 0.4, w=0.8
 Progress: 91/198 case(s) completed.
-Progress: 91/198 case(s) completed; 107 still running.
-Finished Polyphasic 1 (P1), Chi/10, w=0.9
+Recovered Polyphasic 1 (P1), D/Chi = 0.8, w=0.7 on attempt 2 with 128 points and dt=0.01.
 Progress: 92/198 case(s) completed.
-Progress: 92/198 case(s) completed; 106 still running.
-Progress: 92/198 case(s) completed; 106 still running.
-Finished Polyphasic 1 (P1), Chi/100, w=0.7
+Finished Polyphasic 1 (P1), D/Chi = 0.2, w=0.9
 Progress: 93/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/1, w=0.9
+Finished Polyphasic 1 (P1), D/Chi = 0.4, w=0.9
 Progress: 94/198 case(s) completed.
-Progress: 94/198 case(s) completed; 104 still running.
-Finished Polyphasic 1 (P1), Chi/10, w=1
+Finished Polyphasic 1 (P1), D/Chi = 0.2, w=1
 Progress: 95/198 case(s) completed.
-Progress: 95/198 case(s) completed; 103 still running.
-Progress: 95/198 case(s) completed; 103 still running.
-Finished Polyphasic 1 (P1), Chi/1, w=1
+Recovered Polyphasic 1 (P1), D/Chi = 0.8, w=0.8 on attempt 2 with 128 points and dt=0.01.
 Progress: 96/198 case(s) completed.
-Progress: 96/198 case(s) completed; 102 still running.
-Progress: 96/198 case(s) completed; 102 still running.
-Progress: 96/198 case(s) completed; 102 still running.
-Progress: 96/198 case(s) completed; 102 still running.
-Finished Polyphasic 2 (P2), Chi/1, w=0
+Finished Polyphasic 1 (P1), D/Chi = 0.4, w=1
 Progress: 97/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/10, w=0
+Finished Polyphasic 2 (P2), D/Chi = 0.2, w=0
 Progress: 98/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/100, w=0
+Recovered Polyphasic 1 (P1), D/Chi = 0.8, w=0.9 on attempt 2 with 128 points and dt=0.01.
 Progress: 99/198 case(s) completed.
-Progress: 99/198 case(s) completed; 99 still running.
-Progress: 99/198 case(s) completed; 99 still running.
-Progress: 99/198 case(s) completed; 99 still running.
-Finished Polyphasic 1 (P1), Chi/100, w=0.8
+Finished Polyphasic 2 (P2), D/Chi = 0.4, w=0
 Progress: 100/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/10, w=0.1
+Finished Polyphasic 2 (P2), D/Chi = 0.2, w=0.1
 Progress: 101/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/100, w=0.1
+Recovered Polyphasic 1 (P1), D/Chi = 0.8, w=1 on attempt 2 with 128 points and dt=0.01.
 Progress: 102/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/1, w=0.1
+Finished Polyphasic 2 (P2), D/Chi = 0.4, w=0.1
 Progress: 103/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/10, w=0.2
+Finished Polyphasic 2 (P2), D/Chi = 0.2, w=0.2
 Progress: 104/198 case(s) completed.
-Progress: 104/198 case(s) completed; 94 still running.
-Finished Polyphasic 2 (P2), Chi/100, w=0.2
+Recovered Polyphasic 2 (P2), D/Chi = 0.8, w=0 on attempt 2 with 128 points and dt=0.01.
 Progress: 105/198 case(s) completed.
 Progress: 105/198 case(s) completed; 93 still running.
-Progress: 105/198 case(s) completed; 93 still running.
-Finished Polyphasic 2 (P2), Chi/1, w=0.2
+Finished Polyphasic 2 (P2), D/Chi = 0.4, w=0.2
 Progress: 106/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/100, w=0.9
+Finished Polyphasic 2 (P2), D/Chi = 0.2, w=0.3
 Progress: 107/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/10, w=0.3
+Recovered Polyphasic 2 (P2), D/Chi = 0.8, w=0.1 on attempt 2 with 128 points and dt=0.01.
 Progress: 108/198 case(s) completed.
-Progress: 108/198 case(s) completed; 90 still running.
-Finished Polyphasic 2 (P2), Chi/1, w=0.3
+Finished Polyphasic 2 (P2), D/Chi = 0.4, w=0.3
 Progress: 109/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/10, w=0.4
+Finished Polyphasic 2 (P2), D/Chi = 0.2, w=0.4
 Progress: 110/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/100, w=0.3
+Recovered Polyphasic 2 (P2), D/Chi = 0.8, w=0.2 on attempt 2 with 128 points and dt=0.01.
 Progress: 111/198 case(s) completed.
-Progress: 111/198 case(s) completed; 87 still running.
-Progress: 111/198 case(s) completed; 87 still running.
-Finished Polyphasic 2 (P2), Chi/1, w=0.4
+Finished Polyphasic 2 (P2), D/Chi = 0.4, w=0.4
 Progress: 112/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/10, w=0.5
+Finished Polyphasic 2 (P2), D/Chi = 0.2, w=0.5
 Progress: 113/198 case(s) completed.
-Progress: 113/198 case(s) completed; 85 still running.
-Finished Polyphasic 2 (P2), Chi/1, w=0.5
+Recovered Polyphasic 2 (P2), D/Chi = 0.8, w=0.3 on attempt 2 with 128 points and dt=0.01.
 Progress: 114/198 case(s) completed.
-Finished Polyphasic 1 (P1), Chi/100, w=1
+Finished Polyphasic 2 (P2), D/Chi = 0.4, w=0.5
 Progress: 115/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/100, w=0.4
+Finished Polyphasic 2 (P2), D/Chi = 0.2, w=0.6
 Progress: 116/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/10, w=0.6
+Recovered Polyphasic 2 (P2), D/Chi = 0.8, w=0.4 on attempt 2 with 128 points and dt=0.01.
 Progress: 117/198 case(s) completed.
-Progress: 117/198 case(s) completed; 81 still running.
-Progress: 117/198 case(s) completed; 81 still running.
-Progress: 117/198 case(s) completed; 81 still running.
-Finished Polyphasic 2 (P2), Chi/1, w=0.6
+Finished Polyphasic 2 (P2), D/Chi = 0.4, w=0.6
 Progress: 118/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/100, w=0.5
+Finished Polyphasic 2 (P2), D/Chi = 0.2, w=0.7
 Progress: 119/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/10, w=0.7
+Recovered Polyphasic 2 (P2), D/Chi = 0.8, w=0.5 on attempt 2 with 128 points and dt=0.01.
 Progress: 120/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/1, w=0.7
+Finished Polyphasic 2 (P2), D/Chi = 0.4, w=0.7
 Progress: 121/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/10, w=0.8
+Finished Polyphasic 2 (P2), D/Chi = 0.2, w=0.8
 Progress: 122/198 case(s) completed.
-Progress: 122/198 case(s) completed; 76 still running.
-Progress: 122/198 case(s) completed; 76 still running.
-Finished Polyphasic 2 (P2), Chi/100, w=0.6
+Recovered Polyphasic 2 (P2), D/Chi = 0.8, w=0.6 on attempt 2 with 128 points and dt=0.01.
 Progress: 123/198 case(s) completed.
 Progress: 123/198 case(s) completed; 75 still running.
-Finished Polyphasic 2 (P2), Chi/1, w=0.8
+Finished Polyphasic 2 (P2), D/Chi = 0.4, w=0.8
 Progress: 124/198 case(s) completed.
-Progress: 124/198 case(s) completed; 74 still running.
-Finished Polyphasic 2 (P2), Chi/10, w=0.9
+Finished Polyphasic 2 (P2), D/Chi = 0.2, w=0.9
 Progress: 125/198 case(s) completed.
-Progress: 125/198 case(s) completed; 73 still running.
-Progress: 125/198 case(s) completed; 73 still running.
-Finished Polyphasic 2 (P2), Chi/1, w=0.9
+Recovered Polyphasic 2 (P2), D/Chi = 0.8, w=0.7 on attempt 2 with 128 points and dt=0.01.
 Progress: 126/198 case(s) completed.
-Progress: 126/198 case(s) completed; 72 still running.
-Finished Polyphasic 2 (P2), Chi/100, w=0.7
+Finished Polyphasic 2 (P2), D/Chi = 0.4, w=0.9
 Progress: 127/198 case(s) completed.
-Progress: 127/198 case(s) completed; 71 still running.
-Finished Polyphasic 2 (P2), Chi/10, w=1
+Finished Polyphasic 2 (P2), D/Chi = 0.2, w=1
 Progress: 128/198 case(s) completed.
-Progress: 128/198 case(s) completed; 70 still running.
-Finished Polyphasic 2 (P2), Chi/1, w=1
+Recovered Polyphasic 2 (P2), D/Chi = 0.8, w=0.8 on attempt 2 with 128 points and dt=0.01.
 Progress: 129/198 case(s) completed.
-Progress: 129/198 case(s) completed; 69 still running.
-Progress: 129/198 case(s) completed; 69 still running.
-Progress: 129/198 case(s) completed; 69 still running.
-Progress: 129/198 case(s) completed; 69 still running.
-Finished Matutinal 1 (M1), Chi/1, w=0
+Finished Polyphasic 2 (P2), D/Chi = 0.4, w=1
 Progress: 130/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/10, w=0
+Progress: 130/198 case(s) completed; 68 still running.
+Finished Matutinal (M1), D/Chi = 0.2, w=0
 Progress: 131/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/100, w=0
+Recovered Polyphasic 2 (P2), D/Chi = 0.8, w=0.9 on attempt 2 with 128 points and dt=0.01.
 Progress: 132/198 case(s) completed.
-Progress: 132/198 case(s) completed; 66 still running.
-Progress: 132/198 case(s) completed; 66 still running.
-Progress: 132/198 case(s) completed; 66 still running.
-Finished Polyphasic 2 (P2), Chi/100, w=0.8
+Finished Matutinal (M1), D/Chi = 0.4, w=0
 Progress: 133/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/10, w=0.1
+Finished Matutinal (M1), D/Chi = 0.2, w=0.1
 Progress: 134/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/100, w=0.1
+Recovered Polyphasic 2 (P2), D/Chi = 0.8, w=1 on attempt 2 with 128 points and dt=0.01.
 Progress: 135/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/1, w=0.1
+Finished Matutinal (M1), D/Chi = 0.4, w=0.1
 Progress: 136/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/10, w=0.2
+Finished Matutinal (M1), D/Chi = 0.2, w=0.2
 Progress: 137/198 case(s) completed.
-Progress: 137/198 case(s) completed; 61 still running.
-Finished Matutinal 1 (M1), Chi/100, w=0.2
+Recovered Matutinal (M1), D/Chi = 0.8, w=0 on attempt 2 with 128 points and dt=0.01.
 Progress: 138/198 case(s) completed.
-Progress: 138/198 case(s) completed; 60 still running.
-Progress: 138/198 case(s) completed; 60 still running.
-Finished Matutinal 1 (M1), Chi/1, w=0.2
+Finished Matutinal (M1), D/Chi = 0.4, w=0.2
 Progress: 139/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/10, w=0.3
+Recovered Matutinal (M1), D/Chi = 0.8, w=0.1 on attempt 2 with 128 points and dt=0.01.
 Progress: 140/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/100, w=0.9
+Finished Matutinal (M1), D/Chi = 0.2, w=0.3
 Progress: 141/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/1, w=0.3
+Progress: 141/198 case(s) completed; 57 still running.
+Finished Matutinal (M1), D/Chi = 0.4, w=0.3
 Progress: 142/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/10, w=0.4
+Finished Matutinal (M1), D/Chi = 0.2, w=0.4
 Progress: 143/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/100, w=0.3
+Recovered Matutinal (M1), D/Chi = 0.8, w=0.2 on attempt 2 with 128 points and dt=0.01.
 Progress: 144/198 case(s) completed.
-Progress: 144/198 case(s) completed; 54 still running.
-Progress: 144/198 case(s) completed; 54 still running.
-Progress: 144/198 case(s) completed; 54 still running.
-Finished Matutinal 1 (M1), Chi/1, w=0.4
+Finished Matutinal (M1), D/Chi = 0.4, w=0.4
 Progress: 145/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/10, w=0.5
+Finished Matutinal (M1), D/Chi = 0.2, w=0.5
 Progress: 146/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/1, w=0.5
+Recovered Matutinal (M1), D/Chi = 0.8, w=0.3 on attempt 2 with 128 points and dt=0.01.
 Progress: 147/198 case(s) completed.
-Finished Polyphasic 2 (P2), Chi/100, w=1
+Finished Matutinal (M1), D/Chi = 0.4, w=0.5
 Progress: 148/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/100, w=0.4
+Finished Matutinal (M1), D/Chi = 0.2, w=0.6
 Progress: 149/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/10, w=0.6
+Recovered Matutinal (M1), D/Chi = 0.8, w=0.4 on attempt 2 with 128 points and dt=0.01.
 Progress: 150/198 case(s) completed.
-Progress: 150/198 case(s) completed; 48 still running.
-Progress: 150/198 case(s) completed; 48 still running.
-Progress: 150/198 case(s) completed; 48 still running.
-Finished Matutinal 1 (M1), Chi/1, w=0.6
+Finished Matutinal (M1), D/Chi = 0.4, w=0.6
 Progress: 151/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/10, w=0.7
+Finished Matutinal (M1), D/Chi = 0.2, w=0.7
 Progress: 152/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/1, w=0.7
+Recovered Matutinal (M1), D/Chi = 0.8, w=0.5 on attempt 2 with 128 points and dt=0.01.
 Progress: 153/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/100, w=0.5
+Finished Matutinal (M1), D/Chi = 0.4, w=0.7
 Progress: 154/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/10, w=0.8
+Finished Matutinal (M1), D/Chi = 0.2, w=0.8
 Progress: 155/198 case(s) completed.
-Progress: 155/198 case(s) completed; 43 still running.
-Finished Matutinal 1 (M1), Chi/100, w=0.6
+Recovered Matutinal (M1), D/Chi = 0.8, w=0.6 on attempt 2 with 128 points and dt=0.01.
 Progress: 156/198 case(s) completed.
-Progress: 156/198 case(s) completed; 42 still running.
-Finished Matutinal 1 (M1), Chi/1, w=0.8
+Finished Matutinal (M1), D/Chi = 0.4, w=0.8
 Progress: 157/198 case(s) completed.
-Progress: 157/198 case(s) completed; 41 still running.
-Finished Matutinal 1 (M1), Chi/10, w=0.9
+Finished Matutinal (M1), D/Chi = 0.2, w=0.9
 Progress: 158/198 case(s) completed.
-Progress: 158/198 case(s) completed; 40 still running.
-Finished Matutinal 1 (M1), Chi/1, w=0.9
+Recovered Matutinal (M1), D/Chi = 0.8, w=0.7 on attempt 2 with 128 points and dt=0.01.
 Progress: 159/198 case(s) completed.
 Progress: 159/198 case(s) completed; 39 still running.
-Finished Matutinal 1 (M1), Chi/100, w=0.7
+Finished Matutinal (M1), D/Chi = 0.4, w=0.9
 Progress: 160/198 case(s) completed.
-Progress: 160/198 case(s) completed; 38 still running.
-Finished Matutinal 1 (M1), Chi/10, w=1
+Finished Matutinal (M1), D/Chi = 0.2, w=1
 Progress: 161/198 case(s) completed.
-Progress: 161/198 case(s) completed; 37 still running.
-Finished Matutinal 1 (M1), Chi/1, w=1
+Recovered Matutinal (M1), D/Chi = 0.8, w=0.8 on attempt 2 with 128 points and dt=0.01.
 Progress: 162/198 case(s) completed.
-Progress: 162/198 case(s) completed; 36 still running.
-Progress: 162/198 case(s) completed; 36 still running.
-Progress: 162/198 case(s) completed; 36 still running.
-Progress: 162/198 case(s) completed; 36 still running.
-Finished Matutinal 2 (M2), Chi/1, w=0
+Finished Matutinal (M1), D/Chi = 0.4, w=1
 Progress: 163/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/10, w=0
+Finished Vespertine (M2), D/Chi = 0.2, w=0
 Progress: 164/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/100, w=0
+Recovered Matutinal (M1), D/Chi = 0.8, w=0.9 on attempt 2 with 128 points and dt=0.01.
 Progress: 165/198 case(s) completed.
-Progress: 165/198 case(s) completed; 33 still running.
-Progress: 165/198 case(s) completed; 33 still running.
-Progress: 165/198 case(s) completed; 33 still running.
-Finished Matutinal 1 (M1), Chi/100, w=0.8
+Finished Vespertine (M2), D/Chi = 0.4, w=0
 Progress: 166/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/1, w=0.1
+Progress: 166/198 case(s) completed; 32 still running.
+Finished Vespertine (M2), D/Chi = 0.2, w=0.1
 Progress: 167/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/10, w=0.1
+Recovered Matutinal (M1), D/Chi = 0.8, w=1 on attempt 2 with 128 points and dt=0.01.
 Progress: 168/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/100, w=0.1
+Finished Vespertine (M2), D/Chi = 0.4, w=0.1
 Progress: 169/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/10, w=0.2
+Finished Vespertine (M2), D/Chi = 0.2, w=0.2
 Progress: 170/198 case(s) completed.
-Progress: 170/198 case(s) completed; 28 still running.
-Finished Matutinal 2 (M2), Chi/100, w=0.2
+Recovered Vespertine (M2), D/Chi = 0.8, w=0 on attempt 2 with 128 points and dt=0.01.
 Progress: 171/198 case(s) completed.
-Progress: 171/198 case(s) completed; 27 still running.
-Progress: 171/198 case(s) completed; 27 still running.
-Finished Matutinal 2 (M2), Chi/1, w=0.2
+Finished Vespertine (M2), D/Chi = 0.4, w=0.2
 Progress: 172/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/10, w=0.3
+Finished Vespertine (M2), D/Chi = 0.2, w=0.3
 Progress: 173/198 case(s) completed.
-Progress: 173/198 case(s) completed; 25 still running.
-Finished Matutinal 1 (M1), Chi/100, w=0.9
+Recovered Vespertine (M2), D/Chi = 0.8, w=0.1 on attempt 2 with 128 points and dt=0.01.
 Progress: 174/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/1, w=0.3
+Finished Vespertine (M2), D/Chi = 0.4, w=0.3
 Progress: 175/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/10, w=0.4
+Finished Vespertine (M2), D/Chi = 0.2, w=0.4
 Progress: 176/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/100, w=0.3
+Recovered Vespertine (M2), D/Chi = 0.8, w=0.2 on attempt 2 with 128 points and dt=0.01.
 Progress: 177/198 case(s) completed.
 Progress: 177/198 case(s) completed; 21 still running.
-Progress: 177/198 case(s) completed; 21 still running.
-Progress: 177/198 case(s) completed; 21 still running.
-Finished Matutinal 2 (M2), Chi/1, w=0.4
+Finished Vespertine (M2), D/Chi = 0.4, w=0.4
 Progress: 178/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/10, w=0.5
+Finished Vespertine (M2), D/Chi = 0.2, w=0.5
 Progress: 179/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/1, w=0.5
+Recovered Vespertine (M2), D/Chi = 0.8, w=0.3 on attempt 2 with 128 points and dt=0.01.
 Progress: 180/198 case(s) completed.
-Finished Matutinal 1 (M1), Chi/100, w=1
+Finished Vespertine (M2), D/Chi = 0.4, w=0.5
 Progress: 181/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/10, w=0.6
+Finished Vespertine (M2), D/Chi = 0.2, w=0.6
 Progress: 182/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/100, w=0.4
+Recovered Vespertine (M2), D/Chi = 0.8, w=0.4 on attempt 2 with 128 points and dt=0.01.
 Progress: 183/198 case(s) completed.
-Progress: 183/198 case(s) completed; 15 still running.
-Progress: 183/198 case(s) completed; 15 still running.
-Progress: 183/198 case(s) completed; 15 still running.
-Finished Matutinal 2 (M2), Chi/1, w=0.6
+Finished Vespertine (M2), D/Chi = 0.4, w=0.6
 Progress: 184/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/10, w=0.7
+Progress: 184/198 case(s) completed; 14 still running.
+Finished Vespertine (M2), D/Chi = 0.2, w=0.7
 Progress: 185/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/1, w=0.7
+Recovered Vespertine (M2), D/Chi = 0.8, w=0.5 on attempt 2 with 128 points and dt=0.01.
 Progress: 186/198 case(s) completed.
-Progress: 186/198 case(s) completed; 12 still running.
-Finished Matutinal 2 (M2), Chi/100, w=0.5
+Finished Vespertine (M2), D/Chi = 0.4, w=0.7
 Progress: 187/198 case(s) completed.
-Finished Matutinal 2 (M2), Chi/10, w=0.8
+Finished Vespertine (M2), D/Chi = 0.2, w=0.8
 Progress: 188/198 case(s) completed.
-Progress: 188/198 case(s) completed; 10 still running.
-Finished Matutinal 2 (M2), Chi/100, w=0.6
+Recovered Vespertine (M2), D/Chi = 0.8, w=0.6 on attempt 2 with 128 points and dt=0.01.
 Progress: 189/198 case(s) completed.
-Progress: 189/198 case(s) completed; 9 still running.
-Finished Matutinal 2 (M2), Chi/1, w=0.8
+Finished Vespertine (M2), D/Chi = 0.4, w=0.8
 Progress: 190/198 case(s) completed.
-Progress: 190/198 case(s) completed; 8 still running.
-Finished Matutinal 2 (M2), Chi/10, w=0.9
+Recovered Vespertine (M2), D/Chi = 0.8, w=0.7 on attempt 2 with 128 points and dt=0.01.
 Progress: 191/198 case(s) completed.
-Progress: 191/198 case(s) completed; 7 still running.
-Progress: 191/198 case(s) completed; 7 still running.
-Finished Matutinal 2 (M2), Chi/1, w=0.9
+Finished Vespertine (M2), D/Chi = 0.2, w=0.9
 Progress: 192/198 case(s) completed.
-Progress: 192/198 case(s) completed; 6 still running.
-Finished Matutinal 2 (M2), Chi/100, w=0.7
+Finished Vespertine (M2), D/Chi = 0.4, w=0.9
 Progress: 193/198 case(s) completed.
-Progress: 193/198 case(s) completed; 5 still running.
-Finished Matutinal 2 (M2), Chi/10, w=1
+Finished Vespertine (M2), D/Chi = 0.2, w=1
 Progress: 194/198 case(s) completed.
-Progress: 194/198 case(s) completed; 4 still running.
-Finished Matutinal 2 (M2), Chi/1, w=1
+Recovered Vespertine (M2), D/Chi = 0.8, w=0.8 on attempt 2 with 128 points and dt=0.01.
 Progress: 195/198 case(s) completed.
-Progress: 195/198 case(s) completed; 3 still running.
-Progress: 195/198 case(s) completed; 3 still running.
-Progress: 195/198 case(s) completed; 3 still running.
-Progress: 195/198 case(s) completed; 3 still running.
-Progress: 195/198 case(s) completed; 3 still running.
-Progress: 195/198 case(s) completed; 3 still running.
-Progress: 195/198 case(s) completed; 3 still running.
-Finished Matutinal 2 (M2), Chi/100, w=0.8
+Finished Vespertine (M2), D/Chi = 0.8, w=0.9
 Progress: 196/198 case(s) completed.
-Progress: 196/198 case(s) completed; 2 still running.
-Progress: 196/198 case(s) completed; 2 still running.
-Progress: 196/198 case(s) completed; 2 still running.
-Finished Matutinal 2 (M2), Chi/100, w=0.9
+Finished Vespertine (M2), D/Chi = 0.4, w=1
 Progress: 197/198 case(s) completed.
-Progress: 197/198 case(s) completed; 1 still running.
-Progress: 197/198 case(s) completed; 1 still running.
-Finished Matutinal 2 (M2), Chi/100, w=1
+Finished Vespertine (M2), D/Chi = 0.8, w=1
 Progress: 198/198 case(s) completed.
-Recovered 3 case(s) with degraded retries; skipped 0 case(s).
-Saved spread plot to /home/tim/Documents/Spatial-modelling-of-animal-movements/script/reproduce_day_night/output/figure_runs/20260726_213603/figures/basic_simulation/spread_sleep_pattern_diffusion.png
+Recovered 63 case(s) with degraded retries; skipped 0 case(s).
+Saved spread plot to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/20260726_213603/figures/basic_simulation/spread_sleep_pattern_diffusion.png

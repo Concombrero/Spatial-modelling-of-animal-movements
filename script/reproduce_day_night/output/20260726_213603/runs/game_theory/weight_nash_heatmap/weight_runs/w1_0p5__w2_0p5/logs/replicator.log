@@ -19,22 +19,22 @@ Prey strategies:
   2. N
   3. P1
   4. P2
-  5. M1
-  6. M2
+  5. M
+  6. V
 
 Predator strategies:
   1. D
   2. N
   3. P1
   4. P2
-  5. M1
-  6. M2
+  5. M
+  6. V
 
 Found 1 Nash equilibrium result(s):
   Equilibrium 1:
     Algorithm: support_enumeration
-    Prey mixed strategy: D=0.223945, M2=0.776055
+    Prey mixed strategy: D=0.223945, V=0.776055
     Predator mixed strategy: D=0.833652, N=0.166348
     Expected payoffs: prey=1.103805, predator=0.841746
 
-Saved combined strategy plot to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/replicator_analysis/strategy_frequencies.png
+Saved combined strategy plot to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/replicator_analysis/strategy_frequencies.png

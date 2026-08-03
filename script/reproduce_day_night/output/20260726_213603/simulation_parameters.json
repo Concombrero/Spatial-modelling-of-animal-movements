@@ -1,18 +1,25 @@
 {
   "campaign": {
     "figure_scripts": [
+      "script.reproduce_day_night.BasicSimulation.activity_const_heatmaps",
+      "script.reproduce_day_night.BasicSimulation.activity_const_spread",
+      "script.reproduce_day_night.BasicSimulation.sleep_pattern_heatmaps",
+      "script.reproduce_day_night.BasicSimulation.sleep_pattern_spread",
+      "script.reproduce_day_night.BasicSimulation.spread_diurnal_vs_nocturnal",
+      "script.reproduce_day_night.BasicSimulation.spread_polyphasic_matutinal",
+      "script.reproduce_day_night.BasicSimulation.spread_sleep_pattern_diffusion",
       "script.reproduce_day_night.GameTheory.payoff_initial_condition_comparison",
       "script.reproduce_day_night.GameTheory.payoff_weight_nash_heatmap",
       "script.reproduce_day_night.GameTheory.run_payoff_pipeline.sh"
     ],
-    "game_theory_only": true,
+    "game_theory_only": false,
     "game_theory_parameter_source": "shared_config",
     "payoff_mode": "population-integral",
     "shared_payoff_run_config": null,
-    "skip_weight_sweep": false,
+    "skip_weight_sweep": true,
     "weight_sweep_parameter_source": "shared_config"
   },
-  "generated_at_utc": "2026-07-29T19:53:22.563883+00:00",
+  "generated_at_utc": "2026-07-31T21:27:35.066936+00:00",
   "one_population_simulation_config": {
     "base": {
       "coefficient_attraction": [
@@ -178,10 +185,10 @@
           "M2"
         ],
         "case_timeout_seconds": 45.0,
-        "diffusion_multipliers": [
-          0.5,
-          1.0,
-          2.0
+        "diffusion_ratio_values": [
+          0.2,
+          0.4,
+          0.8
         ],
         "max_workers": 6,
         "min_retry_number_of_points": 64,
@@ -284,7 +291,7 @@
         "prey_growth": 0.1
       },
       "sight_radius": 0.1,
-      "smell_radius": 0.1,
+      "smell_radius": 0.2,
       "t_sunset": 0.5,
       "weights": [
         0.5,

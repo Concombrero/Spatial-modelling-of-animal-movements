@@ -1,4 +1,4 @@
-Resuming from 36 completed case(s) in /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/case_payoffs.csv
+Resuming from 36 completed case(s) in /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/case_payoffs.csv
 
 Computed prey payoff matrix:
 Prey/Pred       D       N      P1      P2      M1      M2
@@ -18,8 +18,8 @@ Prey/Pred       D       N      P1      P2      M1      M2
        M1  0.8598  0.8349  0.8387  0.8704  0.8338  0.8774
        M2  0.8393  0.8348  0.8340  0.8296  0.8328  0.8343
 
-Saved prey payoff matrix CSV to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/payoff_matrix_prey.csv
-Saved predator payoff matrix CSV to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/payoff_matrix_predator.csv
-Saved prey payoff heatmap to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/payoff_matrix_prey.png
-Saved predator payoff heatmap to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/payoff_matrix_predator.png
-Saved 36 population heatmap file(s) to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/figure_runs/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/population_heatmaps
+Saved prey payoff matrix CSV to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/payoff_matrix_prey.csv
+Saved predator payoff matrix CSV to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/payoff_matrix_predator.csv
+Saved prey payoff heatmap to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/payoff_matrix_prey.png
+Saved predator payoff heatmap to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/payoff_matrix_predator.png
+Saved 36 population heatmap file(s) to /home/tim/Documents/Spacial Modeling of Animal Displacment/script/reproduce_day_night/output/20260726_213603/runs/game_theory/weight_nash_heatmap/weight_runs/w1_0p5__w2_0p5/population_heatmaps
