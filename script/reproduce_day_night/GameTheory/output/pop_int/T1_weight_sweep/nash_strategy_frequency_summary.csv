@@ -1,7 +1,0 @@
-strategy,prey_leader_count,prey_support_count,prey_support_percentage,prey_percentage,predator_leader_count,predator_support_count,predator_support_percentage,predator_percentage,total_leader_count,total_support_count,total_support_percentage,total_percentage
-D,60,86,71.07438,69.767442,61,91,75.206612,67.032967,121,177,73.140496,68.361582
-N,0,0,0.0,,0,11,9.090909,0.0,0,11,4.545455,0.0
-P1,6,23,19.008264,26.086957,18,22,18.181818,81.818182,24,45,18.595041,53.333333
-P2,0,0,0.0,,0,0,0.0,,0,0,0.0,
-M1,0,0,0.0,,0,0,0.0,,0,0,0.0,
-M2,55,68,56.198347,80.882353,42,53,43.801653,79.245283,97,121,50.0,80.165289

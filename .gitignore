@@ -1,6 +1,4 @@
 .venv/
+.vscode
 __pycache__/
-
-
-agents/
-mardown_agents/
+script/**/output/
